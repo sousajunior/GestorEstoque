@@ -68,7 +68,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(591, 355));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jLImagemPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestao-de-estoque.png"))); // NOI18N
+        jLImagemPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestor-estoque-transparente.png"))); // NOI18N
         jLImagemPrincipal.setName(""); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
