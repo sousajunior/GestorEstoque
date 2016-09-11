@@ -264,7 +264,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         if (!this.jtfNome.getText().equalsIgnoreCase("")) {
             return true;
         }
-        if (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") && (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  "))) {
+        if (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  "))) {
             return true;
         }
         return false;
@@ -422,7 +422,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         jfCPF = new javax.swing.JFormattedTextField();
         jfCNPJ = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro/Edição de Fornecedores");
         setBackground(new java.awt.Color(255, 255, 255));
         setIconImage(null);
