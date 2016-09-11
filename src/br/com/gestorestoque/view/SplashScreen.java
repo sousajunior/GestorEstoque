@@ -65,7 +65,7 @@ public class SplashScreen extends JWindow {
                         Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     FRMPrincipal janelaPrincipal = new FRMPrincipal();
-                    FRMUtil.alterarLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel", janelaPrincipal);
+                    FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", janelaPrincipal);
                     janelaPrincipal.setVisible(true);
                     SplashScreen.this.setVisible(false);
 
