@@ -34,7 +34,7 @@ public class ControladorProdutoArmazenado {
         ResultSet rs =  CRUD.select(nomeTabela);
 
         while (rs.next()) {
-            ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado(rs.getInt("idProdutoArmazenado"), rs.getString("lote"), rs.getDouble("quantidade"),rs.getInt("notaFiscal"), ControladorProduto.selecionarProdutoPorCodigo(""+rs.getInt("produto_codigoProduto")), ControladorFornecedor.selecionarFornecedorPorCodigo(""+rs.getInt("fornecedor_idFornecedor")), ControladorArmazem.selecionarArmazemPorCodigo(""+rs.getInt("armazem_codigoArmazem")));
+            ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado(rs.getInt("idProdutoArmazenado"), rs.getString("lote"), rs.getDouble("quantidade"),rs.getInt("notaFiscal"), ControladorProduto.selecionarProdutoPorCodigo(""+rs.getInt("produto_codigoProduto")), ControladorFornecedor.selecionarFornecedorPorCodigo(rs.getInt("fornecedor_idFornecedor")), ControladorArmazem.selecionarArmazemPorCodigo(""+rs.getInt("armazem_codigoArmazem")));
             produtosArmazenados.add(produtoArmazenado);
         }
 
