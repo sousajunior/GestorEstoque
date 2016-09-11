@@ -14,7 +14,18 @@ import java.sql.Statement;
 public class CRUD {
     
     
+  
     /**
+     * Recebe uma query e e troca todas as ocorrências de 'null' por null
+     * @param query
+     * @return query String 
+     */
+    
+    public static String verificaNull(String query)
+    {
+        return query.replaceAll("'null'", "null");
+    }
+      /**
      * Monta um script de inserção, deve-se passar por parâmetro a tabela, as colunas e os valores a serem inseridos.
      * @param tabela
      * @param colunas
@@ -22,6 +33,7 @@ public class CRUD {
      * @throws SQLException 
      */
     public static void insert(String tabela, String colunas, String valores) throws SQLException, MySQLIntegrityConstraintViolationException{
+        valores = verificaNull(valores);
         String sql = "INSERT into "+ tabela +" ("+colunas+") values("+valores+")";
         executeSQL(sql);        
     }
@@ -33,6 +45,7 @@ public class CRUD {
      * @throws SQLException 
      */
     public static void insert(String tabela,String valores) throws SQLException , MySQLIntegrityConstraintViolationException{       
+        valores = verificaNull(valores);
         String sql = "INSERT into "+ tabela + " values ("+valores+")";
         executeSQL(sql);        
     }
@@ -48,6 +61,7 @@ public class CRUD {
      * @throws SQLException 
      */ 
     public static void update(String tabela, String colunasEValores, String colunaWhere, String valorWhere) throws SQLException{       
+        colunasEValores = verificaNull(colunasEValores);
         String sql = "UPDATE "+ tabela + " SET "+colunasEValores+" WHERE "+colunaWhere +" = "+valorWhere ;
         executeSQL(sql);        
     }
@@ -65,6 +79,8 @@ public class CRUD {
     * @throws SQLException 
     */
     public static void update(String tabela,String coluna1,String coluna2, String colunaWhere,String valores,String valores2, String valorWhere) throws SQLException{       
+        valores = verificaNull(valores);
+        valores2 = verificaNull(valores2);
         String sql = "UPDATE "+ tabela + " SET "+coluna1 +" = "+valores+", "+coluna2+" = "+valores2+" WHERE "+colunaWhere +" = "+valorWhere ;
         executeSQL(sql);        
     }
