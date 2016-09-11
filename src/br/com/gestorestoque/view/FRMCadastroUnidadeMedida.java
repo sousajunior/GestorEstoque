@@ -8,11 +8,12 @@ package br.com.gestorestoque.view;
 import br.com.gestorestoque.controller.ControladorUnidadeMedida;
 import br.com.gestorestoque.model.UnidadeMedida;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -214,7 +215,40 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
+        
+        //jdialogUnidadeMedida
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(verificarComponentesPreenchidos()){
+                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)){
+                        dispose();
+                    }
+                }else{
+                    dispose();
+                }
+            }
+            
+            
+            
+        });
 
+    }
+    
+    private boolean verificarComponentesPreenchidos(){
+        
+        
+        
+        if(!jtfNome.getText().equalsIgnoreCase("")){
+            return true;
+        }
+        
+        if(!jtfAbreviacao.getText().equalsIgnoreCase("")){
+            return true;
+        }
+        
+        
+        return false;
     }
 
     /**
@@ -274,10 +308,10 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
         try {
             if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfAbreviacao.getText().equalsIgnoreCase("")) {
-
-                ControladorUnidadeMedida.deletarUnidadeMedida(unidadeMedidaAlterarExcluir);
-                atualizaTabelaUnidadeMedida();
-
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
+                    ControladorUnidadeMedida.deletarUnidadeMedida(unidadeMedidaAlterarExcluir);
+                    atualizaTabelaUnidadeMedida();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione uma unidade de medida para realizar a exclusão!", "Atenção!", 2);
             }
@@ -346,7 +380,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
         jtfNome = new javax.swing.JTextField();
         jtfAbreviacao = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro/Edição de Unidades de Medidas");
         setBackground(new java.awt.Color(255, 255, 255));
         setIconImage(null);
@@ -392,6 +426,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jtUnidadeMedida.setToolTipText("Tabela de unidades de medida");
         jScrollPane1.setViewportView(jtUnidadeMedida);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -423,6 +458,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
         jPanel1.add(jlQtdMinima, gridBagConstraints);
 
         jbtnSalvar.setText("Salvar");
+        jbtnSalvar.setToolTipText("Salvar/Atualizar unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 10;
@@ -430,22 +466,28 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
         jPanel1.add(jbtnSalvar, gridBagConstraints);
 
         jbtnLimpar.setText("Limpar");
+        jbtnLimpar.setToolTipText("Nova unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 10;
         jPanel1.add(jbtnLimpar, gridBagConstraints);
 
         jbtnExcluir.setText("Excluir");
+        jbtnExcluir.setToolTipText("Excluir unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 10;
         jPanel1.add(jbtnExcluir, gridBagConstraints);
+
+        jtfNome.setToolTipText("Informe a descrição da unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jtfNome, gridBagConstraints);
+
+        jtfAbreviacao.setToolTipText("Informe a abreviação da unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;

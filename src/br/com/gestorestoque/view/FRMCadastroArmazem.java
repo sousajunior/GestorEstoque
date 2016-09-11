@@ -6,6 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -205,6 +207,30 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
                 }
         );
 
+        //jdialogArmazem
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (verificarComponentesPreenchidos()) {
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)) {
+                        dispose();
+                    }
+                } else {
+                    dispose();
+                }
+            }
+
+        });
+
+    }
+
+    private boolean verificarComponentesPreenchidos() {
+
+        if (!jtfDescricao.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -241,10 +267,12 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
 
         try {
             if (!this.jtfDescricao.getText().equalsIgnoreCase("")) {
-                Armazem armazem = new Armazem(this.jtfDescricao.getText());
-                ControladorArmazem.deletarArmazem(armazem);
-                atualizaTabelaArmazens();
-                
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
+                    Armazem armazem = new Armazem(this.jtfDescricao.getText());
+                    ControladorArmazem.deletarArmazem(armazem);
+                    atualizaTabelaArmazens();
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um armazém para realizar a exclusão!", "Atenção!", 2);
             }
@@ -263,26 +291,25 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
 
         try {
             if (!this.jtfDescricao.getText().equalsIgnoreCase("")) {
-            if (armazemAlterarExcluir == null) {
+                if (armazemAlterarExcluir == null) {
 
-                Armazem armazem = new Armazem(this.jtfDescricao.getText());
-                //armazem = procurarArmazemNaLista(armazem.getDescricao());
-                ControladorArmazem.inserirArmazem(armazem);
+                    Armazem armazem = new Armazem(this.jtfDescricao.getText());
+                    //armazem = procurarArmazemNaLista(armazem.getDescricao());
+                    ControladorArmazem.inserirArmazem(armazem);
 
+                } else {
+
+                    ControladorArmazem.updateArmazemPorCodigo(jtfDescricao.getText(), armazemAlterarExcluir.getCodigo().toString());
+                }
+                atualizaTabelaArmazens();
             } else {
-
-                ControladorArmazem.updateArmazemPorCodigo(jtfDescricao.getText(), armazemAlterarExcluir.getCodigo().toString());
-            }
-            atualizaTabelaArmazens();
-            }else{
                 JOptionPane.showMessageDialog(null, "O armazém deve ter uma descrição!", "Atenção!", 2);
             }
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroArmazem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         btnLimparClicado();
 
     }
@@ -326,7 +353,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         jbtnLimpar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro de armazém");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(584, 443));
@@ -355,6 +382,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jtArmazens.setToolTipText("Tabela de armazéns");
         jScrollPane1.setViewportView(jtArmazens);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -377,6 +405,8 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao, gridBagConstraints);
+
+        jtfDescricao.setToolTipText("Informe a descrição do armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -387,6 +417,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         jPanel1.add(jtfDescricao, gridBagConstraints);
 
         jbtnSalvar.setText("Salvar");
+        jbtnSalvar.setToolTipText("Salvar/Atualizar armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 18;
@@ -394,6 +425,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         jPanel1.add(jbtnSalvar, gridBagConstraints);
 
         jbtnLimpar.setText("Limpar");
+        jbtnLimpar.setToolTipText("Novo armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 18;
@@ -401,6 +433,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         jPanel1.add(jbtnLimpar, gridBagConstraints);
 
         jbtnExcluir.setText("Excluir");
+        jbtnExcluir.setToolTipText("Excluir armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 18;

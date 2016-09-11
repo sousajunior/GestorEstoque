@@ -2,7 +2,7 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="Cadastro de armaz&#xe9;m"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -55,6 +55,7 @@
                 <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
               </Table>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Tabela de armaz&#xe9;ns"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -110,6 +111,9 @@
               </Constraints>
             </Component>
             <Component class="javax.swing.JTextField" name="jtfDescricao">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Informe a descri&#xe7;&#xe3;o do armaz&#xe9;m"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
                   <GridBagConstraints gridX="2" gridY="0" gridWidth="19" gridHeight="1" fill="3" ipadX="380" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
@@ -119,6 +123,7 @@
             <Component class="javax.swing.JButton" name="jbtnSalvar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Salvar/Atualizar armaz&#xe9;m"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -129,6 +134,7 @@
             <Component class="javax.swing.JButton" name="jbtnLimpar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Novo armaz&#xe9;m"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -139,6 +145,7 @@
             <Component class="javax.swing.JButton" name="jbtnExcluir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Excluir"/>
+                <Property name="toolTipText" type="java.lang.String" value="Excluir armaz&#xe9;m"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
