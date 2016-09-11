@@ -506,7 +506,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         setTitle("Cadastro/Edição de Produtos");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(584, 443));
-        setPreferredSize(new java.awt.Dimension(584, 443));
+        setPreferredSize(new java.awt.Dimension(806, 448));
 
         jScrollPane1.setName(""); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 200));
