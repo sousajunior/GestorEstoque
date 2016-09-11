@@ -40,6 +40,29 @@ public class ControladorArmazem {
 
     }
     
+     /**
+     * Executa um método que seleciona todos os armazéns cadastrados na base de dados.
+     * Método select da classe CRUD.
+     * @param idArmazem String
+     * @return armazem Armazem
+     * @throws SQLException 
+     */
+    public  static Armazem selecionarArmazemPorCodigo(String idArmazem) throws SQLException {
+
+        Armazem armazem = new Armazem();
+
+        ResultSet rs = CRUD.select("armazem","where codigoArmazem = "+idArmazem);
+
+        while (rs.next()) {
+            armazem = new Armazem(rs.getInt("codigoArmazem"), rs.getString("descricao"));
+            
+        }
+
+        return armazem;
+
+    }
+   
+    
     /**
      * Executa o método insert da classe CRUD, passando tabela armazem e os valores necessários para, inserir um armazém na base de dados.
      * É necessário passar por parâmetro um armazem.
