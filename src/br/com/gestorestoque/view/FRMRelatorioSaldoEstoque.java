@@ -9,6 +9,8 @@ import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,14 @@ import javax.swing.table.TableModel;
 public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
+    List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
     List<Armazem> armazens = new ArrayList<>();
     List<Armazem> armazensPesquisa = new ArrayList<>();
     TableModel modeloTabelaProdutoArmazenado;
+
+    //Strings de pesquisa
+    static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_!@#$%&";
+    String textoLote = "";
 
     /**
      * Creates new form FRMRelatorioSaldosEstoque
@@ -82,10 +89,10 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
      */
     private class ProdutoArmazenadoTableModel extends AbstractTableModel {
 
-        public final List<ProdutoArmazenado> produtosProdutoArmazenados2;
+        public final List<ProdutoArmazenado> produtosArmazenados;
 
         public ProdutoArmazenadoTableModel(List<ProdutoArmazenado> produtosProdutoArmazenadosList) {
-            this.produtosProdutoArmazenados2 = produtosProdutoArmazenadosList;
+            this.produtosArmazenados = produtosProdutoArmazenadosList;
 
         }
 
@@ -280,42 +287,74 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     itemComboCondicaoLoteSelecionado();
                 }
         );
-        
+
         //combo de condição para produto
         jcbCondicaoProduto.addActionListener(
                 (e) -> {
                     itemComboCondicaoProdutoSelecionado();
                 }
         );
-        
+
         //combo de condição para fornecedor
         jcbCondicaoFornecedor.addActionListener(
                 (e) -> {
                     itemComboCondicaoFornecedorSelecionado();
                 }
         );
-        
+
         //combo de condição para Saldo
         jcbCondicaoSaldo.addActionListener(
                 (e) -> {
                     itemComboCondicaoSaldoSelecionado();
                 }
         );
-        
+
         //combo de condição para Nota fiscal
         jcbCondicaoNotaFiscal.addActionListener(
                 (e) -> {
                     itemComboCondicaoNotaFiscalSelecionado();
                 }
         );
-        
-        
+
         //combo de condição para armazem
         jcbCondicaoArmazem.addActionListener(
                 (e) -> {
                     itemComboCondicaoArmazemSelecionado();
                 }
         );
+
+        jtfLote.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                System.out.println("KeyReleased");
+//                filtrar();
+//            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoLote.length() > 0) {
+                        textoLote = "" + textoLote.subSequence(0, textoLote.length() - 1);
+                    }
+                }
+                if (validacao.contains("" + e.getKeyChar())) {
+                    textoLote += "" + e.getKeyChar();
+                }
+
+                System.out.println("KeyPressed");
+                System.out.println(textoLote);
+                filtrar();
+            }
+
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                System.out.println("KeyTyped");
+//                filtrar();
+//            }
+        });
+//        });
+//
 //
 //        //jdialogProduto
 //        this.addWindowListener(new WindowAdapter() {
@@ -346,6 +385,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoArmazem.setSelectedIndex(0);
         this.jcbCondicaoNotaFiscal.setSelectedIndex(0);
         this.jcControladoPorLote.setSelected(false);
+        
+        atualizarTabelaProdutosArmazenados();
 
     }
 
@@ -359,7 +400,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void itemComboCondicaoProdutoSelecionado() {
 
         if (this.jcbCondicaoProduto.getSelectedIndex() == 0) {
@@ -370,7 +411,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void itemComboCondicaoFornecedorSelecionado() {
 
         if (this.jcbCondicaoFornecedor.getSelectedIndex() == 0) {
@@ -381,7 +422,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void itemComboCondicaoSaldoSelecionado() {
 
         if (this.jcbCondicaoSaldo.getSelectedIndex() == 0) {
@@ -392,8 +433,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
-    
+
     private void itemComboCondicaoNotaFiscalSelecionado() {
 
         if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 0) {
@@ -404,8 +444,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
-    
+
     private void itemComboCondicaoArmazemSelecionado() {
 
         if (this.jcbCondicaoArmazem.getSelectedIndex() == 0) {
@@ -413,6 +452,79 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             this.jtfArmazem.setEnabled(false);
         } else {
             this.jtfArmazem.setEnabled(true);
+        }
+
+    }
+
+    private void filtrar() {
+
+        if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
+            if (this.jcbCondicaoLote.getSelectedIndex() == 1) {
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            System.out.println("Lote banco: "+produtosArmazenado.getLote());
+                            if (produtosArmazenado.getLote().contains(this.textoLote)) {
+                                produtosArmazenadosPesquisa.add(produtosArmazenado);
+                                System.out.println("Texto: " + this.textoLote);
+                                System.out.println("Lista vazia indice 1");
+                            }
+                        }
+                    }
+                } else {
+
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            if (produtosArmazenado.getLote().contains(this.textoLote)) {
+                                produtosArmazenadosPesquisa2.add(produtosArmazenado);
+                                System.out.println("Lista não vazia indice 1");
+                            }
+                        }
+                    }
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoLote.getSelectedIndex() == 2) {
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            if (produtosArmazenado.getLote().equals(this.textoLote)) {
+                                produtosArmazenadosPesquisa.add(produtosArmazenado);
+                                System.out.println("Lista vazia indice 2");
+                            }
+                        }
+                    }
+                } else {
+
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            if (produtosArmazenado.getLote().equals(this.textoLote)) {
+                                produtosArmazenadosPesquisa2.add(produtosArmazenado);
+                                System.out.println("Lista não vazia indice 2");
+                            }
+                        }
+                    }
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
+        }
+        atualizarTabelaProdutosArmazenadosComPesquisa();
+    }
+
+    private void atualizarTabelaProdutosArmazenadosComPesquisa() {
+        modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
+        jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
+
+        for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+            System.out.println(produtosArmazenado.getLote());
+
         }
 
     }

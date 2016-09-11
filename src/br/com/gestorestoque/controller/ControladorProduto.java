@@ -44,6 +44,28 @@ public class ControladorProduto {
     }
     
     /**
+     * Executa um método que seleciona todos os armazéns cadastrados na base de dados.
+     * Método select da classe CRUD.
+     * @return List< Produto >
+     * @throws SQLException 
+     */
+    public  static Produto selecionarProdutoPorCodigo(String idProduto) throws SQLException {
+
+        Produto produto = new Produto();
+        
+        ResultSet rs =  CRUD.select(nomeTabela,"where codigoProduto = "+idProduto);
+
+        while (rs.next()) {
+             produto = new Produto(rs.getInt("codigoProduto"), rs.getString("nome"),rs.getBoolean("controladoPorLote"), rs.getDouble("quantidadeMinima"),rs.getDouble("preco"), ControladorUnidadeMedida.selecionarUnidadesMedida(rs.getInt("unidadeMedida_idunidadeMedida")));
+            
+        }
+
+        return produto;
+
+    }
+    
+    
+    /**
      * Executa o método insert da classe CRUD, passando tabela produto e os valores necessários para, inserir um produto na base de dados.
      * É necessário passar por parâmetro um produto.
      * @param produto

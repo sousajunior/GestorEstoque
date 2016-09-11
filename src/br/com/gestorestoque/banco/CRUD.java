@@ -93,6 +93,18 @@ public class CRUD {
        return executeSelect(sql);
     }
     
+    
+    /**
+     * Monta um script para selecionar todos os registros da tabela passada por parâmetro, de acordo com os filtros passados n parametro where.
+     * @param tabela
+     * @return
+     * @throws SQLException 
+     */
+    public static ResultSet   select(String tabela, String where)throws SQLException{      
+       String sql = "SELECT * FROM " +tabela+" "+where; 
+       return executeSelect(sql);
+    }
+    
     /**
      * Monta um script para selecionar os registros da tabela passada por parâmetro, de acordo com o id, que também é passado por parâmetro.
      * @param tabela
