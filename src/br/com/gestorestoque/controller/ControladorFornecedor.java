@@ -18,6 +18,7 @@ import java.util.List;
  */
 
 public class ControladorFornecedor {
+   
     /**
      * @return List < Fornecedor > fornecedores 
      * @throws SQLException 
@@ -31,6 +32,23 @@ public class ControladorFornecedor {
             fornecedores.add(fornecedor);
         }
        return fornecedores;
+    }
+    
+    /**
+     * Seleciona fornecedor por código.
+     * @param idFornecedor 
+     * @return fornecedor Fornecedor
+     * @throws SQLException 
+     */
+    public static Fornecedor selecionarFornecedorPorCodigo(String idFornecedor)throws SQLException
+    {
+        Fornecedor fornecedor = new Fornecedor();
+        ResultSet rs = CRUD.select("fornecedor","where idFornecedor = "+idFornecedor);
+        while (rs.next()) {
+            fornecedor = new Fornecedor(rs.getInt("idfornecedor"), rs.getString("nome"),rs.getString("cpf"),rs.getString("cnpj"));
+            
+        }
+       return fornecedor;
     }
     
     public static void inserirFornecedor(Fornecedor fornecedor) throws SQLException{
