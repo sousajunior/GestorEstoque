@@ -13,6 +13,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Produto"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiProdutoActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiUnidadeMedida">
               <Properties>
@@ -36,19 +39,30 @@
             <Property name="text" type="java.lang.String" value="Estoque"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiEntrada_Saida">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiEntrada">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Entrada/Saida"/>
+                <Property name="text" type="java.lang.String" value="Entrada"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiEntradaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiSaida">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Saida"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiSaidaActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiInventario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Invent&#xe1;rio"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiSaldo">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiSaldo_Estoque">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Saldo"/>
+                <Property name="text" type="java.lang.String" value="Saldos em Estoque"/>
               </Properties>
             </MenuItem>
           </SubComponents>

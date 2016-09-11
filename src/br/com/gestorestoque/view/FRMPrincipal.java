@@ -48,9 +48,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiArmazem = new javax.swing.JMenuItem();
         jmiFornecedor = new javax.swing.JMenuItem();
         jmMovimentacao = new javax.swing.JMenu();
-        jmiEntrada_Saida = new javax.swing.JMenuItem();
+        jmiEntrada = new javax.swing.JMenuItem();
+        jmiSaida = new javax.swing.JMenuItem();
         jmiInventario = new javax.swing.JMenuItem();
-        jmiSaldo = new javax.swing.JMenuItem();
+        jmiSaldo_Estoque = new javax.swing.JMenuItem();
         jmSistema = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jmiWindows = new javax.swing.JMenuItem();
@@ -77,6 +78,11 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmCadastros.setText("Cadastros");
 
         jmiProduto.setText("Produto");
+        jmiProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiProdutoActionPerformed(evt);
+            }
+        });
         jmCadastros.add(jmiProduto);
 
         jmiUnidadeMedida.setText("Unidade de Medida");
@@ -92,14 +98,27 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmMovimentacao.setText("Estoque");
 
-        jmiEntrada_Saida.setText("Entrada/Saida");
-        jmMovimentacao.add(jmiEntrada_Saida);
+        jmiEntrada.setText("Entrada");
+        jmiEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEntradaActionPerformed(evt);
+            }
+        });
+        jmMovimentacao.add(jmiEntrada);
+
+        jmiSaida.setText("Saida");
+        jmiSaida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSaidaActionPerformed(evt);
+            }
+        });
+        jmMovimentacao.add(jmiSaida);
 
         jmiInventario.setText("Inventário");
         jmMovimentacao.add(jmiInventario);
 
-        jmiSaldo.setText("Saldo");
-        jmMovimentacao.add(jmiSaldo);
+        jmiSaldo_Estoque.setText("Saldos em Estoque");
+        jmMovimentacao.add(jmiSaldo_Estoque);
 
         jMenuBar1.add(jmMovimentacao);
 
@@ -143,10 +162,36 @@ public class FRMPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jmiSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiSaidaActionPerformed
+
+    private void jmiProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiProdutoActionPerformed
+
+    private void jmiEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiEntradaActionPerformed
+
+    public void menuMovimentacaoEntradaClicado(){
+        new FRMCadastroEntrada(this, true).setVisible(true);
+    }
+    
+    private void menuMovimentacaoSaidaClicado() {
+        new FRMCadastroSaida(this, true).setVisible(true);
+    }
+
+    private void menuCadastroInventarioClicado() {
+        new FRMCadastroInventario(this, true).setVisible(true);
+    }
+
+    private void menuRelatorioSaldoEstoqueClicado() {
+        new FRMRelatorioSaldoEstoque(this, true).setVisible(true);
+    }
+    
     public void menuCadastroProdutoClicado() {
-
         new FRMCadastroProduto(this, true).setVisible(true);
-
     }
 
     public void menuCadastroUnidadeMediadaClicado() {
@@ -177,6 +222,22 @@ public class FRMPrincipal extends javax.swing.JFrame {
             menuCadastroFornecedorClicado();
         });
 
+        jmiEntrada.addActionListener((e) -> {
+            menuMovimentacaoEntradaClicado();
+        });
+        
+        jmiSaida.addActionListener((e) -> {
+            menuMovimentacaoSaidaClicado();
+        });
+        
+        jmiInventario.addActionListener((e) -> {
+            menuCadastroInventarioClicado();
+        });
+        
+        jmiSaldo_Estoque.addActionListener((e) -> {
+            menuRelatorioSaldoEstoqueClicado();
+        });
+        
         //=====================================
         //Itens de menu da aparência do sistema
         //=====================================
@@ -315,7 +376,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jmMovimentacao;
     private javax.swing.JMenu jmSistema;
     private javax.swing.JMenuItem jmiArmazem;
-    private javax.swing.JMenuItem jmiEntrada_Saida;
+    private javax.swing.JMenuItem jmiEntrada;
     private javax.swing.JMenuItem jmiFornecedor;
     private javax.swing.JMenuItem jmiInventario;
     private javax.swing.JMenuItem jmiLiquid;
@@ -324,7 +385,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiNapkin;
     private javax.swing.JMenuItem jmiNimbus;
     private javax.swing.JMenuItem jmiProduto;
-    private javax.swing.JMenuItem jmiSaldo;
+    private javax.swing.JMenuItem jmiSaida;
+    private javax.swing.JMenuItem jmiSaldo_Estoque;
     private javax.swing.JMenuItem jmiSynthetica;
     private javax.swing.JMenuItem jmiUnidadeMedida;
     private javax.swing.JMenuItem jmiWebLaf;

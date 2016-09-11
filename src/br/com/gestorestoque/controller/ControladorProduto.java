@@ -64,7 +64,7 @@ public class ControladorProduto {
      */
     public static void updateProdutoPorCodigo(Produto produto) throws SQLException{
         
-        CRUD.update(nomeTabela, "nome = '"+produto.getNome()+"', controloadoPorLote = "+produto.isControladoPorLote()+", quantidadeMinima = "+produto.getQuantidadeMinima()+", preco = "+produto.getPreco()+", unidadeMedida_idUnidadeMedida = "+produto.getUnidadeMedida().getCodigo(),"controladoPorLote",""+produto.getCodigo());
+        CRUD.update(nomeTabela, "nome = '"+produto.getNome()+"', controladoPorLote = "+produto.isControladoPorLote()+", quantidadeMinima = "+produto.getQuantidadeMinima()+", preco = "+produto.getPreco()+", unidadeMedida_idUnidadeMedida = "+produto.getUnidadeMedida().getCodigo(),"codigoProduto",""+produto.getCodigo());
         
     }
     

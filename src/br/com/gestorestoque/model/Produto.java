@@ -85,6 +85,36 @@ public class Produto {
     }
 
     
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @param controladoPorLote the controladoPorLote to set
+     */
+    public void setControladoPorLote(boolean controladoPorLote) {
+        this.controladoPorLote = controladoPorLote;
+    }
+
+    /**
+     * @param quantidadeMinima the quantidadeMinima to set
+     */
+    public void setQuantidadeMinima(double quantidadeMinima) {
+        this.quantidadeMinima = quantidadeMinima;
+    }
+
+    /**
+     * @param preco the preco to set
+     */
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    
     
     
 }

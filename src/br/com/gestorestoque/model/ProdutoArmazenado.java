@@ -1,4 +1,5 @@
 package br.com.gestorestoque.model;
+
 public class ProdutoArmazenado {
 
 	private String Lote;
