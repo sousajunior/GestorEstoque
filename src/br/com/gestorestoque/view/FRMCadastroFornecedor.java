@@ -7,8 +7,10 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorFornecedor;
 import br.com.gestorestoque.model.Fornecedor;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -45,9 +47,9 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     }
 
     /**
-     * Executa o método ControladorFornecedor.selecionarTodosFornecedores()
-     * da classe ControladorFornecedor. Este método retorna uma lista com
-     * todos fornecedores cadastrados na base de dados.
+     * Executa o método ControladorFornecedor.selecionarTodosFornecedores() da
+     * classe ControladorFornecedor. Este método retorna uma lista com todos
+     * fornecedores cadastrados na base de dados.
      *
      * @return
      */
@@ -113,19 +115,17 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
             }
 
             Fornecedor fornecedor = fornecedores.get(rowIndex);
-            
-            switch(columnIndex)
-            {
+
+            switch (columnIndex) {
                 case 0:
                     return fornecedor.getIdFornecedor();
                 case 1:
                     return fornecedor.getNome();
                 case 2:
                     return fornecedor.getCpf();
-                case 3: 
+                case 3:
                     return fornecedor.getCnpj();
             }
-           
 
             return null;
         }
@@ -139,15 +139,14 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
          */
         @Override
         public String getColumnName(int column) {
-            switch(column)
-            {
+            switch (column) {
                 case 0:
                     return "ID";
                 case 1:
                     return "Nome";
                 case 2:
                     return "CPF";
-                case 3: 
+                case 3:
                     return "CNPJ";
             }
 
@@ -225,12 +224,13 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
-
+        
     }
-
-    /**
-     * Atualiza as linhas da tabela de fornecedores com todos os fornecedores cadastrados na base.
-     */
+    
+        /**
+         * Atualiza as linhas da tabela de fornecedores com todos os
+         * fornecedores cadastrados na base.
+         */
     private void atualizaFornecedor() {
         modeloTabelaFornecedor = new FornecedorTableModel(getFornecedores());
         jtFornecedor.setModel(modeloTabelaFornecedor);
@@ -249,16 +249,16 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     }
 
     /**
-     * Método procura um fornecedor na base de dados. É necessário
-     * informar o id por parâmetro.
+     * Método procura um fornecedor na base de dados. É necessário informar o id
+     * por parâmetro.
      *
      * @param id int
      * @return
      */
     private Fornecedor procurarFornecedorNaLista(int id) {
 
-        for (Fornecedor fornecedor: getFornecedores()) {
-            if (fornecedor.getIdFornecedor() == id){
+        for (Fornecedor fornecedor : getFornecedores()) {
+            if (fornecedor.getIdFornecedor() == id) {
                 return fornecedor;
             }
         }
@@ -283,7 +283,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private void btnExcluirClicado() {
 
         try {
-            if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")) )) {
+            if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")))) {
 
                 ControladorFornecedor.deleteFornececor(fornecedorAlterarExcluir);
                 atualizaFornecedor();
@@ -305,16 +305,16 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private void btnSalvarFornecedor() {
 
         try {
-            if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")) )) {
+            if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")))) {
                 if (fornecedorAlterarExcluir == null) {
 
-                    Fornecedor fornecedor = new Fornecedor(this.jtfNome.getText(), this.jfCPF.getText(),this.jfCNPJ.getText());
-
+                    Fornecedor fornecedor = new Fornecedor(this.jtfNome.getText(), this.jfCPF.getText(), this.jfCNPJ.getText());
                     ControladorFornecedor.inserirFornecedor(fornecedor);
+                    btnLimparClicado();
 
                 } else {
 
-                    ControladorFornecedor.updateFornecedorPorId("nome = '"+ fornecedorAlterarExcluir.getNome()+"', cpf = '"+ this.jfCPF.getText()+"', cnpj= '"+fornecedorAlterarExcluir.getCnpj()+"'", Integer.toString(fornecedorAlterarExcluir.getIdFornecedor()));
+                    ControladorFornecedor.updateFornecedorPorId("nome = '" + fornecedorAlterarExcluir.getNome() + "', cpf = '" + this.jfCPF.getText() + "', cnpj= '" + fornecedorAlterarExcluir.getCnpj() + "'", Integer.toString(fornecedorAlterarExcluir.getIdFornecedor()));
                 }
                 atualizaFornecedor();
             } else {
@@ -323,13 +323,12 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
 
         } catch (MySQLIntegrityConstraintViolationException ex) {
 
-            JOptionPane.showMessageDialog(null, "O fornecedor já está cadastrado", "Atenção!", 2);
+            JOptionPane.showMessageDialog(null, "O CPF ou CNPJ já existem na base de dados !", "Atenção!", 2);
+            Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        btnLimparClicado();
 
     }
 

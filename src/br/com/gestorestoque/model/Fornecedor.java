@@ -3,7 +3,7 @@ package br.com.gestorestoque.model;
 public class Fornecedor {
 
     private int idFornecedor;
-    private String nome, cnpj, cpf;
+    private String nome, cnpj="", cpf="";
 
     public Fornecedor() {
     }
@@ -11,14 +11,14 @@ public class Fornecedor {
     public Fornecedor(int idFornecedor, String nome, String cpf, String cnpj) {
         this.idFornecedor = idFornecedor;
         this.nome = nome;
-        this.cnpj = cnpj = "";
-        this.cpf = cpf = "";
+        this.cnpj = cnpj;
+        this.cpf = cpf;
     }
     
     public Fornecedor(String nome, String cpf, String cnpj) {
         this.nome = nome;
-        this.cnpj = cnpj = "";
-        this.cpf = cpf = "";
+        this.cnpj = cnpj;
+        this.cpf = cpf;
     }
 
     public int getIdFornecedor() {
