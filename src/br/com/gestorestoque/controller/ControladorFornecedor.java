@@ -45,7 +45,7 @@ public class ControladorFornecedor {
     
     public static void updateFornecedorPorId(String valores,String valorWhere) throws SQLException{
         
-        CRUD.update("fornecedor",valores,"idproduto",valorWhere);
+        CRUD.update("fornecedor",valores,"idfornecedor",valorWhere);
         
     }
     
