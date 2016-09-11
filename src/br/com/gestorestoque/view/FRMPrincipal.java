@@ -201,7 +201,11 @@ public class FRMPrincipal extends javax.swing.JFrame {
     public void menuCadastroArmazemClicado() {
         new FRMCadastroArmazem(this, true).setVisible(true);
     }
-
+    
+    private void menuCadastroFornecedorClicado() {
+        new FRMCadastroFornecedor(this, true).setVisible(true);
+    }
+    
     public void prepararComponentes() {
 
         jmiProduto.addActionListener((e) -> {
@@ -213,6 +217,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
         });
         jmiArmazem.addActionListener((e) -> {
             menuCadastroArmazemClicado();
+        });
+        jmiFornecedor.addActionListener((e) -> {
+            menuCadastroFornecedorClicado();
         });
 
         jmiEntrada.addActionListener((e) -> {
@@ -387,4 +394,5 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiWindowsClassic;
     // End of variables declaration//GEN-END:variables
 
+    
 }
