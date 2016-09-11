@@ -27,21 +27,163 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jpBaixo = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jpPesquisa = new javax.swing.JPanel();
+        jlbLote = new javax.swing.JLabel();
+        jtfLote = new javax.swing.JTextField();
+        jlbQuantidade = new javax.swing.JLabel();
+        jtfQuantidade = new javax.swing.JTextField();
+        Produto = new javax.swing.JLabel();
+        jtfProduto = new javax.swing.JTextField();
+        jlbNotaFiscal = new javax.swing.JLabel();
+        jtfNotaFiscal = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jtfFornecedor = new javax.swing.JTextField();
+        jbtLimparCamposPesquisa = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        pack();
+        jpBaixo.setLayout(new java.awt.GridBagLayout());
+
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 500));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 350));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setToolTipText("Tabela de saldo dos produtos");
+        jTable1.setMaximumSize(new java.awt.Dimension(300, 200));
+        jTable1.setMinimumSize(new java.awt.Dimension(300, 200));
+        jTable1.setPreferredSize(new java.awt.Dimension(300, 200));
+        jScrollPane1.setViewportView(jTable1);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(22, 11, 15, 11);
+        jpBaixo.add(jScrollPane1, gridBagConstraints);
+
+        getContentPane().add(jpBaixo, java.awt.BorderLayout.PAGE_END);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jpPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
+        java.awt.GridBagLayout jpPesquisaLayout = new java.awt.GridBagLayout();
+        jpPesquisaLayout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jpPesquisaLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jpPesquisa.setLayout(jpPesquisaLayout);
+
+        jlbLote.setText("Lote");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        jpPesquisa.add(jlbLote, gridBagConstraints);
+
+        jtfLote.setToolTipText("Informe um lote para a pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfLote, gridBagConstraints);
+
+        jlbQuantidade.setText("Quantidade");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        jpPesquisa.add(jlbQuantidade, gridBagConstraints);
+
+        jtfQuantidade.setToolTipText("Informe a quantidade para a pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfQuantidade, gridBagConstraints);
+
+        Produto.setText("Produto");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 2;
+        jpPesquisa.add(Produto, gridBagConstraints);
+
+        jtfProduto.setToolTipText("Informe a descrição de um produto para a pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 25;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfProduto, gridBagConstraints);
+
+        jlbNotaFiscal.setText("Nota Fiscal");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 6;
+        jpPesquisa.add(jlbNotaFiscal, gridBagConstraints);
+
+        jtfNotaFiscal.setToolTipText("Informe uma nota fiscal para a pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfNotaFiscal, gridBagConstraints);
+
+        jLabel5.setText("Fornecedor");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 42;
+        gridBagConstraints.gridy = 2;
+        jpPesquisa.add(jLabel5, gridBagConstraints);
+
+        jtfFornecedor.setToolTipText("Informe um fornecedor para a pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 44;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfFornecedor, gridBagConstraints);
+
+        jbtLimparCamposPesquisa.setText("Limpar");
+        jbtLimparCamposPesquisa.setToolTipText("Limpar campos de pesquisa");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 60;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
+        jpPesquisa.add(jbtLimparCamposPesquisa, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 4, 21, 4);
+        jPanel1.add(jpPesquisa, gridBagConstraints);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        setSize(new java.awt.Dimension(752, 619));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -88,5 +230,21 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Produto;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbtLimparCamposPesquisa;
+    private javax.swing.JLabel jlbLote;
+    private javax.swing.JLabel jlbNotaFiscal;
+    private javax.swing.JLabel jlbQuantidade;
+    private javax.swing.JPanel jpBaixo;
+    private javax.swing.JPanel jpPesquisa;
+    private javax.swing.JTextField jtfFornecedor;
+    private javax.swing.JTextField jtfLote;
+    private javax.swing.JTextField jtfNotaFiscal;
+    private javax.swing.JTextField jtfProduto;
+    private javax.swing.JTextField jtfQuantidade;
     // End of variables declaration//GEN-END:variables
 }
