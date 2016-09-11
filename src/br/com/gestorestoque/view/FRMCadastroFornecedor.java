@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -224,13 +225,13 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
-        
+       
     }
-    
-        /**
-         * Atualiza as linhas da tabela de fornecedores com todos os
-         * fornecedores cadastrados na base.
-         */
+
+    /**
+     * Atualiza as linhas da tabela de fornecedores com todos os fornecedores
+     * cadastrados na base.
+     */
     private void atualizaFornecedor() {
         modeloTabelaFornecedor = new FornecedorTableModel(getFornecedores());
         jtFornecedor.setModel(modeloTabelaFornecedor);
@@ -272,7 +273,9 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private void btnLimparClicado() {
         this.jtfNome.setText("");
         this.jfCPF.setText("");
+        this.jfCPF.setValue(null);
         this.jfCNPJ.setText("");
+        this.jfCNPJ.setValue(null);
         fornecedorAlterarExcluir = null;
 
     }
