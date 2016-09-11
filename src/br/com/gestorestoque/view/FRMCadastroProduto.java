@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -72,6 +74,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
         public ProdutoTableModel(List<Produto> produtos) {
             this.produtos = produtos;
+
         }
 
         public final void esconderCodigo() {
@@ -95,7 +98,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
          */
         @Override
         public int getColumnCount() {
-            return 5;
+            return 6;
         }
 
         /**
@@ -135,11 +138,16 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
             if (columnIndex == 3) {
 
-                return produto.getQuantidadeMinima();
+                return produto.getPreco();
 
             }
 
             if (columnIndex == 4) {
+
+                return produto.getQuantidadeMinima();
+
+            }
+            if (columnIndex == 5) {
 
                 return produto.getUnidadeMedida().getNome();
 
@@ -168,17 +176,21 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             }
 
             if (column == 2) {
-
                 return "Controlado por Lote";
             }
 
             if (column == 3) {
 
-                return "Quantidade Mínima";
+                return "Preço";
 
             }
 
             if (column == 4) {
+
+                return "Quantidade Mínima";
+            }
+
+            if (column == 5) {
 
                 return "Unidade de Medida";
             }
@@ -197,9 +209,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         //Preparar Jtable de produtos
         atualizarTabelaProdutos();
 
-        jtProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        
-
+        //jtProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jtProdutos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -266,14 +276,58 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 }
         );
 
+        //jdialogProduto
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(verificarComponentesPreenchidos()){
+                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)){
+                        dispose();
+                    }
+                }else{
+                    dispose();
+                }
+            }
+            
+            
+            
+        });
+
         preencheComboUnidadeMedida();
     }
 
-    private void itemComboSelecionado() {
+    private boolean verificarComponentesPreenchidos(){
         
+        
+        
+        if(!jtfNome.getText().equalsIgnoreCase("")){
+            return true;
+        }
+        
+        if(!jtfPreco.getText().equalsIgnoreCase("")){
+            return true;
+        }
+        
+        if(!jtfQtdMinima.getText().equalsIgnoreCase("")){
+            return true;
+        }
+        
+        if(jcbControladoPorLote.isSelected()){
+            return true;
+        }
+        
+        if(!(jcbUnidadeMedida.getSelectedIndex() == 0)){
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private void itemComboSelecionado() {
+
         for (UnidadeMedida unidadeMedida : unidadesMedida) {
-            
-            if (unidadeMedida.getAbreviacao().equals(this.jcbUnidadeMedida.getSelectedItem().toString())) {
+
+            if (unidadeMedida.getNome().equals(this.jcbUnidadeMedida.getSelectedItem().toString())) {
                 unidadeMedidaSelecionada = unidadeMedida;
             }
         }
@@ -308,7 +362,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private void tabelaProdutoClicada() {
         this.produtoAlterarExcluir = new Produto();
         this.produtoAlterarExcluir = procurarProdutoNaLista(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 0)));
-        
+
         jtfNome.setText(produtoAlterarExcluir.getNome());
 
         if (produtoAlterarExcluir.isControladoPorLote()) {
@@ -322,7 +376,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jtfQtdMinima.setText(Double.toString(produtoAlterarExcluir.getQuantidadeMinima()));
         jtfPreco.setText(Double.toString(produtoAlterarExcluir.getPreco()));
         jcbUnidadeMedida.setSelectedItem(produtoAlterarExcluir.getUnidadeMedida().getNome());
-        
+
     }
 
     /**
@@ -344,15 +398,12 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private void btnExcluirClicado() {
 
         try {
+
             if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfPreco.getText().equalsIgnoreCase("")) {
-
-                ControladorProduto.deletarProduto(new Produto(this.jtfNome.getText(),
-                        jcbControladoPorLote.isSelected(),
-                        Double.parseDouble(this.jtfQtdMinima.getText()),
-                        Double.parseDouble(this.jtfPreco.getText()),
-                        unidadeMedidaSelecionada));
-                atualizarTabelaProdutos();
-
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
+                    ControladorProduto.deletarProduto(produtoAlterarExcluir);
+                    atualizarTabelaProdutos();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um produto para realizar a exclusão!", "Atenção!", 2);
             }
@@ -370,7 +421,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private void btnSalvarProdutoClicado() {
 
         try {
-            if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfPreco.getText().equalsIgnoreCase("")) {
+
+            if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfPreco.getText().equalsIgnoreCase("") && !(this.jcbUnidadeMedida.getSelectedIndex() == 0)) {
                 if (produtoAlterarExcluir == null) {
 
                     //produto = procurarProdutoNaLista(produto.getDescricao());
@@ -382,11 +434,17 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
                 } else {
 
-                   ControladorProduto.updateProdutoPorCodigo(produtoAlterarExcluir);
+                    produtoAlterarExcluir.setControladoPorLote(this.jcbControladoPorLote.isSelected());
+                    produtoAlterarExcluir.setNome(this.jtfNome.getText());
+                    produtoAlterarExcluir.setPreco(Double.parseDouble(this.jtfPreco.getText()));
+                    produtoAlterarExcluir.setQuantidadeMinima(Double.parseDouble(this.jtfQtdMinima.getText()));
+                    produtoAlterarExcluir.setUnidadeMedida(unidadeMedidaSelecionada);
+
+                    ControladorProduto.updateProdutoPorCodigo(produtoAlterarExcluir);
                 }
                 atualizarTabelaProdutos();
             } else {
-                JOptionPane.showMessageDialog(null, "O armazém deve ter uma descrição!", "Atenção!", 2);
+                JOptionPane.showMessageDialog(null, "O produto deve ter uma descrição, preço e unidade de medida especificados!", "Atenção!", 2);
             }
 
         } catch (SQLException ex) {
@@ -444,7 +502,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jbtnExcluir = new javax.swing.JButton();
         jcbControladoPorLote = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro/Edição de Produtos");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(584, 443));
@@ -455,41 +513,43 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
         jtProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jtProdutos.setToolTipText("Tabela de produtos");
+        jtProdutos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jtProdutos);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -512,6 +572,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlNome, gridBagConstraints);
+
+        jtfNome.setToolTipText("Informe o nome/descrição do produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -528,6 +590,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         jPanel1.add(jlQtdMinima, gridBagConstraints);
+
+        jtfQtdMinima.setToolTipText("Informe a quantidade mínima");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -544,6 +608,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlPreco, gridBagConstraints);
+
+        jtfPreco.setToolTipText("Informe o preço do produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -561,7 +627,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel1.add(jlUnidadeMedida, gridBagConstraints);
 
         jcbUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-        jcbUnidadeMedida.setToolTipText("");
+        jcbUnidadeMedida.setToolTipText("Selecione uma unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 12;
@@ -572,29 +638,34 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel1.add(jcbUnidadeMedida, gridBagConstraints);
 
         jbtnSalvar.setText("Salvar");
+        jbtnSalvar.setToolTipText("Salvar/Atualizar produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 3;
         jPanel1.add(jbtnSalvar, gridBagConstraints);
 
         jbtnLimpar.setText("Limpar");
+        jbtnLimpar.setToolTipText("Novo produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jbtnLimpar, gridBagConstraints);
 
         jbtnExcluir.setText("Excluir");
+        jbtnExcluir.setToolTipText("Excluir produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 18;
         jPanel1.add(jbtnExcluir, gridBagConstraints);
 
         jcbControladoPorLote.setText("Controlado por lote");
+        jcbControladoPorLote.setToolTipText("Produto controlado por lote S/N");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 5;
         jPanel1.add(jcbControladoPorLote, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
