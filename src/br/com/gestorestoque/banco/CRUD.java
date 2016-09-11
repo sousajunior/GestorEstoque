@@ -116,7 +116,7 @@ public class CRUD {
      * @return
      * @throws SQLException 
      */
-    public static ResultSet   select(String tabela, String where)throws SQLException{      
+    public static ResultSet  select(String tabela, String where)throws SQLException{      
        String sql = "SELECT * FROM " +tabela+" "+where; 
        return executeSelect(sql);
     }
@@ -129,7 +129,7 @@ public class CRUD {
      * @return
      * @throws SQLException 
      */
-    public static ResultSet   select(String tabela,String coluna,int id)throws SQLException{      
+    public static ResultSet  select(String tabela,String coluna,int id)throws SQLException{      
        String sql = "SELECT * FROM " +tabela+ " where "+coluna+" = "+id; 
        return executeSelect(sql);
     }
