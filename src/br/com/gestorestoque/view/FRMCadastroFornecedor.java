@@ -15,6 +15,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
@@ -162,7 +164,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
      */
     public void prepararComponentes() {
 
-        //Preparar Jtable de unidades de medida
+        //Preparar Jtable fornecedores
         atualizaFornecedor();
 
         jtFornecedor.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -225,7 +227,47 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
-       
+        jfCPF.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+                if (jfCPF.getText().equalsIgnoreCase("   .   .   -  ")) {
+                    jfCPF.setValue(null);
+                }
+            }
+        });
+
+        jfCNPJ.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+                if (jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")) {
+                    jfCNPJ.setValue(null);
+                }
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (verificarComponentesPreenchidos()) {
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)) {
+                        dispose();
+                    }
+
+                } else {
+                    dispose();
+                }
+            }
+        });
+    }
+
+    public boolean verificarComponentesPreenchidos() {
+        if (!this.jtfNome.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+        if (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") && (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  "))) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -244,9 +286,16 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private void tabelaFornecedorClicada() {
         this.fornecedorAlterarExcluir = new Fornecedor();
         this.fornecedorAlterarExcluir = procurarFornecedorNaLista(Integer.parseInt(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 0).toString()));
-        jtfNome.setText(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 1).toString());
-        jfCPF.setText(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 2).toString());
-        jfCNPJ.setText(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 3).toString());
+        jtfNome.setText(fornecedorAlterarExcluir.getNome());
+        jfCPF.setText(fornecedorAlterarExcluir.getCpf());
+        jfCNPJ.setText(fornecedorAlterarExcluir.getCnpj());
+        try {
+            jfCPF.commitEdit();
+            jfCNPJ.commitEdit();
+        } catch (ParseException ex) {
+            Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -288,8 +337,10 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         try {
             if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")))) {
 
-                ControladorFornecedor.deleteFornececor(fornecedorAlterarExcluir);
-                atualizaFornecedor();
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
+                    ControladorFornecedor.deleteFornececor(fornecedorAlterarExcluir);
+                    atualizaFornecedor();
+                }
 
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um fornecedor para realizar a exclusão!", "Atenção!", 2);
@@ -308,16 +359,27 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private void btnSalvarFornecedor() {
 
         try {
+            //valida campos
             if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")))) {
-                if (fornecedorAlterarExcluir == null) {
 
-                    Fornecedor fornecedor = new Fornecedor(this.jtfNome.getText(), this.jfCPF.getText(), this.jfCNPJ.getText());
+                Fornecedor fornecedor = new Fornecedor(this.jtfNome.getText(), this.jfCPF.getText(), this.jfCNPJ.getText());
+
+                if (fornecedor.getCpf().equalsIgnoreCase("   .   .   -  ")) {
+                    fornecedor.setCpf("null");
+                }
+                if (fornecedor.getCnpj().equalsIgnoreCase("  .   .   /    -  ")) {
+                    fornecedor.setCnpj("null");
+                }
+
+                //decide se vai fazer update ou insert
+                if (fornecedorAlterarExcluir == null) {
                     ControladorFornecedor.inserirFornecedor(fornecedor);
                     btnLimparClicado();
 
                 } else {
 
-                    ControladorFornecedor.updateFornecedorPorId("nome = '" + fornecedorAlterarExcluir.getNome() + "', cpf = '" + this.jfCPF.getText() + "', cnpj= '" + fornecedorAlterarExcluir.getCnpj() + "'", Integer.toString(fornecedorAlterarExcluir.getIdFornecedor()));
+                    ControladorFornecedor.updateFornecedorPorId("nome = '" + fornecedor.getNome() + "', cpf = '" + fornecedor.getCpf() + "', cnpj= '" + fornecedor.getCnpj() + "'", Integer.toString(fornecedorAlterarExcluir.getIdFornecedor()));
+                    btnLimparClicado();
                 }
                 atualizaFornecedor();
             } else {
