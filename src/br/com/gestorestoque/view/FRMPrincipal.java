@@ -62,7 +62,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiLiquid = new javax.swing.JMenuItem();
         jmiMetal = new javax.swing.JMenuItem();
         jmiSynthetica = new javax.swing.JMenuItem();
-        jmiNapkin = new javax.swing.JMenuItem();
         jmiWebLaf = new javax.swing.JMenuItem();
         jmiSobre = new javax.swing.JMenuItem();
 
@@ -142,9 +141,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmiSynthetica.setText("Synthetica");
         jMenu1.add(jmiSynthetica);
-
-        jmiNapkin.setText("Napkin");
-        jMenu1.add(jmiNapkin);
 
         jmiWebLaf.setText("WebLaf");
         jMenu1.add(jmiWebLaf);
@@ -298,24 +294,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
             }
         });
 
-        // Napkin
-        jmiNapkin.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("napkin.NapkinLookAndFeel", this);
-                
-                /*
-                One thing you can try is the following: 
-                - Don't set the look&feel yet. 
-                - Create your user interface. 
-                - Call setUndecorated(true) on the frame. 
-                - Set the look&feel. 
-                - Call SwingUtilities.updateComponentTreeUI for the frame. 
-                - If necessary, call setUndecorated(false) on the frame.
-                 */
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
+        
 
         // WebLaf
         jmiWebLaf.addActionListener((e) -> {
@@ -376,7 +355,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiLiquid;
     private javax.swing.JMenuItem jmiMetal;
     private javax.swing.JMenuItem jmiMotif;
-    private javax.swing.JMenuItem jmiNapkin;
     private javax.swing.JMenuItem jmiNimbus;
     private javax.swing.JMenuItem jmiProduto;
     private javax.swing.JMenuItem jmiSaida;

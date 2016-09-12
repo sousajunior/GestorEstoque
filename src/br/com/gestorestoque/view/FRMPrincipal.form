@@ -130,11 +130,6 @@
                     <Property name="text" type="java.lang.String" value="Synthetica"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiNapkin">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Napkin"/>
-                  </Properties>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmiWebLaf">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="WebLaf"/>
