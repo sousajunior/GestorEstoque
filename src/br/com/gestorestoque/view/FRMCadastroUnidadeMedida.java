@@ -7,7 +7,7 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorUnidadeMedida;
 import br.com.gestorestoque.model.UnidadeMedida;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;

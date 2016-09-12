@@ -17,12 +17,6 @@ public class GestorEstoque {
 
     public static void main(String args[]) throws SQLException {
         new SplashScreen();
-       /* ResultSet rs = CRUD.select("unidademedida");
-        while (rs.next()) {
-            System.out.println(rs.getString("idunidademedida"));
-            System.out.println(rs.getString("nome"));
-            System.out.println(rs.getString("abreviacao"));
-        }*/
     }
 
 }

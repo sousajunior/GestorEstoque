@@ -408,9 +408,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Selecione um produto para realizar a exclusão!", "Atenção!", 2);
             }
         } catch (SQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, "Houve um problema ao excluir este armazém!\nJá existem produtos armazenados neste armazém,\npara realizar a exclusão, \nremova todos os produtos deste armazém .", "Atenção!", 2);
+            JOptionPane.showMessageDialog(null, ex.getMessage(),"Erro ao excluir o produto", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Houve um problema ao excluir este armazém!\nErro: " + ex, "Erro!", 0);
+            JOptionPane.showMessageDialog(null, "Houve um problema ao excluir este produto!\nErro: " + ex, "Erro!", 0);
         }
         btnLimparClicado();
     }
@@ -447,7 +447,11 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "O produto deve ter uma descrição, preço e unidade de medida especificados!", "Atenção!", 2);
             }
 
-        } catch (SQLException ex) {
+        }catch(SQLIntegrityConstraintViolationException ex){
+            JOptionPane.showMessageDialog(null,"teste","erro",JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        catch (SQLException ex) {
             Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -260,10 +260,11 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         });
     }
 
-    public boolean verificarComponentesPreenchidos() {
+    private boolean verificarComponentesPreenchidos() {
         if (!this.jtfNome.getText().equalsIgnoreCase("")) {
             return true;
         }
+        
         if (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  "))) {
             return true;
         }
@@ -389,10 +390,9 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         } catch (MySQLIntegrityConstraintViolationException ex) {
 
             JOptionPane.showMessageDialog(null, "O CPF ou CNPJ já existem na base de dados !", "Atenção!", 2);
-            Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (SQLException ex) {
-            Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: "+ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }

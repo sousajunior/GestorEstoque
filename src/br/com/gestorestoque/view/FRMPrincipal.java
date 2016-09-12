@@ -9,6 +9,7 @@ import br.com.gestorestoque.util.FRMUtil;
 import com.alee.managers.notification.DisplayType;
 import com.alee.managers.notification.NotificationManager;
 import java.awt.Color;
+import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -78,11 +79,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmCadastros.setText("Cadastros");
 
         jmiProduto.setText("Produto");
-        jmiProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiProdutoActionPerformed(evt);
-            }
-        });
         jmCadastros.add(jmiProduto);
 
         jmiUnidadeMedida.setText("Unidade de Medida");
@@ -99,19 +95,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmMovimentacao.setText("Estoque");
 
         jmiEntrada.setText("Entrada");
-        jmiEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiEntradaActionPerformed(evt);
-            }
-        });
         jmMovimentacao.add(jmiEntrada);
 
         jmiSaida.setText("Saida");
-        jmiSaida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiSaidaActionPerformed(evt);
-            }
-        });
         jmMovimentacao.add(jmiSaida);
 
         jmiInventario.setText("Inventário");
@@ -161,18 +147,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jmiSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaidaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmiSaidaActionPerformed
-
-    private void jmiProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmiProdutoActionPerformed
-
-    private void jmiEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEntradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmiEntradaActionPerformed
 
     public void menuMovimentacaoEntradaClicado(){
         new FRMCadastroEntrada(this, true).setVisible(true);

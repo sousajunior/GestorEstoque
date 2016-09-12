@@ -159,7 +159,7 @@ public class CRUD {
        Connection con = Conexao.AbrirConexao();
        Statement st = con.createStatement();
        ResultSet rs = st.executeQuery(script);
-      // Conexao.FecharConexao();
+       //Conexao.FecharConexao();
        return rs;
   
     }
