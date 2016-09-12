@@ -33,9 +33,16 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     //Strings de pesquisa
     static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
+    static final String validacaoNumerica = "0123456789,.";
+    static final String validacaoNumericaInteiros = "0123456789";
     String textoLote = "";
     String textoProduto = "";
     String textoFornecedor = "";
+    String textoNotaFiscal = "";
+    String textoSaldo = "";
+    String textoPreco = "";
+    String textoArmazem = "";
+    String textoUnidadeMedida = "";
 
     /**
      * Creates new form FRMRelatorioSaldosEstoque
@@ -115,7 +122,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
          */
         @Override
         public int getColumnCount() {
-            return 8;
+            return 9;
         }
 
         /**
@@ -168,18 +175,24 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             }
 
             if (columnIndex == 6) {
-                
-                if(produtoArmazenado.getProduto().isControladoPorLote()){
-                return "S";
-                }else{
-                return "N";    
+
+                if (produtoArmazenado.getProduto().isControladoPorLote()) {
+                    return "S";
+                } else {
+                    return "N";
                 }
 
             }
-            
+
             if (columnIndex == 7) {
-                
+
                 return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
+
+            }
+
+            if (columnIndex == 8) {
+
+                return produtoArmazenado.getProduto().getPreco();
 
             }
 
@@ -228,10 +241,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                 return "Controlado por lote";
             }
-            
+
             if (column == 7) {
 
                 return "Unidade de medida";
+            }
+
+            if (column == 8) {
+
+                return "Preço";
             }
 
             return null;
@@ -247,68 +265,35 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         //Preparar Jtable de produtos
         atualizarTabelaProdutosArmazenados();
-//
-//        //jtProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//        jtProdutos.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                tabelaProdutoClicada();
-//            }
-//        });
-//
-//        jtProdutos.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                int posicaoAtual = jtProdutos.getSelectedRow();
-//
-//                if (e.getKeyCode() == KeyEvent.VK_UP) {
-//                    if (posicaoAtual >= 1) {
-//
-//                        jtProdutos.setRowSelectionInterval(posicaoAtual, posicaoAtual);
-//                        tabelaProdutoClicada();
-//                    }
-//                    if (posicaoAtual == 0) {
-//
-//                        jtProdutos.setRowSelectionInterval(posicaoAtual, posicaoAtual);
-//                        tabelaProdutoClicada();
-//                    }
-//
-//                }
-//                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//                    if (posicaoAtual < jtProdutos.getRowCount()) {
-//
-//                        jtProdutos.setRowSelectionInterval(posicaoAtual, posicaoAtual);
-//                        tabelaProdutoClicada();
-//
-//                    }
-//
-//                }
-//            }
-//        });
-//        });
-//
-//        //Preparar Botoes 
-//        //Salvar
-//        jbtnSalvar.addActionListener(
-//                (e) -> {
-//                    btnSalvarProdutoClicado();
-//                }
-//        );
-//
+
         //Limpar
         jbtLimparCamposPesquisa.addActionListener(
                 (e) -> {
                     btnLimparClicado();
                 }
         );
-//
-//        //excluir
-//        jbtnExcluir.addActionListener(
-//                (e) -> {
-//                    btnExcluirClicado();
-//                }
-//        );
-//
+
+        //entrada de produto
+        jbtEntradaProduto.addActionListener(
+                (e) -> {
+                    btnEntradaProdutoClicado();
+                }
+        );
+
+        //inventario
+        jbtnventario.addActionListener(
+                (e) -> {
+                    btnInventarioClicado();
+                }
+        );
+
+        //saida de produto
+        jbtSaidaProduto.addActionListener(
+                (e) -> {
+                    btnSaidaProdutoClicado();
+                }
+        );
+
         //combo de condição para lote
         jcbCondicaoLote.addActionListener(
                 (e) -> {
@@ -348,6 +333,20 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoArmazem.addActionListener(
                 (e) -> {
                     itemComboCondicaoArmazemSelecionado();
+                }
+        );
+
+        //combo de condição para unidade de medida
+        jcbCondicaoUnidadeMedida.addActionListener(
+                (e) -> {
+                    itemComboCondicaoUnidadeMedidaSelecionado();
+                }
+        );
+
+        //combo de condição para preco
+        jcbCondicaoPreco.addActionListener(
+                (e) -> {
+                    itemComboCondicaoPrecoSelecionado();
                 }
         );
 
@@ -424,27 +423,127 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         });
 
-//        });
-//
-//
-//        //jdialogProduto
-//        this.addWindowListener(new WindowAdapter() {
-//            @Override
-//            public void windowClosing(WindowEvent e) {
-//                if(verificarComponentesPreenchidos()){
-//                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)){
-//                        dispose();
-//                    }
-//                }else{
-//                    dispose();
-//                }
-//            }
-//            
-//            
-//            
-//        });
-//
-//        preencheComboUnidadeMedida();
+        //listener do campo de quantidade(saldo)
+        jtfSaldo.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoSaldo.length() > 0) {
+                        textoSaldo = "";
+                        atualizarTabelaProdutosArmazenados();
+                        jtfSaldo.setText("");
+
+                    }
+                }
+                if (validacaoNumerica.contains("" + e.getKeyChar())) {
+                    textoSaldo += "" + e.getKeyChar();
+                    System.out.println("Saldo:" + Double.parseDouble(textoSaldo));
+                    filtrar();
+                }
+
+            }
+
+        });
+
+        //listener do campo de notafiscal
+        jtfNotaFiscal.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoNotaFiscal.length() > 0) {
+                        textoNotaFiscal = "";
+                        atualizarTabelaProdutosArmazenados();
+                        jtfNotaFiscal.setText("");
+                    }
+                }
+                if (validacaoNumericaInteiros.contains("" + e.getKeyChar())) {
+                    textoNotaFiscal += "" + e.getKeyChar();
+
+                    filtrar();
+                }
+
+            }
+
+        });
+
+        //listener do campo de unidade de medida
+        jtfUnidadeMedida.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoUnidadeMedida.length() > 0) {
+                        textoUnidadeMedida = "";
+                        atualizarTabelaProdutosArmazenados();
+                        jtfUnidadeMedida.setText("");
+                    }
+                }
+                if (validacao.contains("" + e.getKeyChar())) {
+                    textoUnidadeMedida += "" + e.getKeyChar();
+                    textoUnidadeMedida = textoUnidadeMedida.toUpperCase();
+                    filtrar();
+                }
+
+            }
+
+        });
+
+        //listener do campo de armazem
+        jtfArmazem.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoArmazem.length() > 0) {
+                        textoArmazem = "";
+                        atualizarTabelaProdutosArmazenados();
+                        jtfArmazem.setText("");
+                    }
+                }
+                if (validacao.contains("" + e.getKeyChar())) {
+                    textoArmazem += "" + e.getKeyChar();
+                    textoArmazem = textoArmazem.toUpperCase();
+                    filtrar();
+                }
+
+            }
+
+        });
+
+        //listener do campo de preço
+        jtfPreco.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (textoPreco.length() > 0) {
+                        textoPreco = "";
+                        atualizarTabelaProdutosArmazenados();
+                        jtfPreco.setText("");
+                    }
+                }
+                if (validacaoNumerica.contains("" + e.getKeyChar())) {
+                    textoPreco += "" + e.getKeyChar();
+
+                    filtrar();
+                }
+
+            }
+
+        });
+
+        jcControladoPorLote.addActionListener((e) -> {
+            filtrar();
+        }
+        );
+
     }
 
     private void btnLimparClicado() {
@@ -459,6 +558,44 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         atualizarTabelaProdutosArmazenados();
         produtosArmazenadosPesquisa = new ArrayList<>();
+
+    }
+
+    private void btnInventarioClicado() {
+
+        new FRMCadastroInventario(null, true).setVisible(true);
+
+    }
+
+    private void btnEntradaProdutoClicado() {
+
+        new FRMCadastroEntrada(null, true).setVisible(true);
+    }
+
+    private void btnSaidaProdutoClicado() {
+
+        new FRMCadastroSaida(null, true).setVisible(true);
+    }
+
+    private void itemComboCondicaoPrecoSelecionado() {
+
+        if (this.jcbCondicaoPreco.getSelectedIndex() == 0) {
+            this.jtfPreco.setText("");
+            this.jtfPreco.setEnabled(false);
+        } else {
+            this.jtfPreco.setEnabled(true);
+        }
+
+    }
+
+    private void itemComboCondicaoUnidadeMedidaSelecionado() {
+
+        if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 0) {
+            this.jtfUnidadeMedida.setText("");
+            this.jtfUnidadeMedida.setEnabled(false);
+        } else {
+            this.jtfUnidadeMedida.setEnabled(true);
+        }
 
     }
 
@@ -693,6 +830,86 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             }
         }
 
+        //----Unidade de medida
+        //Filtro por unidade de medida
+        //Verificar se o combo de condição por unidade de medida não está ocm o traço selecionado
+        if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() > 0) {
+            //Verificar se o combo de condição por unidade de medida esta selecionando (Contém a expressão)
+            if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 1) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o unidade de medida da posição atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(textoUnidadeMedida)) {
+                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o lote atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(textoUnidadeMedida)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+
+                //quando o item (é igual a), e selecionado no combo de filtro por unidade de medida
+            } else if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 2) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(textoUnidadeMedida)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(textoUnidadeMedida)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
+        }
+
         //----Fornecedor
         //Filtro por fornecedor
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
@@ -773,6 +990,527 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             }
         }
 
+        //----NotaFiscal
+        //Filtro por NotaFiscal
+        //Verificar se o combo de condição por produto não está ocm o traço selecionado
+        if (this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0) {
+            //Verificar se o combo de condição por produto esta selecionando (Contém a expressão)
+            if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 1) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
+                        String nf = "" + produtosArmazenado.getNotaFiscal();
+                        if (nf.contains(textoNotaFiscal)) {
+                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o lote atual contem a expressão que o usuário digitou
+                        String nf = "" + produtosArmazenado.getNotaFiscal();
+                        if (nf.contains(textoNotaFiscal)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+
+                //quando o item (é igual a), e selecionado no combo de filtro por produto
+            } else if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 2) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        String nf = "" + produtosArmazenado.getNotaFiscal();
+                        if (nf.equalsIgnoreCase(textoNotaFiscal)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        String nf = "" + produtosArmazenado.getNotaFiscal();
+                        if (nf.equalsIgnoreCase(textoNotaFiscal)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
+        }
+
+        //----Saldo
+        //Filtro por Saldo
+        //Verificar se o combo de condição por produto não está ocm o traço selecionado
+        if (this.jcbCondicaoSaldo.getSelectedIndex() > 0) {
+            //Verificar se o combo de condição por produto esta selecionando (igual)
+            if (this.jcbCondicaoSaldo.getSelectedIndex() == 1) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o saldo atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+
+                //quando o item (maior), e selecionado no combo de filtro por produto
+            } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 2) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 3) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo) || produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo) || produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 4) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(textoSaldo)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(textoSaldo)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 5) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(textoSaldo)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(textoSaldo)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
+
+        }
+
+        //----preco
+        //Filtro por preco
+        //Verificar se o combo de condição por produto não está ocm o traço selecionado
+        if (this.jcbCondicaoPreco.getSelectedIndex() > 0) {
+            //Verificar se o combo de condição por produto esta selecionando (igual)
+            if (this.jcbCondicaoPreco.getSelectedIndex() == 1) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o saldo atual contem a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+
+                //quando o item (maior), e selecionado no combo de filtro por produto
+            } else if (this.jcbCondicaoPreco.getSelectedIndex() == 2) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoPreco.getSelectedIndex() == 3) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoPreco.getSelectedIndex() == 4) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(textoPreco)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(textoPreco)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            } else if (this.jcbCondicaoPreco.getSelectedIndex() == 5) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(textoPreco)) {
+                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                        }
+
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
+                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(textoPreco)) {
+                            //adiciona o item que encontrou na terceira lista
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                        }
+
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
+
+        }
+
+        //verifica se é controlado por lote
+        if (jcControladoPorLote.isSelected()) {
+            //Verificar se a lista de produto armazenado para pesquisa está vazia 
+            if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                //percorre a lista primária de produtos armazenados
+                for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                    if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                        //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                        produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                    }
+
+                }
+            } else {
+
+                //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                    //verifica se o lote atual contem a expressão que o usuário digitou
+                    if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                        //adiciona o item que encontrou na terceira lista
+                        produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                    }
+
+                }
+                //remove os itens da segunda lista
+                produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                //e atualiza com o que existe na terceira lista
+                produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+            }
+
+        } else //Verificar se a lista de produto armazenado para pesquisa está vazia 
+        if (produtosArmazenadosPesquisa.isEmpty()) {
+
+            //percorre a lista primária de produtos armazenados
+            for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
+                if (!produtosArmazenado.getProduto().isControladoPorLote()) {
+                    //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+                    produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                }
+
+            }
+        } else {
+
+            //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+            List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+            //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+            for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
+                //verifica se o lote atual contem a expressão que o usuário digitou
+                if (!produtosArmazenado.getProduto().isControladoPorLote()) {
+                    //adiciona o item que encontrou na terceira lista
+                    produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                }
+
+            }
+            //remove os itens da segunda lista
+            produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+            //e atualiza com o que existe na terceira lista
+            produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+        }
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaProdutosArmazenadosComPesquisa();
     }
@@ -832,9 +1570,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoArmazem = new javax.swing.JComboBox<>();
         jlArmazem = new javax.swing.JLabel();
         jtfSaldo = new javax.swing.JFormattedTextField();
+        jluniadeMedida = new javax.swing.JLabel();
+        jtfUnidadeMedida = new javax.swing.JTextField();
+        jcbCondicaoUnidadeMedida = new javax.swing.JComboBox<>();
+        jlPreco = new javax.swing.JLabel();
+        jtfPreco = new javax.swing.JTextField();
+        jcbCondicaoPreco = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jbtEntradaProduto = new javax.swing.JButton();
-        jtbInventario = new javax.swing.JButton();
+        jbtnventario = new javax.swing.JButton();
         jbtSaidaProduto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -845,8 +1589,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jpBaixo.setLayout(new java.awt.GridBagLayout());
 
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 300));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 300));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 250));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 250));
 
         jtProdutosArmazenados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -882,8 +1626,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jpPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
         java.awt.GridBagLayout jpPesquisaLayout = new java.awt.GridBagLayout();
-        jpPesquisaLayout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
-        jpPesquisaLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jpPesquisaLayout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jpPesquisaLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jpPesquisa.setLayout(jpPesquisaLayout);
 
         jlbLote.setText("Lote");
@@ -911,7 +1655,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         Produto.setText("Produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jpPesquisa.add(Produto, gridBagConstraints);
@@ -919,7 +1663,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jtfProduto.setToolTipText("Informe a descrição de um produto para a pesquisa");
         jtfProduto.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 27;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -927,7 +1671,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jlbNotaFiscal.setText("Nota Fiscal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jpPesquisa.add(jlbNotaFiscal, gridBagConstraints);
@@ -935,7 +1679,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jtfNotaFiscal.setToolTipText("Informe uma nota fiscal para a pesquisa");
         jtfNotaFiscal.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -943,7 +1687,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jLabel5.setText("Fornecedor");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jpPesquisa.add(jLabel5, gridBagConstraints);
@@ -951,7 +1695,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jtfFornecedor.setToolTipText("Informe um fornecedor para a pesquisa");
         jtfFornecedor.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -960,8 +1704,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jbtLimparCamposPesquisa.setText("Limpar");
         jbtLimparCamposPesquisa.setToolTipText("Limpar campos de pesquisa");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 68;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridx = 66;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jbtLimparCamposPesquisa, gridBagConstraints);
@@ -987,7 +1731,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoProduto.setToolTipText("Selecione um filtro para produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 27;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -996,7 +1740,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoNotaFiscal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoNotaFiscal.setToolTipText("Selecione um filtro para nota fiscal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridx = 22;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1005,7 +1749,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoFornecedor.setToolTipText("Selecione um filtro para fornecedor");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1014,15 +1758,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcControladoPorLote.setText("Controlado por lote");
         jcControladoPorLote.setToolTipText("Selecione filtro para produtos controlados por lote");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 42;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 22;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 7;
         jpPesquisa.add(jcControladoPorLote, gridBagConstraints);
 
         jtfArmazem.setToolTipText("Informe um filtro para armazem");
         jtfArmazem.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1031,7 +1775,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jcbCondicaoArmazem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoArmazem.setToolTipText("Selecione um filtro para armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1039,7 +1783,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jlArmazem.setText("Armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 52;
+        gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jpPesquisa.add(jlArmazem, gridBagConstraints);
@@ -1052,6 +1796,51 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jtfSaldo, gridBagConstraints);
+
+        jluniadeMedida.setText("Unidade de medida");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 38;
+        gridBagConstraints.gridy = 8;
+        jpPesquisa.add(jluniadeMedida, gridBagConstraints);
+
+        jtfUnidadeMedida.setToolTipText("Informe um filtro para abreviação de unidade de medida");
+        jtfUnidadeMedida.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 38;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfUnidadeMedida, gridBagConstraints);
+
+        jcbCondicaoUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 38;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jcbCondicaoUnidadeMedida, gridBagConstraints);
+
+        jlPreco.setText("Preço");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
+        jpPesquisa.add(jlPreco, gridBagConstraints);
+
+        jtfPreco.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jtfPreco, gridBagConstraints);
+
+        jcbCondicaoPreco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Igual a", "É maior", "É maior ou igual", "É menor", "É menor ou igual" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jpPesquisa.add(jcbCondicaoPreco, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1076,13 +1865,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
         jPanel2.add(jbtEntradaProduto, gridBagConstraints);
 
-        jtbInventario.setText("Inventário");
-        jtbInventario.setToolTipText("Ir para a tela de inventário");
+        jbtnventario.setText("Inventário");
+        jbtnventario.setToolTipText("Ir para a tela de inventário");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
-        jPanel2.add(jtbInventario, gridBagConstraints);
+        jPanel2.add(jbtnventario, gridBagConstraints);
 
         jbtSaidaProduto.setText("Saída de produto");
         jbtSaidaProduto.setToolTipText("Ir para tela de saída de produto");
@@ -1151,26 +1940,32 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private javax.swing.JButton jbtEntradaProduto;
     private javax.swing.JButton jbtLimparCamposPesquisa;
     private javax.swing.JButton jbtSaidaProduto;
+    private javax.swing.JButton jbtnventario;
     private javax.swing.JCheckBox jcControladoPorLote;
     private javax.swing.JComboBox<String> jcbCondicaoArmazem;
     private javax.swing.JComboBox<String> jcbCondicaoFornecedor;
     private javax.swing.JComboBox<String> jcbCondicaoLote;
     private javax.swing.JComboBox<String> jcbCondicaoNotaFiscal;
+    private javax.swing.JComboBox<String> jcbCondicaoPreco;
     private javax.swing.JComboBox<String> jcbCondicaoProduto;
     private javax.swing.JComboBox<String> jcbCondicaoSaldo;
+    private javax.swing.JComboBox<String> jcbCondicaoUnidadeMedida;
     private javax.swing.JLabel jlArmazem;
+    private javax.swing.JLabel jlPreco;
     private javax.swing.JLabel jlbLote;
     private javax.swing.JLabel jlbNotaFiscal;
     private javax.swing.JLabel jlbSaldo;
+    private javax.swing.JLabel jluniadeMedida;
     private javax.swing.JPanel jpBaixo;
     private javax.swing.JPanel jpPesquisa;
     private javax.swing.JTable jtProdutosArmazenados;
-    private javax.swing.JButton jtbInventario;
     private javax.swing.JTextField jtfArmazem;
     private javax.swing.JTextField jtfFornecedor;
     private javax.swing.JTextField jtfLote;
     private javax.swing.JTextField jtfNotaFiscal;
+    private javax.swing.JTextField jtfPreco;
     private javax.swing.JTextField jtfProduto;
     private javax.swing.JFormattedTextField jtfSaldo;
+    private javax.swing.JTextField jtfUnidadeMedida;
     // End of variables declaration//GEN-END:variables
 }
