@@ -67,7 +67,8 @@ public class SplashScreen extends JWindow {
                        }
                        sleep(30);
                     }
-                    if(conectado){                                                    
+                    if(conectado){
+                            SplashScreen.this.setAlwaysOnTop(false);
                             FRMPrincipal janelaPrincipal = new FRMPrincipal();
                             FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", janelaPrincipal);
                             janelaPrincipal.setAlwaysOnTop(true);
