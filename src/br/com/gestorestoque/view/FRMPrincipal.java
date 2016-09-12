@@ -190,7 +190,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         new FRMCadastroFornecedor(this, true).setVisible(true);
     }
     private void menuSobreClicado() {
-        new FRMSobre().setVisible(true);
+        new FRMSobre(this,true).setVisible(true);
     }
     
     public void prepararComponentes() {

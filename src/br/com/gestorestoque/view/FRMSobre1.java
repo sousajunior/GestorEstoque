@@ -15,16 +15,16 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 5981468
+ * @author SUPORTE
  */
-public class FRMSobre extends javax.swing.JDialog {
+public class FRMSobre1 extends javax.swing.JFrame {
 
     /**
      * Creates new form FRMSobre
      */
-    public FRMSobre(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public FRMSobre1() {
         initComponents();
+        this.setLocationRelativeTo(null);      
     }
 
     /**
@@ -44,9 +44,11 @@ public class FRMSobre extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         hiperLink = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Desenvolvido por:", 2, 0, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -96,19 +98,11 @@ public class FRMSobre extends javax.swing.JDialog {
         jPanel1.add(jPanel2, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jLabel5, java.awt.BorderLayout.PAGE_START);
 
-        setSize(new java.awt.Dimension(483, 301));
-        setLocationRelativeTo(null);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private static void open(URI uri) {
-    if (Desktop.isDesktopSupported()) {
-      try {
-        Desktop.getDesktop().browse(uri);
-      } catch (IOException e) { /* TODO: error handling */ }
-    } else { /* TODO: error handling */ }
-  }
-    
     private void hiperLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hiperLinkMouseClicked
         URI uri = null;
         try {
@@ -121,7 +115,7 @@ public class FRMSobre extends javax.swing.JDialog {
 
     private void hiperLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hiperLinkMouseEntered
         hiperLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        
     }//GEN-LAST:event_hiperLinkMouseEntered
 
     /**
@@ -141,30 +135,30 @@ public class FRMSobre extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRMSobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMSobre1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRMSobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMSobre1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRMSobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMSobre1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRMSobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMSobre1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMSobre dialog = new FRMSobre(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new FRMSobre1().setVisible(true);
             }
         });
     }
+    
+    private static void open(URI uri) {
+    if (Desktop.isDesktopSupported()) {
+      try {
+        Desktop.getDesktop().browse(uri);
+      } catch (IOException e) { /* TODO: error handling */ }
+    } else { /* TODO: error handling */ }
+  }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel hiperLink;
@@ -172,6 +166,7 @@ public class FRMSobre extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
