@@ -25,7 +25,7 @@ public class FRMUtil {
     public void setarIcone(JFrame frame, JDialog dialog) {
 
         // coloca uma figura na barra de título da janela  
-        URL url = getClass().getResource("/br/com/gestorestoque/view/imagens/icone.png");
+        URL url = getClass().getResource("/br/com/gestorestoque/view/imagens/iconeSistema.png");
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
         
         if (frame != null) {

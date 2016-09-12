@@ -11,21 +11,33 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiProduto">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/estoque-16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Produto"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiUnidadeMedida">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/medida.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Unidade de Medida"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiArmazem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/armazem.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Armaz&#xe9;m"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiFornecedor">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/fornecedor.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Fornecedor"/>
               </Properties>
             </MenuItem>
@@ -38,21 +50,33 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiEntrada">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/entrada-16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Entrada"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSaida">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/saida-16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Saida"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiInventario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/inventario-16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Invent&#xe1;rio"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSaldo_Estoque">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/estoque-16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Saldos em Estoque"/>
               </Properties>
             </MenuItem>
@@ -65,6 +89,9 @@
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/looknfeel.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Apar&#xea;ncia"/>
               </Properties>
               <SubComponents>

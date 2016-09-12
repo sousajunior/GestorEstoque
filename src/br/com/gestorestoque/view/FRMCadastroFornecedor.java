@@ -498,18 +498,21 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         jPanel1.add(jlCPF, gridBagConstraints);
 
+        jbtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/save_accept.png"))); // NOI18N
         jbtnSalvar.setText("Salvar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 14;
         jPanel1.add(jbtnSalvar, gridBagConstraints);
 
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/edit-clear.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 14;
         jPanel1.add(jbtnLimpar, gridBagConstraints);
 
+        jbtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/trashcan-delete2.png"))); // NOI18N
         jbtnExcluir.setText("Excluir");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;

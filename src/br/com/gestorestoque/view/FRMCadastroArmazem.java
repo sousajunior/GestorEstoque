@@ -416,6 +416,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jtfDescricao, gridBagConstraints);
 
+        jbtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/save_accept.png"))); // NOI18N
         jbtnSalvar.setText("Salvar");
         jbtnSalvar.setToolTipText("Salvar/Atualizar armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -424,6 +425,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 3;
         jPanel1.add(jbtnSalvar, gridBagConstraints);
 
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/edit-clear.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.setToolTipText("Novo armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -432,6 +434,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jbtnLimpar, gridBagConstraints);
 
+        jbtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/trashcan-delete2.png"))); // NOI18N
         jbtnExcluir.setText("Excluir");
         jbtnExcluir.setToolTipText("Excluir armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();

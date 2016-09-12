@@ -1583,9 +1583,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Saldos em estoque");
-        setMaximumSize(new java.awt.Dimension(800, 600));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 700));
+        setPreferredSize(new java.awt.Dimension(800, 700));
 
         jpBaixo.setLayout(new java.awt.GridBagLayout());
 
@@ -1701,6 +1700,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jtfFornecedor, gridBagConstraints);
 
+        jbtLimparCamposPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/edit-clear.png"))); // NOI18N
         jbtLimparCamposPesquisa.setText("Limpar");
         jbtLimparCamposPesquisa.setToolTipText("Limpar campos de pesquisa");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1852,11 +1852,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jPanel2.setMinimumSize(new java.awt.Dimension(794, 697));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {0, 12, 0, 12, 0};
         jPanel2Layout.rowHeights = new int[] {0};
         jPanel2.setLayout(jPanel2Layout);
 
+        jbtEntradaProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/entrada-32.png"))); // NOI18N
         jbtEntradaProduto.setText("Entrada de produto");
         jbtEntradaProduto.setToolTipText("Ir para tela de entrada de produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1865,6 +1867,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
         jPanel2.add(jbtEntradaProduto, gridBagConstraints);
 
+        jbtnventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/inventario-32.png"))); // NOI18N
         jbtnventario.setText("Inventário");
         jbtnventario.setToolTipText("Ir para a tela de inventário");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1873,6 +1876,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
         jPanel2.add(jbtnventario, gridBagConstraints);
 
+        jbtSaidaProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/saida-32.png"))); // NOI18N
         jbtSaidaProduto.setText("Saída de produto");
         jbtSaidaProduto.setToolTipText("Ir para tela de saída de produto");
         gridBagConstraints = new java.awt.GridBagConstraints();

@@ -78,15 +78,19 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmCadastros.setText("Cadastros");
 
+        jmiProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/estoque-16.png"))); // NOI18N
         jmiProduto.setText("Produto");
         jmCadastros.add(jmiProduto);
 
+        jmiUnidadeMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/medida.png"))); // NOI18N
         jmiUnidadeMedida.setText("Unidade de Medida");
         jmCadastros.add(jmiUnidadeMedida);
 
+        jmiArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/armazem.png"))); // NOI18N
         jmiArmazem.setText("Armazém");
         jmCadastros.add(jmiArmazem);
 
+        jmiFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/fornecedor.png"))); // NOI18N
         jmiFornecedor.setText("Fornecedor");
         jmCadastros.add(jmiFornecedor);
 
@@ -94,15 +98,19 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmMovimentacao.setText("Estoque");
 
+        jmiEntrada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/entrada-16.png"))); // NOI18N
         jmiEntrada.setText("Entrada");
         jmMovimentacao.add(jmiEntrada);
 
+        jmiSaida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/saida-16.png"))); // NOI18N
         jmiSaida.setText("Saida");
         jmMovimentacao.add(jmiSaida);
 
+        jmiInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/inventario-16.png"))); // NOI18N
         jmiInventario.setText("Inventário");
         jmMovimentacao.add(jmiInventario);
 
+        jmiSaldo_Estoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/estoque-16.png"))); // NOI18N
         jmiSaldo_Estoque.setText("Saldos em Estoque");
         jmMovimentacao.add(jmiSaldo_Estoque);
 
@@ -110,6 +118,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmSistema.setText("Sistema");
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/looknfeel.png"))); // NOI18N
         jMenu1.setText("Aparência");
 
         jmiWindows.setText("Windows");

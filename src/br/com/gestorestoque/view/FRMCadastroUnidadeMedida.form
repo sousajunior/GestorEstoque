@@ -135,6 +135,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jbtnSalvar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/save_accept.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Salvar/Atualizar unidade de medida"/>
               </Properties>
@@ -146,6 +149,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jbtnLimpar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/edit-clear.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Limpar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Nova unidade de medida"/>
               </Properties>
@@ -157,6 +163,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jbtnExcluir">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/trashcan-delete2.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Excluir"/>
                 <Property name="toolTipText" type="java.lang.String" value="Excluir unidade de medida"/>
               </Properties>
