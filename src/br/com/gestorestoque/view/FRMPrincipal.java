@@ -64,6 +64,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSynthetica = new javax.swing.JMenuItem();
         jmiNapkin = new javax.swing.JMenuItem();
         jmiWebLaf = new javax.swing.JMenuItem();
+        jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor de estoque - Início");
@@ -150,6 +151,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmSistema.add(jMenu1);
 
+        jmiSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/sobre.png"))); // NOI18N
+        jmiSobre.setText("Sobre");
+        jmSistema.add(jmiSobre);
+
         jMenuBar1.add(jmSistema);
 
         setJMenuBar(jMenuBar1);
@@ -188,6 +193,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private void menuCadastroFornecedorClicado() {
         new FRMCadastroFornecedor(this, true).setVisible(true);
     }
+    private void menuSobreClicado() {
+        new FRMSobre().setVisible(true);
+    }
     
     public void prepararComponentes() {
 
@@ -219,6 +227,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
         
         jmiSaldo_Estoque.addActionListener((e) -> {
             menuRelatorioSaldoEstoqueClicado();
+        });
+        jmiSobre.addActionListener((e) -> {
+            menuSobreClicado();
         });
         
         //=====================================
@@ -370,12 +381,15 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiProduto;
     private javax.swing.JMenuItem jmiSaida;
     private javax.swing.JMenuItem jmiSaldo_Estoque;
+    private javax.swing.JMenuItem jmiSobre;
     private javax.swing.JMenuItem jmiSynthetica;
     private javax.swing.JMenuItem jmiUnidadeMedida;
     private javax.swing.JMenuItem jmiWebLaf;
     private javax.swing.JMenuItem jmiWindows;
     private javax.swing.JMenuItem jmiWindowsClassic;
     // End of variables declaration//GEN-END:variables
+
+    
 
     
 }
