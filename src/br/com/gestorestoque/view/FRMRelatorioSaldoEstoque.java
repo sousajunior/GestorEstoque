@@ -563,7 +563,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     private void btnInventarioClicado() {
 
-        new FRMCadastroInventario(null, true).setVisible(true);
+        new FRMInventario(null, true).setVisible(true);
 
     }
 

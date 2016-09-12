@@ -157,7 +157,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     }
 
     private void menuCadastroInventarioClicado() {
-        new FRMCadastroInventario(this, true).setVisible(true);
+        new FRMInventario(this, true).setVisible(true);
     }
 
     private void menuRelatorioSaldoEstoqueClicado() {
