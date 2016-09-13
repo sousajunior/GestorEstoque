@@ -318,20 +318,22 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void prepararComponentes() {
-        jrbEntrada.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                jrbEntrada.setSelected(true);
-                jrbSaida.setSelected(false);
-            }
-        });
-        jrbSaida.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                jrbSaida.setSelected(true);
-                jrbEntrada.setSelected(false);
-            }
-        });
+        
+        jrbEntrada.addActionListener(
+                (e) -> {
+                    jrbEntrada.setSelected(true);
+                    jrbSaida.setSelected(false);
+                }
+        );
+        
+        jrbSaida.addActionListener(
+                (e) -> {
+                    jrbSaida.setSelected(true);
+                    jrbEntrada.setSelected(false);
+                }
+        );
+        
+        
 
         jbtnPesquisarArmazem.addMouseListener(new MouseAdapter() {
             @Override
