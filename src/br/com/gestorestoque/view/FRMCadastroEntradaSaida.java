@@ -5,20 +5,27 @@
  */
 package br.com.gestorestoque.view;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author Carlinhos
  */
-public class FRMCadastroEntrada extends javax.swing.JDialog {
+public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMCadastroEntrada
      */
-    public FRMCadastroEntrada(java.awt.Frame parent, boolean modal) {
+    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        isEntrada(isEntrada);
+        prepararComponentes();
     }
 
     /**
@@ -256,20 +263,21 @@ public class FRMCadastroEntrada extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRMCadastroEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMCadastroEntradaSaida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRMCadastroEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMCadastroEntradaSaida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRMCadastroEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMCadastroEntradaSaida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRMCadastroEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMCadastroEntradaSaida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMCadastroEntrada dialog = new FRMCadastroEntrada(new javax.swing.JFrame(), true);
+                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -308,4 +316,84 @@ public class FRMCadastroEntrada extends javax.swing.JDialog {
     private javax.swing.JTextField jtfNomeFornecedor;
     private javax.swing.JTextField jtfNomeProduto;
     // End of variables declaration//GEN-END:variables
+
+    private void prepararComponentes() {
+        jrbEntrada.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                jrbEntrada.setSelected(true);
+                jrbSaida.setSelected(false);
+            }
+        });
+        jrbSaida.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                jrbSaida.setSelected(true);
+                jrbEntrada.setSelected(false);
+            }
+        });
+
+        jbtnPesquisarArmazem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                pesquisaArmazem();
+            }
+        });
+
+        jbtnPesquisarFornecedor.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                pesquisaFornecedor();
+            }
+        });
+
+        jbtnPesquisarProduto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                pesquisaProduto();
+            }
+        });
+    }
+
+    private void pesquisaArmazem() {
+        FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);
+        cadastroArmazem.setVisible(true);
+        //cadastroArmazem.
+    }
+
+    private void pesquisaFornecedor() {
+        FRMCadastroFornecedor cadastroFornecedor = new FRMCadastroFornecedor(this, true);
+        cadastroFornecedor.setVisible(true);
+        cadastroFornecedor.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                jsCodigoFornecedor.setValue(cadastroFornecedor.fornecedorAlterarExcluir.getIdFornecedor());
+                jtfNomeFornecedor.setText(cadastroFornecedor.fornecedorAlterarExcluir.getNome());
+            }
+        });
+    }
+
+    private void pesquisaProduto() {
+        FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
+        cadastroProduto.setVisible(true);
+        cadastroProduto.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                jsProduto.setValue(cadastroProduto.produtoAlterarExcluir.getCodigo());
+                jtfNomeProduto.setText(cadastroProduto.produtoAlterarExcluir.getNome());
+            }
+        });
+    }
+    
+    
+    
+    private void isEntrada(Boolean isEntrada) {
+        if (isEntrada) {
+            jrbEntrada.setSelected(true);
+            jrbSaida.setSelected(false);
+        } else {
+            jrbEntrada.setSelected(false);
+            jrbSaida.setSelected(true);
+        }
+    }
 }

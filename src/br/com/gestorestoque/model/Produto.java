@@ -84,7 +84,10 @@ public class Produto {
         this.unidadeMedida = unidadeMedida;
     }
 
-    
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
 
     /**
      * @param nome the nome to set

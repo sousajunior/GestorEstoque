@@ -33,12 +33,24 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     Produto produtoAlterarExcluir;
     UnidadeMedida unidadeMedidaSelecionada;
     List<UnidadeMedida> unidadesMedida = new ArrayList<>();
+    Boolean somentePesquisa;
 
     /**
      * Creates new form FRMCadastroProduto
      */
     public FRMCadastroProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        somentePesquisa = false;
+        initialize();
+    }
+
+    public FRMCadastroProduto(java.awt.Dialog parent, boolean modal) {
+        super(parent, modal);
+        somentePesquisa = true;
+        initialize();
+    }
+
+    private void initialize() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
@@ -213,7 +225,16 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jtProdutos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabelaProdutoClicada();
+                if (e.getClickCount() > 1) {
+                    if (somentePesquisa) {
+                        produtoAlterarExcluir = new Produto();
+                        produtoAlterarExcluir.setCodigo(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 0)));
+                        produtoAlterarExcluir.setNome(modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 1).toString());
+                        dispose();
+                    }
+                } else {
+                    tabelaProdutoClicada();
+                }
             }
         });
 
@@ -280,49 +301,45 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if(verificarComponentesPreenchidos()){
-                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)){
+                if (verificarComponentesPreenchidos()) {
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)) {
                         dispose();
                     }
-                }else{
+                } else {
                     dispose();
                 }
             }
-            
-            
-            
+
         });
 
         preencheComboUnidadeMedida();
     }
 
-    private boolean verificarComponentesPreenchidos(){
-        
-        
-        
-        if(!jtfNome.getText().equalsIgnoreCase("")){
+    private boolean verificarComponentesPreenchidos() {
+
+        if (!jtfNome.getText().equalsIgnoreCase("")) {
             return true;
         }
-        
-        if(!jtfPreco.getText().equalsIgnoreCase("")){
+
+        if (!jtfPreco.getText().equalsIgnoreCase("")) {
             return true;
         }
-        
-        if(!jtfQtdMinima.getText().equalsIgnoreCase("")){
+
+        if (!jtfQtdMinima.getText().equalsIgnoreCase("")) {
             return true;
         }
-        
-        if(jcbControladoPorLote.isSelected()){
+
+        if (jcbControladoPorLote.isSelected()) {
             return true;
         }
-        
-        if(!(jcbUnidadeMedida.getSelectedIndex() == 0)){
+
+        if (!(jcbUnidadeMedida.getSelectedIndex() == 0)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     private void itemComboSelecionado() {
 
         for (UnidadeMedida unidadeMedida : unidadesMedida) {
@@ -408,7 +425,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Selecione um produto para realizar a exclusão!", "Atenção!", 2);
             }
         } catch (SQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Erro ao excluir o produto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro ao excluir o produto", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Houve um problema ao excluir este produto!\nErro: " + ex, "Erro!", 0);
         }
@@ -447,11 +464,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "O produto deve ter uma descrição, preço e unidade de medida especificados!", "Atenção!", 2);
             }
 
-        }catch(SQLIntegrityConstraintViolationException ex){
-            JOptionPane.showMessageDialog(null,"teste","erro",JOptionPane.ERROR_MESSAGE);
-        } 
-        
-        catch (SQLException ex) {
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            JOptionPane.showMessageDialog(null, "teste", "erro", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
 

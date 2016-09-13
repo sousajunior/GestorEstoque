@@ -32,8 +32,16 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
      * Creates new form FRMCadastroArmazem
      */
     public FRMCadastroArmazem(java.awt.Frame parent, boolean modal) {
-
         super(parent, modal);
+        initialize();
+    }
+
+    public FRMCadastroArmazem(java.awt.Dialog parent, boolean modal) {
+        super(parent, modal);
+        initialize();
+    }
+
+    public void initialize() {
         initComponents();
         this.setLocationRelativeTo(null);
         prepararComponentes();
@@ -151,7 +159,12 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         jtArmazens.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabelaArmazemClicada();
+                if (e.getClickCount() > 1) {
+                    tabelaArmazemClicada();
+                    dispose();
+                } else {
+                    tabelaArmazemClicada();
+                }
             }
         });
 

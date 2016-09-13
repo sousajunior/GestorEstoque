@@ -37,16 +37,27 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
 
     TableModel modeloTabelaFornecedor;
     Fornecedor fornecedorAlterarExcluir;
+    Boolean somentePesquisa;
 
     /**
      * Creates new form FRMCadastroProduto
      */
     public FRMCadastroFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        somentePesquisa = false;
+        initialize();
+    }
+
+    public FRMCadastroFornecedor(java.awt.Dialog parent, boolean modal) {
+        super(parent, modal);
+        somentePesquisa = true;
+        initialize();
+    }
+
+    public void initialize() {
         initComponents();
         this.setLocationRelativeTo(null);
         prepararComponentes();
-
     }
 
     /**
@@ -172,7 +183,16 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         jtFornecedor.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabelaFornecedorClicada();
+                if (e.getClickCount() > 1) {
+                    if (somentePesquisa) {
+                        fornecedorAlterarExcluir = new Fornecedor();
+                        fornecedorAlterarExcluir.setIdFornecedor(Integer.parseInt(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 0).toString()));
+                        fornecedorAlterarExcluir.setNome(modeloTabelaFornecedor.getValueAt(jtFornecedor.getSelectedRow(), 1).toString());
+                        dispose();
+                    }
+                } else {
+                    tabelaFornecedorClicada();
+                }
             }
         });
 
@@ -264,7 +284,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         if (!this.jtfNome.getText().equalsIgnoreCase("")) {
             return true;
         }
-        
+
         if (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  "))) {
             return true;
         }
@@ -392,7 +412,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "O CPF ou CNPJ já existem na base de dados !", "Atenção!", 2);
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: "+ex, "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }

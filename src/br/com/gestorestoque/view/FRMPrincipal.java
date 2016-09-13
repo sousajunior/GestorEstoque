@@ -159,11 +159,11 @@ public class FRMPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void menuMovimentacaoEntradaClicado(){
-        new FRMCadastroEntrada(this, true).setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, true).setVisible(true);
     }
     
     private void menuMovimentacaoSaidaClicado() {
-        new FRMCadastroSaida(this, true).setVisible(true);
+         new FRMCadastroEntradaSaida(this, true, false).setVisible(true);
     }
 
     private void menuCadastroInventarioClicado() {
