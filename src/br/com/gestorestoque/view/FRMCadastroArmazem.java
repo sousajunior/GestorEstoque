@@ -87,7 +87,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
          */
         @Override
         public int getColumnCount() {
-            return 1;
+            return 2;
         }
 
         /**
@@ -110,9 +110,9 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
             Armazem armazem = armazens.get(rowIndex);
 
             if (columnIndex == 0) {
-                return armazem.getDescricao();
+                return armazem.getCodigo();
             } else if (columnIndex == 1) {
-                return null;
+                return armazem.getDescricao();
             }
 
             return null;
@@ -128,6 +128,10 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
         @Override
         public String getColumnName(int column) {
             if (column == 0) {
+
+                return "ID";
+            }
+            if (column == 1) {
 
                 return "Descrição";
             }
