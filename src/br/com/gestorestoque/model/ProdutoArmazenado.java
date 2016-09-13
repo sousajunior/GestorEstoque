@@ -39,7 +39,15 @@ public class ProdutoArmazenado {
     public ProdutoArmazenado() {
     }
     
+    public void aumentarQtd(double qtd)
+    {
+        this.Quantidade+=qtd;
+    }
     
+    public void diminuirQtd(double qtd)
+    {
+        this.Quantidade-=qtd;
+    }
 
     /**
      * @return the Lote
