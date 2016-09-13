@@ -114,7 +114,7 @@ public class FRMSobre extends javax.swing.JDialog {
         try {
             uri = new URI("https://github.com/CarlinhosSousaJunior/GestorEstoque");
         } catch (URISyntaxException ex) {
-            Logger.getLogger(FRMSobre1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FRMSobre.class.getName()).log(Level.SEVERE, null, ex);
         }
         open(uri);
     }//GEN-LAST:event_hiperLinkMouseClicked

@@ -164,7 +164,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (columnIndex == 4) {
 
-                return produtoArmazenado.getNotaFiscal();
+                return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
 
             }
 
@@ -186,7 +186,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (columnIndex == 7) {
 
-                return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
+                return produtoArmazenado.getNotaFiscal();
 
             }
 
@@ -230,7 +230,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (column == 4) {
 
-                return "Nota Fiscal";
+                return "Unidade de medida";
             }
 
             if (column == 5) {
@@ -244,7 +244,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (column == 7) {
 
-                return "Unidade de medida";
+                return "Nota Fiscal";
             }
 
             if (column == 8) {
@@ -284,6 +284,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jbtnventario.addActionListener(
                 (e) -> {
                     btnInventarioClicado();
+                }
+        );
+
+        //pesquisar
+        jbtPesquisar.addActionListener(
+                (e) -> {
+                    btnPesquisarClicado();
                 }
         );
 
@@ -367,7 +374,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacao.contains("" + e.getKeyChar())) {
                     textoLote += "" + e.getKeyChar();
                     textoLote = textoLote.toUpperCase();
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -393,7 +400,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     textoProduto = textoProduto.toUpperCase();
                     produtosArmazenadosPesquisa = new ArrayList<>();
                     System.out.println("Produto: " + textoProduto);
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -416,7 +423,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacao.contains("" + e.getKeyChar())) {
                     textoFornecedor += "" + e.getKeyChar();
                     textoFornecedor = textoFornecedor.toUpperCase();
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -440,7 +447,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacaoNumerica.contains("" + e.getKeyChar())) {
                     textoSaldo += "" + e.getKeyChar();
                     System.out.println("Saldo:" + Double.parseDouble(textoSaldo));
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -463,7 +470,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacaoNumericaInteiros.contains("" + e.getKeyChar())) {
                     textoNotaFiscal += "" + e.getKeyChar();
 
-                    filtrar();
+                   // filtrar();
                 }
 
             }
@@ -486,7 +493,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacao.contains("" + e.getKeyChar())) {
                     textoUnidadeMedida += "" + e.getKeyChar();
                     textoUnidadeMedida = textoUnidadeMedida.toUpperCase();
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -509,7 +516,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacao.contains("" + e.getKeyChar())) {
                     textoArmazem += "" + e.getKeyChar();
                     textoArmazem = textoArmazem.toUpperCase();
-                    filtrar();
+                    //filtrar();
                 }
 
             }
@@ -532,17 +539,12 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 if (validacaoNumerica.contains("" + e.getKeyChar())) {
                     textoPreco += "" + e.getKeyChar();
 
-                    filtrar();
+                    //filtrar();
                 }
 
             }
 
         });
-
-        jcControladoPorLote.addActionListener((e) -> {
-            filtrar();
-        }
-        );
 
     }
 
@@ -554,7 +556,6 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoSaldo.setSelectedIndex(0);
         this.jcbCondicaoArmazem.setSelectedIndex(0);
         this.jcbCondicaoNotaFiscal.setSelectedIndex(0);
-        this.jcControladoPorLote.setSelected(false);
 
         atualizarTabelaProdutosArmazenados();
         produtosArmazenadosPesquisa = new ArrayList<>();
@@ -564,6 +565,12 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private void btnInventarioClicado() {
 
         new FRMInventario(null, true).setVisible(true);
+
+    }
+
+    private void btnPesquisarClicado() {
+
+        filtrar();
 
     }
 
@@ -1440,79 +1447,10 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         }
 
-        //verifica se é controlado por lote
-        if (jcControladoPorLote.isSelected()) {
-            //Verificar se a lista de produto armazenado para pesquisa está vazia 
-            if (produtosArmazenadosPesquisa.isEmpty()) {
-
-                //percorre a lista primária de produtos armazenados
-                for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
-                    if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                        //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
-                        produtosArmazenadosPesquisa.add(produtosArmazenado);
-
-                    }
-
-                }
-            } else {
-
-                //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
-                List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
-                //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
-                for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
-                    //verifica se o lote atual contem a expressão que o usuário digitou
-                    if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                        //adiciona o item que encontrou na terceira lista
-                        produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
-                    }
-
-                }
-                //remove os itens da segunda lista
-                produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                //e atualiza com o que existe na terceira lista
-                produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-            }
-
-        } else //Verificar se a lista de produto armazenado para pesquisa está vazia 
-        if (produtosArmazenadosPesquisa.isEmpty()) {
-
-            //percorre a lista primária de produtos armazenados
-            for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
-                if (!produtosArmazenado.getProduto().isControladoPorLote()) {
-                    //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
-                    produtosArmazenadosPesquisa.add(produtosArmazenado);
-
-                }
-
-            }
-        } else {
-
-            //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
-            List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
-            //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
-            for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
-                //verifica se o lote atual contem a expressão que o usuário digitou
-                if (!produtosArmazenado.getProduto().isControladoPorLote()) {
-                    //adiciona o item que encontrou na terceira lista
-                    produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
-                }
-
-            }
-            //remove os itens da segunda lista
-            produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-            //e atualiza com o que existe na terceira lista
-            produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-        }
         //atualiza a tabela com o resultado da pesquisa
-        atualizarTabelaProdutosArmazenadosComPesquisa();
+        if (produtosArmazenadosPesquisa.size() > 0) {
+            atualizarTabelaProdutosArmazenadosComPesquisa();
+        }
     }
 
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
@@ -1560,22 +1498,22 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jtfFornecedor = new javax.swing.JTextField();
         jbtLimparCamposPesquisa = new javax.swing.JButton();
-        jcbCondicaoLote = new javax.swing.JComboBox<>();
-        jcbCondicaoSaldo = new javax.swing.JComboBox<>();
-        jcbCondicaoProduto = new javax.swing.JComboBox<>();
-        jcbCondicaoNotaFiscal = new javax.swing.JComboBox<>();
-        jcbCondicaoFornecedor = new javax.swing.JComboBox<>();
-        jcControladoPorLote = new javax.swing.JCheckBox();
+        jcbCondicaoLote = new javax.swing.JComboBox<String>();
+        jcbCondicaoSaldo = new javax.swing.JComboBox<String>();
+        jcbCondicaoProduto = new javax.swing.JComboBox<String>();
+        jcbCondicaoNotaFiscal = new javax.swing.JComboBox<String>();
+        jcbCondicaoFornecedor = new javax.swing.JComboBox<String>();
         jtfArmazem = new javax.swing.JTextField();
-        jcbCondicaoArmazem = new javax.swing.JComboBox<>();
+        jcbCondicaoArmazem = new javax.swing.JComboBox<String>();
         jlArmazem = new javax.swing.JLabel();
         jtfSaldo = new javax.swing.JFormattedTextField();
         jluniadeMedida = new javax.swing.JLabel();
         jtfUnidadeMedida = new javax.swing.JTextField();
-        jcbCondicaoUnidadeMedida = new javax.swing.JComboBox<>();
+        jcbCondicaoUnidadeMedida = new javax.swing.JComboBox<String>();
         jlPreco = new javax.swing.JLabel();
         jtfPreco = new javax.swing.JTextField();
-        jcbCondicaoPreco = new javax.swing.JComboBox<>();
+        jcbCondicaoPreco = new javax.swing.JComboBox<String>();
+        jbtPesquisar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jbtEntradaProduto = new javax.swing.JButton();
         jbtnventario = new javax.swing.JButton();
@@ -1585,6 +1523,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         setTitle("Saldos em estoque");
         setMinimumSize(new java.awt.Dimension(800, 700));
         setPreferredSize(new java.awt.Dimension(800, 700));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jpBaixo.setLayout(new java.awt.GridBagLayout());
 
@@ -1616,7 +1555,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(22, 11, 15, 11);
+        gridBagConstraints.insets = new java.awt.Insets(22, 5, 15, 5);
         jpBaixo.add(jScrollPane1, gridBagConstraints);
 
         getContentPane().add(jpBaixo, java.awt.BorderLayout.PAGE_END);
@@ -1625,7 +1564,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jpPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
         java.awt.GridBagLayout jpPesquisaLayout = new java.awt.GridBagLayout();
-        jpPesquisaLayout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jpPesquisaLayout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
         jpPesquisaLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jpPesquisa.setLayout(jpPesquisaLayout);
 
@@ -1634,6 +1573,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jlbLote, gridBagConstraints);
 
         jtfLote.setToolTipText("Informe um lote para a pesquisa");
@@ -1643,6 +1583,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jtfLote, gridBagConstraints);
 
         jlbSaldo.setText("Saldo");
@@ -1696,39 +1637,43 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.gridwidth = 17;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jpPesquisa.add(jtfFornecedor, gridBagConstraints);
 
         jbtLimparCamposPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/edit-clear.png"))); // NOI18N
         jbtLimparCamposPesquisa.setText("Limpar");
         jbtLimparCamposPesquisa.setToolTipText("Limpar campos de pesquisa");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 66;
+        gridBagConstraints.gridx = 60;
         gridBagConstraints.gridy = 18;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jbtLimparCamposPesquisa, gridBagConstraints);
 
-        jcbCondicaoLote.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoLote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoLote.setToolTipText("Selecione um filtro para lote");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jcbCondicaoLote, gridBagConstraints);
 
-        jcbCondicaoSaldo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Igual a", "É maior", "É maior ou igual", "É menor", "É menor ou igual" }));
+        jcbCondicaoSaldo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Igual a", "É maior", "É maior ou igual", "É menor", "É menor ou igual" }));
         jcbCondicaoSaldo.setToolTipText("Selecione um filtro para saldo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jcbCondicaoSaldo, gridBagConstraints);
 
-        jcbCondicaoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoProduto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoProduto.setToolTipText("Selecione um filtro para produto");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 22;
@@ -1737,7 +1682,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jcbCondicaoProduto, gridBagConstraints);
 
-        jcbCondicaoNotaFiscal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoNotaFiscal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoNotaFiscal.setToolTipText("Selecione um filtro para nota fiscal");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 22;
@@ -1746,39 +1691,34 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jcbCondicaoNotaFiscal, gridBagConstraints);
 
-        jcbCondicaoFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoFornecedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoFornecedor.setToolTipText("Selecione um filtro para fornecedor");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.gridwidth = 17;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jpPesquisa.add(jcbCondicaoFornecedor, gridBagConstraints);
-
-        jcControladoPorLote.setText("Controlado por lote");
-        jcControladoPorLote.setToolTipText("Selecione filtro para produtos controlados por lote");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 22;
-        gridBagConstraints.gridy = 16;
-        gridBagConstraints.gridwidth = 7;
-        jpPesquisa.add(jcControladoPorLote, gridBagConstraints);
 
         jtfArmazem.setToolTipText("Informe um filtro para armazem");
         jtfArmazem.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.gridwidth = 17;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jpPesquisa.add(jtfArmazem, gridBagConstraints);
 
-        jcbCondicaoArmazem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoArmazem.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         jcbCondicaoArmazem.setToolTipText("Selecione um filtro para armazém");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 50;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.gridwidth = 17;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jpPesquisa.add(jcbCondicaoArmazem, gridBagConstraints);
 
         jlArmazem.setText("Armazém");
@@ -1795,6 +1735,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jtfSaldo, gridBagConstraints);
 
         jluniadeMedida.setText("Unidade de medida");
@@ -1812,7 +1753,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpPesquisa.add(jtfUnidadeMedida, gridBagConstraints);
 
-        jcbCondicaoUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jcbCondicaoUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Contém a expressão", "Igual a" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 38;
         gridBagConstraints.gridy = 10;
@@ -1832,22 +1773,34 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jtfPreco, gridBagConstraints);
 
-        jcbCondicaoPreco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Igual a", "É maior", "É maior ou igual", "É menor", "É menor ou igual" }));
+        jcbCondicaoPreco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Igual a", "É maior", "É maior ou igual", "É menor", "É menor ou igual" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 21;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jpPesquisa.add(jcbCondicaoPreco, gridBagConstraints);
+
+        jbtPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search.png"))); // NOI18N
+        jbtPesquisar.setText("Pesquisar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 50;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        jpPesquisa.add(jbtPesquisar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = -3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 4, 16, 4);
+        gridBagConstraints.insets = new java.awt.Insets(15, 5, 16, 5);
         jPanel1.add(jpPesquisa, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1888,7 +1841,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
         jPanel2.getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new java.awt.Dimension(805, 675));
+        setSize(new java.awt.Dimension(813, 675));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1943,9 +1896,9 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtEntradaProduto;
     private javax.swing.JButton jbtLimparCamposPesquisa;
+    private javax.swing.JButton jbtPesquisar;
     private javax.swing.JButton jbtSaidaProduto;
     private javax.swing.JButton jbtnventario;
-    private javax.swing.JCheckBox jcControladoPorLote;
     private javax.swing.JComboBox<String> jcbCondicaoArmazem;
     private javax.swing.JComboBox<String> jcbCondicaoFornecedor;
     private javax.swing.JComboBox<String> jcbCondicaoLote;
