@@ -35,14 +35,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
     static final String validacaoNumerica = "0123456789,.";
     static final String validacaoNumericaInteiros = "0123456789";
-    String textoLote = "";
-    String textoProduto = "";
-    String textoFornecedor = "";
-    String textoNotaFiscal = "";
-    String textoSaldo = "";
-    String textoPreco = "";
-    String textoArmazem = "";
-    String textoUnidadeMedida = "";
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Creates new form FRMRelatorioSaldosEstoque
@@ -364,16 +363,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoLote.length() > 0) {
-                        textoLote = "";
+                    if (jtfLote.getText().length() > 0) {
+                        
                         atualizarTabelaProdutosArmazenados();
                         produtosArmazenadosPesquisa = new ArrayList<>();
                         jtfLote.setText("");
                     }
                 }
                 if (validacao.contains("" + e.getKeyChar())) {
-                    textoLote += "" + e.getKeyChar();
-                    textoLote = textoLote.toUpperCase();
+                    
                     //filtrar();
                 }
 
@@ -388,18 +386,17 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoProduto.length() > 0) {
-                        textoProduto = "";
+                    if (jtfProduto.getText().length() > 0) {
+
                         atualizarTabelaProdutosArmazenados();
                         produtosArmazenadosPesquisa = new ArrayList<>();
                         jtfProduto.setText("");
                     }
                 }
                 if (validacao.contains("" + e.getKeyChar())) {
-                    textoProduto += "" + e.getKeyChar();
-                    textoProduto = textoProduto.toUpperCase();
+      
                     produtosArmazenadosPesquisa = new ArrayList<>();
-                    System.out.println("Produto: " + textoProduto);
+                    System.out.println("Produto: " + jtfProduto.getText());
                     //filtrar();
                 }
 
@@ -414,15 +411,14 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoFornecedor.length() > 0) {
-                        textoFornecedor = "";
+                    if (jtfFornecedor.getText().length() > 0) {
+                        
                         atualizarTabelaProdutosArmazenados();
-                        jtfFornecedor.setText("");
+                        
                     }
                 }
                 if (validacao.contains("" + e.getKeyChar())) {
-                    textoFornecedor += "" + e.getKeyChar();
-                    textoFornecedor = textoFornecedor.toUpperCase();
+               
                     //filtrar();
                 }
 
@@ -437,16 +433,16 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoSaldo.length() > 0) {
-                        textoSaldo = "";
+                    if (jtfSaldo.getText().length() > 0) {
+                        
                         atualizarTabelaProdutosArmazenados();
                         jtfSaldo.setText("");
 
                     }
                 }
                 if (validacaoNumerica.contains("" + e.getKeyChar())) {
-                    textoSaldo += "" + e.getKeyChar();
-                    System.out.println("Saldo:" + Double.parseDouble(textoSaldo));
+                    
+//                    System.out.println("Saldo:" + Double.parseDouble(jtfSaldo.getText()));
                     //filtrar();
                 }
 
@@ -461,14 +457,14 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoNotaFiscal.length() > 0) {
-                        textoNotaFiscal = "";
+                    if (jtfNotaFiscal.getText().length() > 0) {
+                        
                         atualizarTabelaProdutosArmazenados();
                         jtfNotaFiscal.setText("");
                     }
                 }
                 if (validacaoNumericaInteiros.contains("" + e.getKeyChar())) {
-                    textoNotaFiscal += "" + e.getKeyChar();
+                    
 
                    // filtrar();
                 }
@@ -484,15 +480,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoUnidadeMedida.length() > 0) {
-                        textoUnidadeMedida = "";
+                    if (jtfUnidadeMedida.getText().length() > 0) {
+
                         atualizarTabelaProdutosArmazenados();
                         jtfUnidadeMedida.setText("");
                     }
                 }
                 if (validacao.contains("" + e.getKeyChar())) {
-                    textoUnidadeMedida += "" + e.getKeyChar();
-                    textoUnidadeMedida = textoUnidadeMedida.toUpperCase();
                     //filtrar();
                 }
 
@@ -507,15 +501,14 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoArmazem.length() > 0) {
-                        textoArmazem = "";
+                    if (jtfArmazem.getText().length() > 0) {
+           
                         atualizarTabelaProdutosArmazenados();
                         jtfArmazem.setText("");
                     }
                 }
                 if (validacao.contains("" + e.getKeyChar())) {
-                    textoArmazem += "" + e.getKeyChar();
-                    textoArmazem = textoArmazem.toUpperCase();
+
                     //filtrar();
                 }
 
@@ -530,14 +523,14 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (textoPreco.length() > 0) {
-                        textoPreco = "";
+                    if (jtfPreco.getText().length() > 0) {
+                       
                         atualizarTabelaProdutosArmazenados();
                         jtfPreco.setText("");
                     }
                 }
                 if (validacaoNumerica.contains("" + e.getKeyChar())) {
-                    textoPreco += "" + e.getKeyChar();
+                    
 
                     //filtrar();
                 }
@@ -569,7 +562,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     }
 
     private void btnPesquisarClicado() {
-
+        
+        produtosArmazenadosPesquisa = new ArrayList<>();
         filtrar();
 
     }
@@ -687,7 +681,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
                             //verifica se o lote da posição atual contem a expressão que o usuário digitou
-                            if (produtosArmazenado.getLote().toUpperCase().contains(textoLote)) {
+                            if (produtosArmazenado.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
                                 //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -704,7 +698,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
                             //verifica se o lote atual contem a expressão que o usuário digitou
-                            if (produtosArmazenado.getLote().toUpperCase().contains(textoLote)) {
+                            if (produtosArmazenado.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -726,7 +720,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
                             //verifica se o lote atual é igual a expressão que o usuário digitou
-                            if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(textoLote)) {
+                            if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
                                 //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -742,7 +736,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
                             //verifica se o lote atual é igual a expressão que o usuário digitou
-                            if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(textoLote)) {
+                            if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -770,7 +764,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o produto da posição atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(textoProduto)) {
+                        if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -786,7 +780,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o lote atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(textoProduto)) {
+                        if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -807,7 +801,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o produto atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(textoProduto)) {
+                        if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -822,7 +816,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o produto atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(textoProduto)) {
+                        if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -850,7 +844,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o unidade de medida da posição atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(textoUnidadeMedida)) {
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -866,7 +860,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o lote atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(textoUnidadeMedida)) {
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -887,7 +881,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(textoUnidadeMedida)) {
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -902,7 +896,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(textoUnidadeMedida)) {
+                        if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -930,7 +924,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(textoFornecedor)) {
+                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -946,7 +940,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o lote atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(textoFornecedor)) {
+                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -967,7 +961,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(textoFornecedor)) {
+                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -982,7 +976,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(textoFornecedor)) {
+                        if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1011,7 +1005,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                         //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-                        if (nf.contains(textoNotaFiscal)) {
+                        if (nf.contains(jtfNotaFiscal.getText())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1028,7 +1022,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                         //verifica se o lote atual contem a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-                        if (nf.contains(textoNotaFiscal)) {
+                        if (nf.contains(jtfNotaFiscal.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1050,7 +1044,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-                        if (nf.equalsIgnoreCase(textoNotaFiscal)) {
+                        if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1066,7 +1060,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-                        if (nf.equalsIgnoreCase(textoNotaFiscal)) {
+                        if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1094,7 +1088,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1110,7 +1104,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o saldo atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1131,7 +1125,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1146,7 +1140,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1165,7 +1159,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo) || produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1180,7 +1174,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(textoSaldo) || produtosArmazenado.getQuantidade() == Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1199,7 +1193,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1214,7 +1208,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1233,7 +1227,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1248,7 +1242,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(textoSaldo)) {
+                        if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1264,7 +1258,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         }
 
-        //----preco
+       //----preco
         //Filtro por preco
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoPreco.getSelectedIndex() > 0) {
@@ -1277,7 +1271,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
                             //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1293,7 +1287,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o saldo atual contem a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1314,7 +1308,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1329,7 +1323,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1348,7 +1342,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1363,7 +1357,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(textoPreco) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1382,7 +1376,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1397,7 +1391,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1416,7 +1410,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
                             //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
@@ -1431,7 +1425,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
                         //verifica se o fornecedor atual é igual a expressão que o usuário digitou
-                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(textoPreco)) {
+                        if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
                             //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
@@ -1444,13 +1438,98 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
                 }
             }
+            
+             
 
+        //Filtro por lote
+        //Verificar se o combo de condição por lote não está ocm o traço selecionado
+        if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
+            //Verificar se o combo de condição por lote esta selecionando (Contém a expressão)
+            if (this.jcbCondicaoArmazem.getSelectedIndex() == 1) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+                        //verifica se o produto é controlado por lote
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            //verifica se o lote da posição atual contem a expressão que o usuário digitou
+                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(this.jtfArmazem.getText().toUpperCase())) {
+                                //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
+                                produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                            }
+                        }
+                    }
+                } else {
+
+                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+                        //verifica se o produto é controlado por lote
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            //verifica se o lote atual contem a expressão que o usuário digitou
+                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(jtfArmazem.getText().toUpperCase())) {
+                                //adiciona o item que encontrou na terceira lista
+                                produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                            }
+                        }
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+
+                //quando o item (é igual a), e selecionado no combo de filtro por lote
+            } else if (this.jcbCondicaoArmazem.getSelectedIndex() == 2) {
+                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+                if (produtosArmazenadosPesquisa.isEmpty()) {
+                    //percorre a lista primária de produtos armazenados
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+                        //verifica se o produto é controlado por lote
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            //verifica se o lote atual é igual a expressão que o usuário digitou
+                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
+                                //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+                                produtosArmazenadosPesquisa.add(produtosArmazenado);
+
+                            }
+                        }
+                    }
+                } else {
+
+                    // se a lista de pesquisa nao estiver vazia
+                    List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+                    for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+                        //verifica se o produto é controlado por lote
+                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
+                            //verifica se o lote atual é igual a expressão que o usuário digitou
+                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
+                                //adiciona o item que encontrou na terceira lista
+                                produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
+                            }
+                        }
+                    }
+                    //remove os itens da segunda lista
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    //e atualiza com o que existe na terceira lista
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+                }
+            }
         }
 
+
+        }
         //atualiza a tabela com o resultado da pesquisa
-        if (produtosArmazenadosPesquisa.size() > 0) {
+        //if (produtosArmazenadosPesquisa.size() > 0) {
             atualizarTabelaProdutosArmazenadosComPesquisa();
-        }
+        //}
     }
 
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
@@ -1728,7 +1807,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jpPesquisa.add(jlArmazem, gridBagConstraints);
 
-        jtfSaldo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jtfSaldo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         jtfSaldo.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
