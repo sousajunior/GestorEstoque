@@ -35,13 +35,6 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
     static final String validacaoNumerica = "0123456789,.";
     static final String validacaoNumericaInteiros = "0123456789";
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * Creates new form FRMRelatorioSaldosEstoque
@@ -362,17 +355,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfLote.getText().length() > 0) {
-                        
-                        atualizarTabelaProdutosArmazenados();
-                        produtosArmazenadosPesquisa = new ArrayList<>();
-                        jtfLote.setText("");
-                    }
-                }
-                if (validacao.contains("" + e.getKeyChar())) {
-                    
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -385,19 +369,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfProduto.getText().length() > 0) {
-
-                        atualizarTabelaProdutosArmazenados();
-                        produtosArmazenadosPesquisa = new ArrayList<>();
-                        jtfProduto.setText("");
-                    }
-                }
-                if (validacao.contains("" + e.getKeyChar())) {
-      
-                    produtosArmazenadosPesquisa = new ArrayList<>();
-                    System.out.println("Produto: " + jtfProduto.getText());
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -410,16 +383,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfFornecedor.getText().length() > 0) {
-                        
-                        atualizarTabelaProdutosArmazenados();
-                        
-                    }
-                }
-                if (validacao.contains("" + e.getKeyChar())) {
-               
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -432,18 +397,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfSaldo.getText().length() > 0) {
-                        
-                        atualizarTabelaProdutosArmazenados();
-                        jtfSaldo.setText("");
-
-                    }
-                }
-                if (validacaoNumerica.contains("" + e.getKeyChar())) {
-                    
-//                    System.out.println("Saldo:" + Double.parseDouble(jtfSaldo.getText()));
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -456,17 +411,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfNotaFiscal.getText().length() > 0) {
-                        
-                        atualizarTabelaProdutosArmazenados();
-                        jtfNotaFiscal.setText("");
-                    }
-                }
-                if (validacaoNumericaInteiros.contains("" + e.getKeyChar())) {
-                    
-
-                   // filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -479,15 +425,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfUnidadeMedida.getText().length() > 0) {
-
-                        atualizarTabelaProdutosArmazenados();
-                        jtfUnidadeMedida.setText("");
-                    }
-                }
-                if (validacao.contains("" + e.getKeyChar())) {
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -500,16 +439,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfArmazem.getText().length() > 0) {
-           
-                        atualizarTabelaProdutosArmazenados();
-                        jtfArmazem.setText("");
-                    }
-                }
-                if (validacao.contains("" + e.getKeyChar())) {
-
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -522,17 +453,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (jtfPreco.getText().length() > 0) {
-                       
-                        atualizarTabelaProdutosArmazenados();
-                        jtfPreco.setText("");
-                    }
-                }
-                if (validacaoNumerica.contains("" + e.getKeyChar())) {
-                    
-
-                    //filtrar();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filtrar();
                 }
 
             }
@@ -549,6 +471,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoSaldo.setSelectedIndex(0);
         this.jcbCondicaoArmazem.setSelectedIndex(0);
         this.jcbCondicaoNotaFiscal.setSelectedIndex(0);
+        this.jcbCondicaoPreco.setSelectedIndex(0);
+        this.jcbCondicaoUnidadeMedida.setSelectedIndex(0);
 
         atualizarTabelaProdutosArmazenados();
         produtosArmazenadosPesquisa = new ArrayList<>();
@@ -562,7 +486,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     }
 
     private void btnPesquisarClicado() {
-        
+
         produtosArmazenadosPesquisa = new ArrayList<>();
         filtrar();
 
@@ -670,23 +594,31 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
         if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
+
             //Verificar se o combo de condição por lote esta selecionando (Contém a expressão)
             if (this.jcbCondicaoLote.getSelectedIndex() == 1) {
+
                 //Verificar se a lista de produto armazenado para pesquisa está vazia 
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
                     //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
+
                             //verifica se o lote da posição atual contem a expressão que o usuário digitou
                             if (produtosArmazenado.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
+
                                 //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
+
                 } else {
 
                     //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
@@ -694,841 +626,831 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                     //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
+
                             //verifica se o lote atual contem a expressão que o usuário digitou
                             if (produtosArmazenado.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
+
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
+
                     //remove os itens da segunda lista
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+
                     //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
                 //quando o item (é igual a), e selecionado no combo de filtro por lote
             } else if (this.jcbCondicaoLote.getSelectedIndex() == 2) {
+
                 //Verificar se a lista de produto armazenado para pesquisa está vazia 
                 if (produtosArmazenadosPesquisa.isEmpty()) {
+
                     //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
+
                             //verifica se o lote atual é igual a expressão que o usuário digitou
                             if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
+
                                 //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
+
                 } else {
 
                     // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
+
                     //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+
                         //verifica se o produto é controlado por lote
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
+
                             //verifica se o lote atual é igual a expressão que o usuário digitou
                             if (produtosArmazenado.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
+
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
+
                     //remove os itens da segunda lista
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+
                     //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
+
         }
 
         //----Produto
         //Filtro por produto
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoProduto.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por produto esta selecionando (Contém a expressão)
+
             if (this.jcbCondicaoProduto.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o produto da posição atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o lote atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (é igual a), e selecionado no combo de filtro por produto
             } else if (this.jcbCondicaoProduto.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o produto atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o produto atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
+
         }
 
         //----Unidade de medida
         //Filtro por unidade de medida
         //Verificar se o combo de condição por unidade de medida não está ocm o traço selecionado
         if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por unidade de medida esta selecionando (Contém a expressão)
+
             if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o unidade de medida da posição atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o lote atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
+
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (é igual a), e selecionado no combo de filtro por unidade de medida
             } else if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o unidade de medida atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
+
         }
 
         //----Fornecedor
         //Filtro por fornecedor
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoFornecedor.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por produto esta selecionando (Contém a expressão)
+
             if (this.jcbCondicaoFornecedor.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o lote atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (é igual a), e selecionado no combo de filtro por produto
             } else if (this.jcbCondicaoFornecedor.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
+
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
+
         }
 
         //----NotaFiscal
         //Filtro por NotaFiscal
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por produto esta selecionando (Contém a expressão)
+
             if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
+
                         if (nf.contains(jtfNotaFiscal.getText())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o lote atual contem a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
+
                         if (nf.contains(jtfNotaFiscal.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (é igual a), e selecionado no combo de filtro por produto
             } else if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
+
                         if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         String nf = "" + produtosArmazenado.getNotaFiscal();
+
                         if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
+
         }
 
         //----Saldo
         //Filtro por Saldo
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoSaldo.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por produto esta selecionando (igual)
+
             if (this.jcbCondicaoSaldo.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o saldo atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (maior), e selecionado no combo de filtro por produto
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 3) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 4) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona o item que encontrou na terceira lista
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 5) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
 
         }
 
-       //----preco
+        //----preco
         //Filtro por preco
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoPreco.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por produto esta selecionando (igual)
+
             if (this.jcbCondicaoPreco.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor da posição atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona na lista quando encontra um produto que contenha o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o saldo atual contem a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (maior), e selecionado no combo de filtro por produto
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
+
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 3) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 4) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 5) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                         }
 
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 
-                        //verifica se o fornecedor atual é igual a expressão que o usuário digitou
                         if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
-                            //adiciona o item que encontrou na terceira lista
+
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                         }
 
                     }
-                    //remove os itens da segunda lista
-                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
-                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-                }
-            }
-            
-             
 
-        //Filtro por lote
-        //Verificar se o combo de condição por lote não está ocm o traço selecionado
+                    produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
+                    produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
+                }
+
+            }
+
+        }
+
+        //Filtro por armazem
+        //Verificar se o combo de condição por armazem não está ocm o traço selecionado
         if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
-            //Verificar se o combo de condição por lote esta selecionando (Contém a expressão)
+
             if (this.jcbCondicaoArmazem.getSelectedIndex() == 1) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
 
-                    //percorre a lista primária de produtos armazenados
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-                        //verifica se o produto é controlado por lote
-                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                            //verifica se o lote da posição atual contem a expressão que o usuário digitou
-                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(this.jtfArmazem.getText().toUpperCase())) {
-                                //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
-                                produtosArmazenadosPesquisa.add(produtosArmazenado);
 
-                            }
+                        if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(this.jtfArmazem.getText().toUpperCase())) {
+
+                            produtosArmazenadosPesquisa.add(produtosArmazenado);
+
                         }
+
                     }
+
                 } else {
 
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
 
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-                        //verifica se o produto é controlado por lote
-                        if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                            //verifica se o lote atual contem a expressão que o usuário digitou
-                            if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(jtfArmazem.getText().toUpperCase())) {
-                                //adiciona o item que encontrou na terceira lista
-                                produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
-                            }
+                        if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(jtfArmazem.getText().toUpperCase())) {
+
+                            produtosArmazenadosPesquisa2.add(produtosArmazenado);
+
                         }
+
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
 
-                //quando o item (é igual a), e selecionado no combo de filtro por lote
             } else if (this.jcbCondicaoArmazem.getSelectedIndex() == 2) {
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
+
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-                    //percorre a lista primária de produtos armazenados
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-                        //verifica se o produto é controlado por lote
+
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                            //verifica se o lote atual é igual a expressão que o usuário digitou
+
                             if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-                                //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
+
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
+
                 } else {
 
-                    // se a lista de pesquisa nao estiver vazia
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
+
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-                        //verifica se o produto é controlado por lote
+
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
-                            //verifica se o lote atual é igual a expressão que o usuário digitou
+
                             if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-                                //adiciona o item que encontrou na terceira lista
+
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
 
                             }
+
                         }
+
                     }
-                    //remove os itens da segunda lista
+
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-                    //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
+
                 }
+
             }
-        }
-
 
         }
+
         //atualiza a tabela com o resultado da pesquisa
-        //if (produtosArmazenadosPesquisa.size() > 0) {
-            atualizarTabelaProdutosArmazenadosComPesquisa();
-        //}
+        atualizarTabelaProdutosArmazenadosComPesquisa();
+
     }
 
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
@@ -1536,7 +1458,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
 
         for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-            System.out.println(produtosArmazenado.getLote());
+            //System.out.println(produtosArmazenado.getLote());
 
         }
 
