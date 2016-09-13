@@ -358,7 +358,13 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     private void pesquisaArmazem() {
         FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);
         cadastroArmazem.setVisible(true);
-        //cadastroArmazem.
+        cadastroArmazem.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                jsCodigoArmazem1.setValue(cadastroArmazem.armazemAlterarExcluir.getCodigo());
+                jtfNomeArmazem1.setText(cadastroArmazem.armazemAlterarExcluir.getDescricao());
+            }
+        });
     }
 
     private void pesquisaFornecedor() {

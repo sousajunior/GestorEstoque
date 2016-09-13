@@ -27,17 +27,19 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
 
     TableModel modeloTabelaArmazem;
     Armazem armazemAlterarExcluir;
-
+    Boolean somentePesquisa;
     /**
      * Creates new form FRMCadastroArmazem
      */
     public FRMCadastroArmazem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        somentePesquisa = false;
         initialize();
     }
 
     public FRMCadastroArmazem(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        somentePesquisa = true;
         initialize();
     }
 
@@ -164,8 +166,12 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() > 1) {
-                    tabelaArmazemClicada();
-                    dispose();
+                    if (somentePesquisa) {
+                        armazemAlterarExcluir = new Armazem();
+                        armazemAlterarExcluir.setCodigo(Integer.parseInt("" + modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 0)));
+                        armazemAlterarExcluir.setDescricao(modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 1).toString());
+                        dispose();
+                    }
                 } else {
                     tabelaArmazemClicada();
                 }
