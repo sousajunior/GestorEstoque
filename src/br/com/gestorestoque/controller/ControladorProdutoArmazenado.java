@@ -41,6 +41,11 @@ public class ControladorProdutoArmazenado {
         return produtosArmazenados;
 
     }
+    
+    public static ProdutoArmazenado selecionarPorLote()throws SQLException{
+        ProdutoArmazenado p = new ProdutoArmazenado();
+        return p;
+    }
 
     /**
      * Executa um método que seleciona todos os armazéns cadastrados na base de
