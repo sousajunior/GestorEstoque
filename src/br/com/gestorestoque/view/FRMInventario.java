@@ -161,7 +161,7 @@ public class FRMInventario extends javax.swing.JDialog {
 
             produtoArmazenado.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
 
-            ControladorProdutoArmazenado.updateInventarioProdutoArmazenado(produtoArmazenado);
+            ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
             JOptionPane.showMessageDialog(null, "Inventário realizado com sucesso! ", "Inventário", JOptionPane.INFORMATION_MESSAGE);
             btnLimparClicado();
 
@@ -239,7 +239,7 @@ public class FRMInventario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao3, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;

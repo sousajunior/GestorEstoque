@@ -34,7 +34,7 @@ public class Armazem {
         if (produtoEncontrado != null) {
             //Nao e controlado por lote
             if (!produtoEncontrado.getProduto().isControladoPorLote()) {
-                produtoEncontrado.aumentarQuantidade(produto);
+                produtoEncontrado.aumentarQuantidade(produto.getQuantidade());
             } else {
                 this.getProdutosArmazenados().add(produto);
             }

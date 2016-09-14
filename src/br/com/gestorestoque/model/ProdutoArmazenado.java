@@ -124,12 +124,12 @@ public class ProdutoArmazenado {
         this.produto = produto;
     }
 
-    public void aumentarQuantidade(ProdutoArmazenado pa) {
-        this.Quantidade += pa.getQuantidade();
+    public double aumentarQuantidade(Double pa) {
+        return this.Quantidade += pa;
     }
 
-    public void diminuirQuantidade(ProdutoArmazenado pa) {
-        this.Quantidade -= pa.getQuantidade();
+    public double diminuirQuantidade(Double pa) {
+       return this.Quantidade -= pa;
     }
 
     /**

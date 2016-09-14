@@ -22,12 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -36,6 +31,8 @@ import javax.swing.event.ChangeListener;
  * @author Carlinhos
  */
 public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
+    
+    ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
 
     /**
      * Creates new form FRMCadastroEntrada
@@ -172,7 +169,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 8;
@@ -204,7 +201,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlArmazem1, gridBagConstraints);
 
-        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 6;
@@ -229,7 +226,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlProduto, gridBagConstraints);
 
-        jsProduto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jsProduto.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 4;
@@ -265,7 +262,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.gridy = 8;
         jPanel1.add(jbtnPesquisarFornecedor, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
@@ -516,7 +513,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (!jsCodigoArmazem1.getValue().toString().equalsIgnoreCase("0") || !jsCodigoFornecedor.getValue().toString().equalsIgnoreCase("0") || !jsProduto.getValue().toString().equalsIgnoreCase("0")  || !jftNotaFiscal.getText().equalsIgnoreCase("") || (jtfLote.isEnabled() && !jtfLote.getText().equalsIgnoreCase(""))) {
+                if (!jsCodigoArmazem1.getValue().toString().equalsIgnoreCase("0") || !jsCodigoFornecedor.getValue().toString().equalsIgnoreCase("0") || !jsProduto.getValue().toString().equalsIgnoreCase("0") || !jftNotaFiscal.getText().equalsIgnoreCase("") || (jtfLote.isEnabled() && !jtfLote.getText().equalsIgnoreCase(""))) {
                     if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)) {
                         dispose();
                     }
@@ -555,15 +552,49 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     }
 
     private void pesquisaProduto() {
-        FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
-        cadastroProduto.setVisible(true);
-        cadastroProduto.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                jsProduto.setValue(cadastroProduto.produtoAlterarExcluir.getCodigo());
-                jtfNomeProduto.setText(cadastroProduto.produtoAlterarExcluir.getNome());
-            }
-        });
+
+        if (this.jrbSaida.isSelected()) {
+            FRMRelatorioSaldoEstoque frmSaldo = new FRMRelatorioSaldoEstoque(this, true);
+            frmSaldo.setVisible(true);
+
+            frmSaldo.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+
+                    produtoArmazenado = frmSaldo.produtoArmazenadoPesquisa;
+                    //JOptionPane.showMessageDialog(null, produtoArmazenado.getProduto().isControladoPorLote());
+                    
+                    jsCodigoArmazem1.setValue(produtoArmazenado.getArmazem().getCodigo());
+                    jtfNomeArmazem1.setText(produtoArmazenado.getArmazem().getDescricao());
+                    jsProduto.setValue(produtoArmazenado.getProduto().getCodigo());
+                    jtfNomeProduto.setText(produtoArmazenado.getProduto().getNome());
+                    jsCodigoFornecedor.setValue(produtoArmazenado.getFornecedor().getIdFornecedor());
+                    jtfNomeFornecedor.setText(produtoArmazenado.getFornecedor().getNome()); 
+                    jsQtd.setValue(produtoArmazenado.getQuantidade());
+                    if (produtoArmazenado.getProduto().isControladoPorLote()) {
+                        
+                        jtfLote.setText(produtoArmazenado.getLote());
+                        
+                    } else {
+                        JOptionPane.showMessageDialog(null, "limpar");
+                        jtfLote.setEnabled(false);
+                        jtfLote.setText("");
+                    }
+
+                }
+            });
+
+        } else {
+            FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
+            cadastroProduto.setVisible(true);
+            cadastroProduto.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    jsProduto.setValue(cadastroProduto.produtoAlterarExcluir.getCodigo());
+                    jtfNomeProduto.setText(cadastroProduto.produtoAlterarExcluir.getNome());
+                }
+            });
+        }
     }
 
     private void isEntrada(Boolean isEntrada) {
@@ -589,16 +620,20 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos necessários !", "Atenção!", 2);
             return;
         }
-
+JOptionPane.showMessageDialog(null, "Salvar!", "Atenção!", 2);
         //tenta inserir
         try {
 
-            ProdutoArmazenado produtoArmazenado = carregarCampos();
+            
+            
 
             if (this.jrbEntrada.isSelected()) {
+                ProdutoArmazenado produtoArmazenado = carregarCampos();
                 ControladorProdutoArmazenado.inserirProduto(produtoArmazenado);
             } else {
                 //update
+                produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble(""+jsQtd.getValue()))); 
+                ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);

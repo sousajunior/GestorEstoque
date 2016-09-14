@@ -101,7 +101,7 @@ public class ControladorProdutoArmazenado {
      * @param produtoArmazenado
      * @throws SQLException
      */
-    public static void updateInventarioProdutoArmazenado(ProdutoArmazenado produtoArmazenado) throws SQLException {
+    public static void updateSaldoProdutoArmazenado(ProdutoArmazenado produtoArmazenado) throws SQLException {
 
         CRUD.update(nomeTabela, "quantidade = '" + produtoArmazenado.getQuantidade() + "'", "idProdutoArmazenado", "" + produtoArmazenado.getCodigo());
 

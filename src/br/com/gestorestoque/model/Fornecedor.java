@@ -73,5 +73,7 @@ public class Fornecedor {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+    
+    
 
 }
