@@ -31,7 +31,7 @@ import javax.swing.event.ChangeListener;
  * @author Carlinhos
  */
 public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
-    
+
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
 
     /**
@@ -169,7 +169,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 8;
@@ -201,7 +201,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlArmazem1, gridBagConstraints);
 
-        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 6;
@@ -226,7 +226,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlProduto, gridBagConstraints);
 
-        jsProduto.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsProduto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 4;
@@ -262,7 +262,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.gridy = 8;
         jPanel1.add(jbtnPesquisarFornecedor, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
@@ -359,15 +359,13 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
         jrbEntrada.addActionListener(
                 (e) -> {
-                    jrbEntrada.setSelected(true);
-                    jrbSaida.setSelected(false);
+                    alterarParaEntrada();
                 }
         );
 
         jrbSaida.addActionListener(
                 (e) -> {
-                    jrbSaida.setSelected(true);
-                    jrbEntrada.setSelected(false);
+                    alterarParaSaida();
                 }
         );
 
@@ -379,15 +377,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
         jbtnLimpar.addActionListener(
                 (e) -> {
-                    this.jsCodigoArmazem1.setValue(0);
-                    this.jsCodigoFornecedor.setValue(0);
-                    this.jsProduto.setValue(0);
-                    this.jsQtd.setValue(1);
-                    this.jtfLote.setText("");
-                    this.jtfNomeArmazem1.setText("");
-                    this.jtfNomeFornecedor.setText("");
-                    this.jtfNomeProduto.setText("");
-                    this.jftNotaFiscal.setText("");
+                    limpar();
                 }
         );
 
@@ -409,27 +399,22 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                 }
             }
         });
+        jbtnPesquisarArmazem.addActionListener(
+                (e) -> {
+                    pesquisaArmazem();
+                }
+        );
 
-        jbtnPesquisarArmazem.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                pesquisaArmazem();
-            }
-        });
-
-        jbtnPesquisarFornecedor.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                pesquisaFornecedor();
-            }
-        });
-
-        jbtnPesquisarProduto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                pesquisaProduto();
-            }
-        });
+        jbtnPesquisarFornecedor.addActionListener(
+                (e) -> {
+                    pesquisaFornecedor();
+                }
+        );
+        jbtnPesquisarProduto.addActionListener(
+                (e) -> {
+                    pesquisaProduto();
+                }
+        );
 
         ChangeListener Produtolistener = (ChangeEvent e) -> {
             try {
@@ -563,20 +548,21 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
                     produtoArmazenado = frmSaldo.produtoArmazenadoPesquisa;
                     //JOptionPane.showMessageDialog(null, produtoArmazenado.getProduto().isControladoPorLote());
-                    
+
                     jsCodigoArmazem1.setValue(produtoArmazenado.getArmazem().getCodigo());
                     jtfNomeArmazem1.setText(produtoArmazenado.getArmazem().getDescricao());
                     jsProduto.setValue(produtoArmazenado.getProduto().getCodigo());
                     jtfNomeProduto.setText(produtoArmazenado.getProduto().getNome());
                     jsCodigoFornecedor.setValue(produtoArmazenado.getFornecedor().getIdFornecedor());
-                    jtfNomeFornecedor.setText(produtoArmazenado.getFornecedor().getNome()); 
-                    jsQtd.setValue(produtoArmazenado.getQuantidade());
+                    jtfNomeFornecedor.setText(produtoArmazenado.getFornecedor().getNome());
+                    //jsQtd.setValue(produtoArmazenado.getQuantidade());
+                    jftNotaFiscal.setText(Integer.toString(produtoArmazenado.getNotaFiscal()));
                     if (produtoArmazenado.getProduto().isControladoPorLote()) {
-                        
+                        jtfLote.setEnabled(true);
                         jtfLote.setText(produtoArmazenado.getLote());
-                        
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "limpar");
+                        //JOptionPane.showMessageDialog(null, "limpar");
                         jtfLote.setEnabled(false);
                         jtfLote.setText("");
                     }
@@ -600,10 +586,12 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     private void isEntrada(Boolean isEntrada) {
         if (isEntrada) {
             jrbEntrada.setSelected(true);
-            jrbSaida.setSelected(false);
+            jrbEntrada.setSelected(false);
+            alterarParaEntrada();
         } else {
             jrbEntrada.setSelected(false);
             jrbSaida.setSelected(true);
+            alterarParaSaida();
         }
     }
 
@@ -620,21 +608,25 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos necessários !", "Atenção!", 2);
             return;
         }
-JOptionPane.showMessageDialog(null, "Salvar!", "Atenção!", 2);
+
         //tenta inserir
         try {
 
-            
-            
-
             if (this.jrbEntrada.isSelected()) {
-                ProdutoArmazenado produtoArmazenado = carregarCampos();
+                produtoArmazenado = carregarCampos();
+                //if(produtoArmazenado.getProduto().getNome().equalsIgnoreCase(jtf))
                 ControladorProdutoArmazenado.inserirProduto(produtoArmazenado);
-            } else {
-                //update
-                produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble(""+jsQtd.getValue()))); 
-                ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
-            }
+                JOptionPane.showMessageDialog(null, "Entrada realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
+                limpar();
+            } else //da baixa se a quantidade for válida
+             if (produtoArmazenado.getQuantidade() >= Double.parseDouble(jsQtd.getValue().toString())) {
+                    produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble("" + jsQtd.getValue())));
+                    ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
+                    JOptionPane.showMessageDialog(null, "Saída realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
+                    limpar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não há quantidade suficiente no armazém para concluir a operação. ", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -653,5 +645,56 @@ JOptionPane.showMessageDialog(null, "Salvar!", "Atenção!", 2);
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return p;
+    }
+
+    private void limpar() {
+        this.jsCodigoArmazem1.setValue(0);
+        this.jsCodigoFornecedor.setValue(0);
+        this.jsProduto.setValue(0);
+        this.jsQtd.setValue(1);
+        this.jtfLote.setText("");
+        this.jtfNomeArmazem1.setText("");
+        this.jtfNomeFornecedor.setText("");
+        this.jtfNomeProduto.setText("");
+        this.jftNotaFiscal.setText("");
+    }
+
+    private void habilitaComponentes() {
+        this.jsCodigoArmazem1.setEnabled(true);
+        this.jsCodigoFornecedor.setEnabled(true);
+        this.jsProduto.setEnabled(true);
+        this.jsQtd.setEnabled(true);
+        this.jtfLote.setEnabled(true);
+        this.jtfNomeArmazem1.setEnabled(true);
+        this.jtfNomeFornecedor.setEnabled(true);
+        this.jtfNomeProduto.setEnabled(true);
+        this.jftNotaFiscal.setEnabled(true);
+        this.jbtnPesquisarArmazem.setEnabled(true);
+        this.jbtnPesquisarFornecedor.setEnabled(true);
+    }
+
+    private void desabilitaComponentes() {
+        this.jsCodigoArmazem1.setEnabled(false);
+        this.jsCodigoFornecedor.setEnabled(false);
+        this.jsProduto.setEnabled(false);
+        this.jtfLote.setEnabled(false);
+        this.jtfNomeArmazem1.setEnabled(false);
+        this.jtfNomeFornecedor.setEnabled(false);
+        this.jtfNomeProduto.setEnabled(false);
+        this.jftNotaFiscal.setEnabled(false);
+        this.jbtnPesquisarArmazem.setEnabled(false);
+        this.jbtnPesquisarFornecedor.setEnabled(false);
+    }
+
+    private void alterarParaEntrada() {
+        habilitaComponentes();
+        jrbEntrada.setSelected(true);
+        jrbSaida.setSelected(false);
+    }
+
+    private void alterarParaSaida() {
+        desabilitaComponentes();
+        jrbSaida.setSelected(true);
+        jrbEntrada.setSelected(false);
     }
 }
