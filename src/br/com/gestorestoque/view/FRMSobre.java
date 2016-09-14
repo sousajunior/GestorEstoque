@@ -110,6 +110,8 @@ public class FRMSobre extends javax.swing.JDialog {
   }
     
     private void hiperLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hiperLinkMouseClicked
+        this.jPanel1.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        this.hiperLink.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         URI uri = null;
         try {
             uri = new URI("https://github.com/CarlinhosSousaJunior/GestorEstoque");
@@ -117,6 +119,13 @@ public class FRMSobre extends javax.swing.JDialog {
             Logger.getLogger(FRMSobre.class.getName()).log(Level.SEVERE, null, ex);
         }
         open(uri);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FRMSobre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.jPanel1.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.hiperLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_hiperLinkMouseClicked
 
     private void hiperLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hiperLinkMouseEntered
