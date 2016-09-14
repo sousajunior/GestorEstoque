@@ -51,14 +51,7 @@ public class FRMInventario extends javax.swing.JDialog {
                 (e) -> {
                     btnLimparClicado();
                 }
-        );
-
-        jbtnPesquisarArmazem.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                pesquisaArmazem();
-            }
-        });
+        );        
 
         jbtnPesquisarProduto.addMouseListener(new MouseAdapter() {
             @Override
@@ -125,13 +118,19 @@ public class FRMInventario extends javax.swing.JDialog {
     private void pesquisaProduto() {
 
         FRMRelatorioSaldoEstoque frmSaldo = new FRMRelatorioSaldoEstoque(this, true);
+        frmSaldo.jbtEntradaProduto.setEnabled(false);
+        frmSaldo.jbtSaidaProduto.setEnabled(false);
+        frmSaldo.jbtnventario.setEnabled(false);
         frmSaldo.setVisible(true);
 
         frmSaldo.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
 
+                try{
+                produtoArmazenado = new ProdutoArmazenado();
                 produtoArmazenado = frmSaldo.produtoArmazenadoPesquisa;
+                
                 if (produtoArmazenado.getProduto().isControladoPorLote()) {
                     jtfLote.setEnabled(true);
                     jtfLote.setText(produtoArmazenado.getLote());
@@ -145,7 +144,13 @@ public class FRMInventario extends javax.swing.JDialog {
                 jtfNomeProduto.setText(produtoArmazenado.getProduto().getNome());
                 jsQtd.setValue(produtoArmazenado.getQuantidade());
 
+            }catch(Exception ex){
+                  //  System.out.println("Erro: "+ ex.getMessage());
             }
+            
+            
+        }
+            
         });
 
     }
@@ -196,7 +201,6 @@ public class FRMInventario extends javax.swing.JDialog {
         jsQtd = new javax.swing.JSpinner();
         jlArmazem1 = new javax.swing.JLabel();
         jtfNomeArmazem = new javax.swing.JTextField();
-        jbtnPesquisarArmazem = new javax.swing.JButton();
         jlProduto = new javax.swing.JLabel();
         jtfNomeProduto = new javax.swing.JTextField();
         jbtnPesquisarProduto = new javax.swing.JButton();
@@ -208,6 +212,7 @@ public class FRMInventario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inventário");
         setPreferredSize(new java.awt.Dimension(480, 380));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
@@ -239,7 +244,7 @@ public class FRMInventario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao3, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
@@ -265,12 +270,6 @@ public class FRMInventario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jtfNomeArmazem, gridBagConstraints);
-
-        jbtnPesquisarArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 18;
-        gridBagConstraints.gridy = 14;
-        jPanel1.add(jbtnPesquisarArmazem, gridBagConstraints);
 
         jlProduto.setText("Produto:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -380,7 +379,6 @@ public class FRMInventario extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtnLimpar;
-    private javax.swing.JButton jbtnPesquisarArmazem;
     private javax.swing.JButton jbtnPesquisarProduto;
     private javax.swing.JButton jbtnSalvar;
     private javax.swing.JLabel jlArmazem1;

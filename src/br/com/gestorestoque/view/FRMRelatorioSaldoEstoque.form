@@ -2776,6 +2776,9 @@
             <Property name="text" type="java.lang.String" value="Entrada de produto"/>
             <Property name="toolTipText" type="java.lang.String" value="Ir para tela de entrada de produto"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="21" insetsLeft="21" insetsBottom="21" insetsRight="21" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -2790,6 +2793,9 @@
             <Property name="text" type="java.lang.String" value="Invent&#xe1;rio"/>
             <Property name="toolTipText" type="java.lang.String" value="Ir para a tela de invent&#xe1;rio"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="21" insetsLeft="21" insetsBottom="21" insetsRight="21" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -2804,6 +2810,9 @@
             <Property name="text" type="java.lang.String" value="Sa&#xed;da de produto"/>
             <Property name="toolTipText" type="java.lang.String" value="Ir para tela de sa&#xed;da de produto"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="4" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="21" insetsLeft="21" insetsBottom="21" insetsRight="21" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -2932,7 +2941,7 @@
           </StatementProvider>
           <Parameters>
             <CodeExpression id="172_jbtEntradaProduto">
-              <CodeVariable name="jbtEntradaProduto" type="8194" declaredType="javax.swing.JButton"/>
+              <CodeVariable name="jbtEntradaProduto" type="8196" declaredType="javax.swing.JButton"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
                   <ComponentRef name="jbtEntradaProduto"/>
@@ -3003,7 +3012,7 @@
           </StatementProvider>
           <Parameters>
             <CodeExpression id="177_jbtnventario">
-              <CodeVariable name="jbtnventario" type="8194" declaredType="javax.swing.JButton"/>
+              <CodeVariable name="jbtnventario" type="8196" declaredType="javax.swing.JButton"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
                   <ComponentRef name="jbtnventario"/>
@@ -3074,7 +3083,7 @@
           </StatementProvider>
           <Parameters>
             <CodeExpression id="182_jbtSaidaProduto">
-              <CodeVariable name="jbtSaidaProduto" type="8194" declaredType="javax.swing.JButton"/>
+              <CodeVariable name="jbtSaidaProduto" type="8196" declaredType="javax.swing.JButton"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">
                   <ComponentRef name="jbtSaidaProduto"/>
