@@ -32,4 +32,64 @@ public class Movimentacao {
         this.idArmazem = idArmazem;
     }
 
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return the lote
+     */
+    public String getLote() {
+        return lote;
+    }
+
+    /**
+     * @return the qtd
+     */
+    public double getQtd() {
+        return qtd;
+    }
+
+    /**
+     * @return the notaFiscal
+     */
+    public int getNotaFiscal() {
+        return notaFiscal;
+    }
+
+    /**
+     * @return the tipoMovimentacao
+     */
+    public char getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    /**
+     * @return the data
+     */
+    public Date getData() {
+        return data;
+    }
+
+    /**
+     * @return the idProdutoArmazenado
+     */
+    public int getIdProdutoArmazenado() {
+        return idProdutoArmazenado;
+    }
+
+    /**
+     * @return the idArmazem
+     */
+    public int getIdArmazem() {
+        return idArmazem;
+    }
+
+    
+    
+    
+    
 }

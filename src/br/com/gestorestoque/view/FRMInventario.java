@@ -66,8 +66,49 @@ public class FRMInventario extends javax.swing.JDialog {
                 pesquisaProduto();
             }
         });
+        
+        //jdialogInventario
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (verificarComponentesPreenchidos()) {
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Há itens que não foram salvos!\n Deseja mesmo sair?", "Fechar", JOptionPane.YES_NO_OPTION, 3)) {
+                        dispose();
+                    }
+                } else {
+                    dispose();
+                }
+            }
+
+        });
 
     }
+    
+    private boolean verificarComponentesPreenchidos() {
+
+        if (!jtfNomeArmazem.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        if (!jtfArmazem.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        if (!jtfLote.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        if (jtfProduto.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        if (jtfNomeProduto.getText().equalsIgnoreCase("")) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     private void pesquisaArmazem() {
         FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);

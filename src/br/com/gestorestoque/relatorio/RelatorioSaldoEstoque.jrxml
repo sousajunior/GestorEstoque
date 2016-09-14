@@ -198,7 +198,7 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 			<textField>
 				<reportElement x="519" y="0" width="73" height="30" uuid="265694c6-9a8c-4621-9ce4-92be54899f29"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}.equals(Boolean.TRUE) ? "SIM" : "NÂO"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}.equals(Boolean.TRUE) ? "SIM" : "NÃO"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="592" y="0" width="100" height="30" uuid="11f00c3c-65db-4bb3-8ac5-643e35c26255"/>
