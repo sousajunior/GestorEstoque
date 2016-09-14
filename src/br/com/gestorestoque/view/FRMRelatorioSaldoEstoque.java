@@ -186,9 +186,9 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             if (columnIndex == 6) {
                 
                 if (produtoArmazenado.getProduto().isControladoPorLote()) {
-                    return "Sim";
+                    return "S";
                 } else {
-                    return "Não";
+                    return "N";
                 }
                 
             }
