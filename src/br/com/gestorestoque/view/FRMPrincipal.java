@@ -6,12 +6,8 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.util.FRMUtil;
-import com.alee.managers.notification.DisplayType;
-import com.alee.managers.notification.NotificationManager;
 import java.awt.Color;
-import java.awt.Cursor;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -98,6 +94,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmMovimentacao.setText("Estoque");
 
+        jmiEntrada.setBackground(new java.awt.Color(204, 204, 204));
         jmiEntrada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/entrada-16.png"))); // NOI18N
         jmiEntrada.setText("Entrada");
         jmMovimentacao.add(jmiEntrada);
@@ -159,11 +156,12 @@ public class FRMPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void menuMovimentacaoEntradaClicado(){
-        new FRMCadastroEntradaSaida(this, true, true).setVisible(true);
+        
+        new FRMCadastroEntradaSaida(this, true, true,"Entrada de produtos").setVisible(true);
     }
     
     private void menuMovimentacaoSaidaClicado() {
-         new FRMCadastroEntradaSaida(this, true, false).setVisible(true);
+         new FRMCadastroEntradaSaida(this, true, false,"Saída de produtos").setVisible(true);
     }
 
     private void menuCadastroInventarioClicado() {

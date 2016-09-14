@@ -8,14 +8,18 @@ package br.com.gestorestoque.view;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.model.Armazem;
+import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -30,11 +34,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     List<Armazem> armazens = new ArrayList<>();
     List<Armazem> armazensPesquisa = new ArrayList<>();
     TableModel modeloTabelaProdutoArmazenado;
-
+    ProdutoArmazenado produtoArmazenadoPesquisa;
     //Strings de pesquisa
     static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
     static final String validacaoNumerica = "0123456789,.";
     static final String validacaoNumericaInteiros = "0123456789";
+
+    Boolean somentePesquisa;
 
     /**
      * Creates new form FRMRelatorioSaldosEstoque
@@ -42,6 +48,17 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     public FRMRelatorioSaldoEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        somentePesquisa = false;
+        prepararComponentes();
+    }
+
+    /**
+     * Creates new form FRMRelatorioSaldosEstoque
+     */
+    public FRMRelatorioSaldoEstoque(java.awt.Dialog parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        somentePesquisa = true;
         prepararComponentes();
     }
 
@@ -137,32 +154,29 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             ProdutoArmazenado produtoArmazenado = produtosArmazenados.get(rowIndex);
 
             if (columnIndex == 0) {
-                return produtoArmazenado.getLote();
+                return produtoArmazenado.getCodigo();
             }
 
             if (columnIndex == 1) {
-                return produtoArmazenado.getProduto().getNome();
+                return produtoArmazenado.getLote();
             }
 
             if (columnIndex == 2) {
-                return produtoArmazenado.getFornecedor().getNome();
+                return produtoArmazenado.getProduto().getNome();
             }
 
             if (columnIndex == 3) {
-
-                return produtoArmazenado.getQuantidade();
+                return produtoArmazenado.getFornecedor().getNome();
 
             }
 
             if (columnIndex == 4) {
-
-                return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
+                return produtoArmazenado.getQuantidade();
 
             }
 
             if (columnIndex == 5) {
-
-                return produtoArmazenado.getArmazem().getDescricao();
+                return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
 
             }
 
@@ -178,11 +192,16 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (columnIndex == 7) {
 
-                return produtoArmazenado.getNotaFiscal();
+                return produtoArmazenado.getArmazem().getDescricao();
 
             }
 
             if (columnIndex == 8) {
+
+                return produtoArmazenado.getNotaFiscal();
+
+            }
+            if (columnIndex == 9) {
 
                 return produtoArmazenado.getProduto().getPreco();
 
@@ -202,32 +221,31 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         public String getColumnName(int column) {
 
             if (column == 0) {
-                return "Lote";
+                return "ID";
             }
 
             if (column == 1) {
 
-                return "Produto";
+                return "Lote";
             }
 
             if (column == 2) {
-                return "Fornecedor";
+                return "Produto";
             }
 
             if (column == 3) {
-
-                return "Saldo";
+                return "Fornecedor";
 
             }
 
             if (column == 4) {
 
-                return "Unidade de medida";
+                return "Saldo";
             }
 
             if (column == 5) {
 
-                return "Armazem";
+                return "Unidade de medida";
             }
             if (column == 6) {
 
@@ -236,10 +254,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             if (column == 7) {
 
-                return "Nota Fiscal";
+                return "Armazem";
             }
 
             if (column == 8) {
+
+                return "Nota Fiscal";
+            }
+
+            if (column == 9) {
 
                 return "Preço";
             }
@@ -257,6 +280,24 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         //Preparar Jtable de produtos
         atualizarTabelaProdutosArmazenados();
+
+        jtProdutosArmazenados.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    if (somentePesquisa) {
+                        produtoArmazenadoPesquisa = new ProdutoArmazenado(Integer.parseInt("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0)),
+                                "" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 1),
+                                Double.parseDouble("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 4)),
+                                Integer.parseInt("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 8)),
+                                procurarProduto("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 2)),
+                                procurarArmazem("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 7)));
+
+                        dispose();
+                    }
+                }
+            }
+        });
 
         //Limpar
         jbtLimparCamposPesquisa.addActionListener(
@@ -479,13 +520,36 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     }
 
+    private Produto procurarProduto(String produto) {
+
+        Produto produtoEncontrado = new Produto();
+        for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+            if (produtosArmazenado.getProduto().getNome().equals(produto)) {
+                return produtosArmazenado.getProduto();
+            }
+        }
+
+        return produtoEncontrado;
+    }
+
+    private Armazem procurarArmazem(String armazem) {
+        Armazem armazemEncontrado = new Armazem();
+        for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+            if (armazem.equals(produtosArmazenado.getArmazem().getDescricao())) {
+                return produtosArmazenado.getArmazem();
+            }
+        }
+
+        return armazemEncontrado;
+    }
+
     private void btnInventarioClicado() {
 
-        new FRMInventario(null, true).setVisible(true);
+        new FRMInventario(this, true).setVisible(true);
 
     }
 
-    private void btnPesquisarClicado() {
+    protected void btnPesquisarClicado() {
 
         produtosArmazenadosPesquisa = new ArrayList<>();
         filtrar();
@@ -494,11 +558,11 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     private void btnEntradaProdutoClicado() {
 
-        new FRMCadastroEntradaSaida(null, true, true).setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, true, "Entrada de produtos").setVisible(true);
     }
 
     private void btnSaidaProdutoClicado() {
-        new FRMCadastroEntradaSaida(null, true, false).setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, false, "Saída de produtos").setVisible(true);
     }
 
     private void itemComboCondicaoPrecoSelecionado() {
@@ -1903,7 +1967,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jcbCondicaoLote;
     private javax.swing.JComboBox<String> jcbCondicaoNotaFiscal;
     private javax.swing.JComboBox<String> jcbCondicaoPreco;
-    private javax.swing.JComboBox<String> jcbCondicaoProduto;
+    protected javax.swing.JComboBox<String> jcbCondicaoProduto;
     private javax.swing.JComboBox<String> jcbCondicaoSaldo;
     private javax.swing.JComboBox<String> jcbCondicaoUnidadeMedida;
     private javax.swing.JLabel jlArmazem;
@@ -1914,13 +1978,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private javax.swing.JLabel jluniadeMedida;
     private javax.swing.JPanel jpBaixo;
     private javax.swing.JPanel jpPesquisa;
-    private javax.swing.JTable jtProdutosArmazenados;
+    protected javax.swing.JTable jtProdutosArmazenados;
     private javax.swing.JTextField jtfArmazem;
     private javax.swing.JTextField jtfFornecedor;
     private javax.swing.JTextField jtfLote;
     private javax.swing.JTextField jtfNotaFiscal;
     private javax.swing.JTextField jtfPreco;
-    private javax.swing.JTextField jtfProduto;
+    protected javax.swing.JTextField jtfProduto;
     private javax.swing.JFormattedTextField jtfSaldo;
     private javax.swing.JTextField jtfUnidadeMedida;
     // End of variables declaration//GEN-END:variables

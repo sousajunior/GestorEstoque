@@ -52,6 +52,19 @@ public class ControladorProdutoArmazenado {
         CRUD.insert("produtoarmazenado", "null,'"+produto.getLote()+"',"+produto.getQuantidade()+","+produto.getNotaFiscal()+","+produto.getArmazem().getCodigo()+","+produto.getFornecedor().getIdFornecedor()+","+produto.getProduto().getCodigo()); 
     }
     
+     /**
+     * Executa o método update da classe CRUD, passando a tabela de produto, e os valores necessários para atualizar um produto que já está cadastrado na base de dados.
+     * é necessário informar via parâmetro a coluna a ser alterada, o valor para esta coluna, e a coluna e valor para a clausula where.
+     * @param valores
+     * @param valorWhere
+     * @throws SQLException 
+     */
+    public static void updateInventarioProdutoArmazenado(ProdutoArmazenado produtoArmazenado) throws SQLException{
+        
+        CRUD.update(nomeTabela, "quantidade = '"+produtoArmazenado.getQuantidade()+"'","idProdutoArmazenado",""+produtoArmazenado.getCodigo());
+        
+    }
+    
 //    /**
 //     * Executa o método update da classe CRUD, passando a tabela de produto, e os valores necessários para atualizar um produto que já está cadastrado na base de dados.
 //     * é necessário informar via parâmetro a coluna a ser alterada, o valor para esta coluna, e a coluna e valor para a clausula where.

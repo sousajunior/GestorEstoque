@@ -36,6 +36,15 @@ public class ProdutoArmazenado {
         this.armazem = armazem;
     }
     
+    public ProdutoArmazenado(int codigo,String Lote, double Quantidade, int NotaFiscal, Produto produto,  Armazem armazem) {
+        this.codigo = codigo;
+        this.Lote = Lote;
+        this.Quantidade = Quantidade;
+        this.NotaFiscal = NotaFiscal;
+        this.produto = produto;
+        this.armazem = armazem;
+    }
+    
     public ProdutoArmazenado() {
     }
     
