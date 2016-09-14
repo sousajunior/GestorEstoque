@@ -9,6 +9,9 @@ import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorFornecedor;
 import br.com.gestorestoque.controller.ControladorProduto;
+import br.com.gestorestoque.model.Produto;
+import br.com.gestorestoque.model.Armazem;
+import br.com.gestorestoque.model.Fornecedor;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -91,26 +94,28 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jftNotaFiscal = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(480, 380));
-        setPreferredSize(new java.awt.Dimension(480, 380));
+        setMinimumSize(new java.awt.Dimension(510, 380));
+        setPreferredSize(new java.awt.Dimension(510, 380));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 100));
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 300));
         jPanel1.setRequestFocusEnabled(false);
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
-        jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jPanel1.setLayout(jPanel1Layout);
 
         jlDescricao.setText("Lote:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao, gridBagConstraints);
+
+        jtfLote.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -135,14 +140,14 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jlDescricao2.setText("Nota Fiscal:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao2, gridBagConstraints);
 
         jlDescricao3.setText("Qtd:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao3, gridBagConstraints);
 
@@ -167,15 +172,16 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jsCodigoFornecedor, gridBagConstraints);
 
         jtfNomeFornecedor.setEditable(false);
+        jtfNomeFornecedor.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -185,29 +191,30 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jlFornecedor.setText("Fornecedor:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlFornecedor, gridBagConstraints);
 
         jlArmazem1.setText("Armazem:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlArmazem1, gridBagConstraints);
 
         jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jsCodigoArmazem1, gridBagConstraints);
 
         jtfNomeArmazem1.setEditable(false);
+        jtfNomeArmazem1.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -217,22 +224,23 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jlProduto.setText("Produto:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlProduto, gridBagConstraints);
 
         jsProduto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jsProduto, gridBagConstraints);
 
         jtfNomeProduto.setEditable(false);
+        jtfNomeProduto.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -242,26 +250,26 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jbtnPesquisarArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 6;
         jPanel1.add(jbtnPesquisarArmazem, gridBagConstraints);
 
         jbtnPesquisarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         jPanel1.add(jbtnPesquisarProduto, gridBagConstraints);
 
         jbtnPesquisarFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 8;
         jPanel1.add(jbtnPesquisarFornecedor, gridBagConstraints);
 
         jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jsQtd, gridBagConstraints);
@@ -269,7 +277,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jftNotaFiscal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         jPanel1.add(jftNotaFiscal, gridBagConstraints);
@@ -402,6 +410,95 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                 pesquisaProduto();
             }
         });
+
+        ChangeListener Produtolistener = (ChangeEvent e) -> {
+            try {
+                if(jsProduto.getValue().toString().equalsIgnoreCase("0"))
+                {
+                    jtfNomeProduto.setText("");
+                    return;
+                }
+                Produto p = ControladorProduto.selecionarProdutoPorCodigo(jsProduto.getValue().toString());
+                
+                if (p.getNome() == null) {
+                    JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum produto cadastrado!", "Atenção, produto inexistente!", JOptionPane.WARNING_MESSAGE);                    
+                    jtfNomeProduto.setText("");
+                    jsProduto.setValue(0);
+                    jsProduto.requestFocus();
+                }
+                else
+                {
+                    jtfNomeProduto.setText(p.getNome());
+                    if(p.isControladoPorLote())
+                    {
+                        jtfLote.setEnabled(true);
+                        jtfLote.setText("");
+                    }else{
+                        jtfLote.setEnabled(false);
+                        jtfLote.setText("");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
+        };
+        
+        ChangeListener ArmazemListener = (ChangeEvent e) -> {
+            
+            try {
+                if(this.jsCodigoArmazem1.getValue().toString().equalsIgnoreCase("0"))
+                {
+                    jtfNomeArmazem1.setText("");
+                    return;
+                }
+                Armazem a = ControladorArmazem.selecionarArmazemPorCodigo(jsCodigoArmazem1.getValue().toString());
+                
+                if (a.getDescricao() == null) {
+                    JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum armazém cadastrado!", "Atenção, armazém não existe!", JOptionPane.WARNING_MESSAGE);                    
+                    jtfNomeArmazem1.setText("");
+                    jsCodigoArmazem1.setValue(0);
+                    jsCodigoArmazem1.requestFocus();
+                }
+                else
+                {
+                    jtfNomeArmazem1.setText(a.getDescricao());                    
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        };
+        
+        ChangeListener FornecedorListener = (ChangeEvent e) -> {
+            
+            try {
+                if(this.jsCodigoFornecedor.getValue().toString().equalsIgnoreCase("0"))
+                {
+                    jtfNomeFornecedor.setText("");
+                    return;
+                }
+                Fornecedor f = ControladorFornecedor.selecionarFornecedorPorCodigo(Integer.parseInt(jsCodigoFornecedor.getValue().toString()));
+            
+                if (f.getNome()== null) {
+                    JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum fornecedor cadastrado!", "Atenção, fornecedor não existe!", JOptionPane.WARNING_MESSAGE);                    
+                    jtfNomeFornecedor.setText("");
+                    jsCodigoFornecedor.setValue(0);
+                    jsCodigoFornecedor.requestFocus();
+                }
+                else
+                {
+                    jtfNomeFornecedor.setText(f.getNome());                    
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        };
+        
+        jsProduto.addChangeListener(Produtolistener);
+        jsCodigoArmazem1.addChangeListener(ArmazemListener);
+        jsCodigoFornecedor.addChangeListener(FornecedorListener);
     }
 
     private void pesquisaArmazem() {
