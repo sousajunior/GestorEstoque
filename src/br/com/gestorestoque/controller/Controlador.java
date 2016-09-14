@@ -9,12 +9,12 @@ package br.com.gestorestoque.controller;
  *
  * @author DG
  */
-public interface Controlador {
+public interface Controlador<T>{
     //Interface ainda não implementada, os controladores devem deixar de serem 
     //estáticos e devem passar a implementar esta interface
-    public void inserir();
-    public void atualizarPorCodigo();
-    public void selecionarTudo();
-    public void selecionarPorCodigo();
-    public void deletar();
+    public T inserir(T objeto);
+    public T atualizarPorCodigo(T objeto);
+    public T selecionarTudo();
+    public T selecionarPorCodigo();
+    public T deletar();
 }
