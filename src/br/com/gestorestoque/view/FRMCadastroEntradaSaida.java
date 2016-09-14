@@ -35,8 +35,19 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     /**
      * Creates new form FRMCadastroEntrada
      */
-    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada) {
-        super(parent, modal);
+    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada, String title) {
+        super(parent, title, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        isEntrada(isEntrada);
+        prepararComponentes();
+    }
+
+    /**
+     * Creates new form FRMCadastroEntrada
+     */
+    public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada, String title) {
+        super(parent, title, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         isEntrada(isEntrada);
@@ -299,7 +310,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true);
+                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true, "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -340,27 +351,27 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void prepararComponentes() {
-        
+
         jrbEntrada.addActionListener(
                 (e) -> {
                     jrbEntrada.setSelected(true);
                     jrbSaida.setSelected(false);
                 }
         );
-        
+
         jrbSaida.addActionListener(
                 (e) -> {
                     jrbSaida.setSelected(true);
                     jrbEntrada.setSelected(false);
                 }
         );
-        
+
         jbtnSalvar.addActionListener(
                 (e) -> {
                     Salvar();
                 }
         );
-        
+
         jftNotaFiscal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -370,21 +381,21 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                 }
             }
         });
-        
+
         jbtnPesquisarArmazem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 pesquisaArmazem();
             }
         });
-        
+
         jbtnPesquisarFornecedor.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 pesquisaFornecedor();
             }
         });
-        
+
         jbtnPesquisarProduto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -392,7 +403,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             }
         });
     }
-    
+
     private void pesquisaArmazem() {
         FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);
         cadastroArmazem.setVisible(true);
@@ -404,7 +415,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             }
         });
     }
-    
+
     private void pesquisaFornecedor() {
         FRMCadastroFornecedor cadastroFornecedor = new FRMCadastroFornecedor(this, true);
         cadastroFornecedor.setVisible(true);
@@ -416,7 +427,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             }
         });
     }
-    
+
     private void pesquisaProduto() {
         FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
         cadastroProduto.setVisible(true);
@@ -428,7 +439,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             }
         });
     }
-    
+
     private void isEntrada(Boolean isEntrada) {
         if (isEntrada) {
             jrbEntrada.setSelected(true);
@@ -438,7 +449,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             jrbSaida.setSelected(true);
         }
     }
-    
+
     private void Salvar() {
         //valida os campos
         if (this.jtfLote.getText().equalsIgnoreCase("") || this.jsQtd.getValue().equals(0) || jftNotaFiscal.getText().equalsIgnoreCase("") || jsCodigoArmazem1.getValue().equals(0) || jsCodigoFornecedor.getValue().equals(0) || jsProduto.getValue().equals(0)) {
@@ -448,20 +459,19 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
         //tenta inserir
         try {
-                
+
             ProdutoArmazenado produtoArmazenado = carregarCampos();
-            
-            if(this.jrbEntrada.isSelected()){
+
+            if (this.jrbEntrada.isSelected()) {
                 ControladorProdutoArmazenado.inserirProduto(produtoArmazenado);
-            }else
-            {
+            } else {
                 //update
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private ProdutoArmazenado carregarCampos() {
         ProdutoArmazenado p = new ProdutoArmazenado();
         try {
