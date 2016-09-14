@@ -5,6 +5,15 @@
  */
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author DG
@@ -13,18 +22,34 @@ public class FRMRelatorio extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMRelatorio
+     * @param parent
+     * @param modal
+     * @param rs
      */
-    public FRMRelatorio(java.awt.Frame parent, boolean modal) {
+    public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS) {
         super(parent, modal);
         initComponents();
-        
-        vizualizarRelatorio();
+
+        vizualizarRelatorio(jrRS);
     }
 
-    private void vizualizarRelatorio(){
-        
+    private void vizualizarRelatorio(JRResultSetDataSource jrRS) {
+        try {
+            
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport("src/br/com/gestorestoque/relatorio/RelatorioSaldoEstoque.jasper", new HashMap(), jrRS);
+            JasperViewer jrViewer = new JasperViewer(jasperPrint, true);
+            jrViewer.setSize(1200, 700);
+            //Adicionando o relatorio no Jdialog  
+            this.getContentPane().add(jrViewer.getContentPane());
+            this.revalidate();
+            //Deixar True para exibir a tela no sistema  
+            //this.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:"+e.getMessage(),"Erro",0);
+        }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,19 +60,21 @@ public class FRMRelatorio extends javax.swing.JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Relatório");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1200, 700));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -64,23 +91,31 @@ public class FRMRelatorio extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRMRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRelatorio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRMRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRelatorio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRMRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRelatorio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRMRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRelatorio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JFrame(), true);
+                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

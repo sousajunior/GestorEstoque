@@ -134,6 +134,21 @@ public class CRUD {
        return executeSelect(sql);
     }
     
+    
+    /**
+     * Monta um script para selecionar os registros da tabela passada por parâmetro, de acordo com o id, que também é passado por parâmetro. 
+     * @param query
+     * @return
+     * @throws SQLException 
+     */
+    public static ResultSet  queryRelatorio(String query)throws SQLException{      
+        if(!query.equalsIgnoreCase("")){
+            return executeSelect(query);
+        }
+       
+       return null;
+    }
+    
     /**
      * Executa scripts como insert, update e delete, deve-se passar por parâmetro o script pronto para a execução.
      * @param script

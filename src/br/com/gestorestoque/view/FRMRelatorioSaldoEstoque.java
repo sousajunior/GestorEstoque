@@ -22,13 +22,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 /**
  *
  * @author Carlinhos
  */
 public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
-
+    
     List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
     List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
     List<Armazem> armazens = new ArrayList<>();
@@ -39,7 +40,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
     static final String validacaoNumerica = "0123456789,.";
     static final String validacaoNumericaInteiros = "0123456789";
-
+    
     Boolean somentePesquisa;
 
     /**
@@ -70,7 +71,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
      * @return
      */
     private List<ProdutoArmazenado> getProdutosArmazenados() {
-
+        
         produtosArmazenados = new ArrayList<>();
         try {
             produtosArmazenados = ControladorProdutoArmazenado.selecionarTodosProdutosArmazenados();
@@ -78,7 +79,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return null;
     }
 
@@ -90,7 +91,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
      * @return
      */
     private List<Armazem> getArmazens() {
-
+        
         armazens = new ArrayList<>();
         try {
             armazens = ControladorArmazem.selecionarTodosArmazens();
@@ -98,7 +99,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return null;
     }
 
@@ -106,12 +107,12 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
      * Classe interna que define o TableModel da tabela de Armazém.
      */
     private class ProdutoArmazenadoTableModel extends AbstractTableModel {
-
+        
         public final List<ProdutoArmazenado> produtosArmazenados;
-
+        
         public ProdutoArmazenadoTableModel(List<ProdutoArmazenado> produtosProdutoArmazenadosList) {
             this.produtosArmazenados = produtosProdutoArmazenadosList;
-
+            
         }
 
         /**
@@ -145,68 +146,68 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
          */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-
+            
             if (rowIndex < 0 | rowIndex >= produtosArmazenados.size()) {
                 return null;
-
+                
             }
-
+            
             ProdutoArmazenado produtoArmazenado = produtosArmazenados.get(rowIndex);
-
+            
             if (columnIndex == 0) {
                 return produtoArmazenado.getCodigo();
             }
-
+            
             if (columnIndex == 1) {
                 return produtoArmazenado.getLote();
             }
-
+            
             if (columnIndex == 2) {
                 return produtoArmazenado.getProduto().getNome();
             }
-
+            
             if (columnIndex == 3) {
                 return produtoArmazenado.getFornecedor().getNome();
-
+                
             }
-
+            
             if (columnIndex == 4) {
                 return produtoArmazenado.getQuantidade();
-
+                
             }
-
+            
             if (columnIndex == 5) {
                 return produtoArmazenado.getProduto().getUnidadeMedida().getAbreviacao();
-
+                
             }
-
+            
             if (columnIndex == 6) {
-
+                
                 if (produtoArmazenado.getProduto().isControladoPorLote()) {
                     return "S";
                 } else {
                     return "N";
                 }
-
+                
             }
-
+            
             if (columnIndex == 7) {
-
+                
                 return produtoArmazenado.getArmazem().getDescricao();
-
+                
             }
-
+            
             if (columnIndex == 8) {
-
+                
                 return produtoArmazenado.getNotaFiscal();
-
+                
             }
             if (columnIndex == 9) {
-
+                
                 return produtoArmazenado.getProduto().getPreco();
-
+                
             }
-
+            
             return null;
         }
 
@@ -219,57 +220,57 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
          */
         @Override
         public String getColumnName(int column) {
-
+            
             if (column == 0) {
                 return "ID";
             }
-
+            
             if (column == 1) {
-
+                
                 return "Lote";
             }
-
+            
             if (column == 2) {
                 return "Produto";
             }
-
+            
             if (column == 3) {
                 return "Fornecedor";
-
+                
             }
-
+            
             if (column == 4) {
-
+                
                 return "Saldo";
             }
-
+            
             if (column == 5) {
-
+                
                 return "Unidade de medida";
             }
             if (column == 6) {
-
+                
                 return "Controlado por lote";
             }
-
+            
             if (column == 7) {
-
+                
                 return "Armazem";
             }
-
+            
             if (column == 8) {
-
+                
                 return "Nota Fiscal";
             }
-
+            
             if (column == 9) {
-
+                
                 return "Preço";
             }
-
+            
             return null;
         }
-
+        
     }
 
     /**
@@ -280,7 +281,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         //Preparar Jtable de produtos
         atualizarTabelaProdutosArmazenados();
-
+        
         jtProdutosArmazenados.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -292,13 +293,23 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                                 Integer.parseInt("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 8)),
                                 procurarProduto("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 2)),
                                 procurarArmazem("" + modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 7)));
-
+                        
                         dispose();
                     }
                 }
             }
         });
 
+        //Relatório
+        jbtGerarRelatorio.addActionListener(
+                (e) -> {
+                    try {
+                        btnGerarRelatorioClicado();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        );
         //Limpar
         jbtLimparCamposPesquisa.addActionListener(
                 (e) -> {
@@ -392,120 +403,138 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         //listener do campo de lote
         jtfLote.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de produto
         jtfProduto.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de fornecedor
         jtfFornecedor.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de quantidade(saldo)
         jtfSaldo.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de notafiscal
         jtfNotaFiscal.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de unidade de medida
         jtfUnidadeMedida.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de armazem
         jtfArmazem.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
 
         //listener do campo de preço
         jtfPreco.addKeyListener(new KeyAdapter() {
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
-
+                
             }
-
+            
         });
-
+        
     }
-
+    
+    private void btnGerarRelatorioClicado() throws SQLException {
+        
+        if (modeloTabelaProdutoArmazenado.getRowCount() > 0) {
+            String codigosProdutosArmazenados = "";
+            for (int i = 0; i < modeloTabelaProdutoArmazenado.getRowCount(); i++) {
+                codigosProdutosArmazenados += " "+modeloTabelaProdutoArmazenado.getValueAt(i, 0) + ",";
+               // System.out.println(" "+modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0) + ",");
+               // System.out.println(codigosProdutosArmazenados);
+            }
+            if (codigosProdutosArmazenados.length() > 0) {
+                
+                new FRMRelatorio(this, true, new JRResultSetDataSource(ControladorProdutoArmazenado.selecionarParaRelatorio(codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1)))).setVisible(true);
+                
+            }
+        }
+        
+    }
+    
     private void btnLimparClicado() {
-
+        
         this.jcbCondicaoLote.setSelectedIndex(0);
         this.jcbCondicaoProduto.setSelectedIndex(0);
         this.jcbCondicaoFornecedor.setSelectedIndex(0);
@@ -514,24 +543,24 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoNotaFiscal.setSelectedIndex(0);
         this.jcbCondicaoPreco.setSelectedIndex(0);
         this.jcbCondicaoUnidadeMedida.setSelectedIndex(0);
-
+        
         atualizarTabelaProdutosArmazenados();
         produtosArmazenadosPesquisa = new ArrayList<>();
-
+        
     }
-
+    
     private Produto procurarProduto(String produto) {
-
+        
         Produto produtoEncontrado = new Produto();
         for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
             if (produtosArmazenado.getProduto().getNome().equals(produto)) {
                 return produtosArmazenado.getProduto();
             }
         }
-
+        
         return produtoEncontrado;
     }
-
+    
     private Armazem procurarArmazem(String armazem) {
         Armazem armazemEncontrado = new Armazem();
         for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
@@ -539,120 +568,120 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 return produtosArmazenado.getArmazem();
             }
         }
-
+        
         return armazemEncontrado;
     }
-
+    
     private void btnInventarioClicado() {
-
+        
         new FRMInventario(this, true).setVisible(true);
-
+        
     }
-
+    
     protected void btnPesquisarClicado() {
-
+        
         produtosArmazenadosPesquisa = new ArrayList<>();
         filtrar();
-
+        
     }
-
+    
     private void btnEntradaProdutoClicado() {
-
+        
         new FRMCadastroEntradaSaida(this, true, true, "Entrada de produtos").setVisible(true);
     }
-
+    
     private void btnSaidaProdutoClicado() {
         new FRMCadastroEntradaSaida(this, true, false, "Saída de produtos").setVisible(true);
     }
-
+    
     private void itemComboCondicaoPrecoSelecionado() {
-
+        
         if (this.jcbCondicaoPreco.getSelectedIndex() == 0) {
             this.jtfPreco.setText("");
             this.jtfPreco.setEnabled(false);
         } else {
             this.jtfPreco.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoUnidadeMedidaSelecionado() {
-
+        
         if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 0) {
             this.jtfUnidadeMedida.setText("");
             this.jtfUnidadeMedida.setEnabled(false);
         } else {
             this.jtfUnidadeMedida.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoLoteSelecionado() {
-
+        
         if (this.jcbCondicaoLote.getSelectedIndex() == 0) {
             this.jtfLote.setText("");
             this.jtfLote.setEnabled(false);
         } else {
             this.jtfLote.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoProdutoSelecionado() {
-
+        
         if (this.jcbCondicaoProduto.getSelectedIndex() == 0) {
             this.jtfProduto.setText("");
             this.jtfProduto.setEnabled(false);
         } else {
             this.jtfProduto.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoFornecedorSelecionado() {
-
+        
         if (this.jcbCondicaoFornecedor.getSelectedIndex() == 0) {
             this.jtfFornecedor.setText("");
             this.jtfFornecedor.setEnabled(false);
         } else {
             this.jtfFornecedor.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoSaldoSelecionado() {
-
+        
         if (this.jcbCondicaoSaldo.getSelectedIndex() == 0) {
             this.jtfSaldo.setText("");
             this.jtfSaldo.setEnabled(false);
         } else {
             this.jtfSaldo.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoNotaFiscalSelecionado() {
-
+        
         if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 0) {
             this.jtfNotaFiscal.setText("");
             this.jtfNotaFiscal.setEnabled(false);
         } else {
             this.jtfNotaFiscal.setEnabled(true);
         }
-
+        
     }
-
+    
     private void itemComboCondicaoArmazemSelecionado() {
-
+        
         if (this.jcbCondicaoArmazem.getSelectedIndex() == 0) {
             this.jtfArmazem.setText("");
             this.jtfArmazem.setEnabled(false);
         } else {
             this.jtfArmazem.setEnabled(true);
         }
-
+        
     }
-
+    
     private void filtrar() {
 
         //Filtro por lote
@@ -676,13 +705,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                                 //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
 
                     //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
@@ -699,11 +728,11 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
 
                     //remove os itens da segunda lista
@@ -711,7 +740,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                     //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
 
                 //quando o item (é igual a), e selecionado no combo de filtro por lote
@@ -731,13 +760,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                                 //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
 
                     // se a lista de pesquisa nao estiver vazia
@@ -754,11 +783,11 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                                 //adiciona o item que encontrou na terceira lista
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
 
                     //remove os itens da segunda lista
@@ -766,766 +795,766 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
                     //e atualiza com o que existe na terceira lista
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----Produto
         //Filtro por produto
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoProduto.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoProduto.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoProduto.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----Unidade de medida
         //Filtro por unidade de medida
         //Verificar se o combo de condição por unidade de medida não está ocm o traço selecionado
         if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(jtfUnidadeMedida.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-
+                    
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoUnidadeMedida.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(jtfUnidadeMedida.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----Fornecedor
         //Filtro por fornecedor
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoFornecedor.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoFornecedor.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().contains(jtfFornecedor.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoFornecedor.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(jtfFornecedor.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-
+                    
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----NotaFiscal
         //Filtro por NotaFiscal
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-
+                        
                         if (nf.contains(jtfNotaFiscal.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-
+                        
                         if (nf.contains(jtfNotaFiscal.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-
+                        
                         if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         String nf = "" + produtosArmazenado.getNotaFiscal();
-
+                        
                         if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----Saldo
         //Filtro por Saldo
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoSaldo.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoSaldo.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 3) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getQuantidade() > Double.parseDouble(jtfSaldo.getText()) || produtosArmazenado.getQuantidade() == Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 4) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getQuantidade() < Double.parseDouble(jtfSaldo.getText())) {
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoSaldo.getSelectedIndex() == 5) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getQuantidade() <= Double.parseDouble(jtfSaldo.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //----preco
         //Filtro por preco
         //Verificar se o combo de condição por produto não está ocm o traço selecionado
         if (this.jcbCondicaoPreco.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoPreco.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
-
+                    
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 3) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() > Double.parseDouble(jtfPreco.getText()) || produtosArmazenado.getProduto().getPreco() == Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 4) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() < Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoPreco.getSelectedIndex() == 5) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().getPreco() <= Double.parseDouble(jtfPreco.getText())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //Filtro por armazem
         //Verificar se o combo de condição por armazem não está ocm o traço selecionado
         if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
-
+            
             if (this.jcbCondicaoArmazem.getSelectedIndex() == 1) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(this.jtfArmazem.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().contains(jtfArmazem.getText().toUpperCase())) {
-
+                            
                             produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             } else if (this.jcbCondicaoArmazem.getSelectedIndex() == 2) {
-
+                
                 if (produtosArmazenadosPesquisa.isEmpty()) {
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
-
+                        
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
-
+                            
                             if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-
+                                
                                 produtosArmazenadosPesquisa.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                 } else {
-
+                    
                     List<ProdutoArmazenado> produtosArmazenadosPesquisa2 = new ArrayList<>();
-
+                    
                     for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-
+                        
                         if (produtosArmazenado.getProduto().isControladoPorLote()) {
-
+                            
                             if (produtosArmazenado.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-
+                                
                                 produtosArmazenadosPesquisa2.add(produtosArmazenado);
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                     produtosArmazenadosPesquisa.removeAll(produtosArmazenadosPesquisa);
                     produtosArmazenadosPesquisa = produtosArmazenadosPesquisa2;
-
+                    
                 }
-
+                
             }
-
+            
         }
 
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaProdutosArmazenadosComPesquisa();
-
+        
     }
-
+    
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
-
+        
         for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
             //System.out.println(produtosArmazenado.getLote());
 
         }
-
+        
     }
 
     /**
@@ -1578,6 +1607,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         jtfPreco = new javax.swing.JTextField();
         jcbCondicaoPreco = new javax.swing.JComboBox<>();
         jbtPesquisar = new javax.swing.JButton();
+        jbtGerarRelatorio = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jbtEntradaProduto = new javax.swing.JButton();
         jbtnventario = new javax.swing.JButton();
@@ -1590,8 +1620,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jpBaixo.setLayout(new java.awt.GridBagLayout());
 
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 250));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 250));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 230));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 230));
 
         jtProdutosArmazenados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1618,7 +1648,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(22, 5, 15, 5);
+        gridBagConstraints.insets = new java.awt.Insets(9, 5, 2, 5);
         jpBaixo.add(jScrollPane1, gridBagConstraints);
 
         getContentPane().add(jpBaixo, java.awt.BorderLayout.PAGE_END);
@@ -1863,8 +1893,16 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = -3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 5, 16, 5);
+        gridBagConstraints.insets = new java.awt.Insets(9, 0, 2, 0);
         jPanel1.add(jpPesquisa, gridBagConstraints);
+
+        jbtGerarRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtGerarRelatorio.setToolTipText("Gerar relatório com os dados atuais da tabela.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 5);
+        jPanel1.add(jbtGerarRelatorio, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1958,6 +1996,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtEntradaProduto;
+    private javax.swing.JButton jbtGerarRelatorio;
     private javax.swing.JButton jbtLimparCamposPesquisa;
     private javax.swing.JButton jbtPesquisar;
     private javax.swing.JButton jbtSaidaProduto;

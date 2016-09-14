@@ -32,8 +32,7 @@ where pa.fornecedor_idFornecedor = f.idFornecedor
 and pa.produto_codigoProduto = p.codigoProduto
 and p.unidadeMedida_idunidadeMedida = um.idunidadeMedida
 and pa.armazem_codigoArmazem = a.codigoArmazem
-and pa.idprodutoArmazenado in(1,2)
-]]>
+/*and pa.idprodutoArmazenado in(1,2)*/]]>
 	</queryString>
 	<field name="PRODUTO" class="java.lang.String"/>
 	<field name="LOTE" class="java.lang.String">
@@ -111,7 +110,7 @@ and pa.idprodutoArmazenado in(1,2)
 						<text><![CDATA[NOTA FISCAL]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="692" y="0" width="100" height="37" forecolor="#FFFFFF" uuid="139fd805-2c75-4902-89bb-32b0b1eb890c"/>
+						<reportElement x="692" y="0" width="110" height="37" forecolor="#FFFFFF" uuid="139fd805-2c75-4902-89bb-32b0b1eb890c"/>
 						<textElement verticalAlignment="Middle">
 							<font fontName="Tahoma" size="11" isBold="true"/>
 						</textElement>
@@ -121,59 +120,13 @@ and pa.idprodutoArmazenado in(1,2)
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="6"/>
+			<band height="44"/>
 		</groupFooter>
 	</group>
 	<group name="Group2">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
 		<groupHeader>
-			<band height="30">
-				<textField>
-					<reportElement x="0" y="0" width="100" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{PRODUTO}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="102" y="0" width="100" height="30" uuid="063389d4-922b-4fb0-a0fc-cbf76e6ad4f1"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="202" y="0" width="100" height="30" uuid="e4f055c6-3406-4c3a-ba66-950877ca95b5"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{FORNECEDOR}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="302" y="0" width="100" height="30" uuid="c3bc9d3c-9190-44ff-be47-4a19818f62db"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="402" y="0" width="31" height="30" uuid="87679c67-6a69-40e7-99f6-d0fb02a2ab52"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{UM}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="433" y="0" width="96" height="30" uuid="b2986598-66c6-42e8-b678-300090fc07f9"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{ARMAZEM}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="519" y="0" width="73" height="30" uuid="265694c6-9a8c-4621-9ce4-92be54899f29"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="592" y="0" width="100" height="30" uuid="11f00c3c-65db-4bb3-8ac5-643e35c26255"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="692" y="0" width="100" height="30" uuid="0fd20f54-0f6a-4372-810b-5af109bd9c36"/>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band height="4"/>
 		</groupHeader>
 	</group>
 	<background>
@@ -211,10 +164,56 @@ and pa.idprodutoArmazenado in(1,2)
 		<band height="26" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="101" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRODUTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="0" width="100" height="30" uuid="063389d4-922b-4fb0-a0fc-cbf76e6ad4f1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="0" width="100" height="30" uuid="e4f055c6-3406-4c3a-ba66-950877ca95b5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FORNECEDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="100" height="30" uuid="c3bc9d3c-9190-44ff-be47-4a19818f62db"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="0" width="31" height="30" uuid="87679c67-6a69-40e7-99f6-d0fb02a2ab52"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{UM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="0" width="86" height="30" uuid="b2986598-66c6-42e8-b678-300090fc07f9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ARMAZEM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="519" y="0" width="73" height="30" uuid="265694c6-9a8c-4621-9ce4-92be54899f29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}.equals(Boolean.TRUE) ? "SIM" : "NÂO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="592" y="0" width="100" height="30" uuid="11f00c3c-65db-4bb3-8ac5-643e35c26255"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="692" y="0" width="110" height="30" uuid="0fd20f54-0f6a-4372-810b-5af109bd9c36"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6d7e9c91-94e8-4867-aa4d-d3e60369b9fc"/>
 				<graphicElement>
