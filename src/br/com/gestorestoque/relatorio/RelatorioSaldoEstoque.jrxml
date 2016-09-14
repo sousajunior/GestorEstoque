@@ -144,7 +144,7 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 					<text><![CDATA[Relatório de saldo de estoque]]></text>
 				</staticText>
 			</frame>
-			<image>
+			<image>     
 				<reportElement x="2" y="0" width="99" height="95" uuid="141f1241-d4f9-412c-a688-e0f1ca39c341"/>
 				<imageExpression><![CDATA["src\\br\\com\\gestorestoque\\view\\Imagens\\iconeGestao.png"]]></imageExpression>
 			</image>
