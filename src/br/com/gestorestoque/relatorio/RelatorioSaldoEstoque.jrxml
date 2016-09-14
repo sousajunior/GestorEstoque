@@ -146,7 +146,7 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 			</frame>
 			<image>
 				<reportElement x="2" y="0" width="99" height="95" uuid="141f1241-d4f9-412c-a688-e0f1ca39c341"/>
-				<imageExpression><![CDATA["D:\\Ciência da computação\\4 Semestre\\POO 2\\M1\\GestorEstoque\\src\\br\\com\\gestorestoque\\view\\Imagens\\iconeGestao.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\br\\com\\gestorestoque\\view\\Imagens\\iconeGestao.png"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="658" y="112" width="144" height="20" forecolor="#A42429" uuid="9e392f25-cc8a-4711-afa4-5c6317207b4c"/>
