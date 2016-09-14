@@ -178,7 +178,6 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jPanel1.add(jsCodigoFornecedor, gridBagConstraints);
 
         jtfNomeFornecedor.setEditable(false);
-        jtfNomeFornecedor.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 8;
@@ -211,7 +210,6 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jPanel1.add(jsCodigoArmazem1, gridBagConstraints);
 
         jtfNomeArmazem1.setEditable(false);
-        jtfNomeArmazem1.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 6;
@@ -237,7 +235,6 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jPanel1.add(jsProduto, gridBagConstraints);
 
         jtfNomeProduto.setEditable(false);
-        jtfNomeProduto.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 4;
