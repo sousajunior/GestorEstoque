@@ -10,5 +10,6 @@ package br.com.gestorestoque.controller;
  * @author DG
  */
 public interface Controlador {
-    
+    //Interface ainda não implementada, os controladores devem deixar de serem 
+    //estáticos e devem passar a implementar esta interface 
 }
