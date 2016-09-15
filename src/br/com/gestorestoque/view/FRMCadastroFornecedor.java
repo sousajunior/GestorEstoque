@@ -38,7 +38,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     TableModel modeloTabelaFornecedor;
     Fornecedor fornecedorAlterarExcluir;
     Boolean somentePesquisa;
-
+    ControladorFornecedor ctrlFornecedor;
     /**
      * Creates new form FRMCadastroProduto
      */
@@ -57,6 +57,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     public void initialize() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.ctrlFornecedor = new ControladorFornecedor();
         prepararComponentes();
     }
 
@@ -71,7 +72,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
 
         List<Fornecedor> fornecedor = new ArrayList<>();
         try {
-            fornecedor = ControladorFornecedor.selecionarTodosFornecedores();
+            fornecedor = this.ctrlFornecedor.selecionarTodos();
             return fornecedor;
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -359,7 +360,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
             if (!this.jtfNome.getText().equalsIgnoreCase("") && (!this.jfCPF.getText().equalsIgnoreCase("   .   .   -  ") || (!this.jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")))) {
 
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
-                    ControladorFornecedor.deleteFornececor(fornecedorAlterarExcluir);
+                    this.ctrlFornecedor.deletar(fornecedorAlterarExcluir);
                     atualizaFornecedor();
                 }
 
@@ -394,12 +395,12 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
 
                 //decide se vai fazer update ou insert
                 if (fornecedorAlterarExcluir == null) {
-                    ControladorFornecedor.inserirFornecedor(fornecedor);
+                    this.ctrlFornecedor.inserir(fornecedor);
                     btnLimparClicado();
 
                 } else {
-
-                    ControladorFornecedor.updateFornecedorPorId("nome = '" + fornecedor.getNome() + "', cpf = '" + fornecedor.getCpf() + "', cnpj= '" + fornecedor.getCnpj() + "'", Integer.toString(fornecedorAlterarExcluir.getIdFornecedor()));
+                    fornecedor.setIdFornecedor(fornecedorAlterarExcluir.getIdFornecedor());
+                    this.ctrlFornecedor.atualizarPorCodigo(fornecedor); 
                     btnLimparClicado();
                 }
                 atualizaFornecedor();

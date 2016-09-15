@@ -34,6 +34,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     UnidadeMedida unidadeMedidaSelecionada;
     List<UnidadeMedida> unidadesMedida = new ArrayList<>();
     Boolean somentePesquisa;
+    ControladorProduto ctrlProduto;
 
     /**
      * Creates new form FRMCadastroProduto
@@ -54,7 +55,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
+        this.ctrlProduto = new ControladorProduto();
         prepararComponentes();
+
     }
 
     /**
@@ -68,7 +71,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
         produtos = new ArrayList<>();
         try {
-            produtos = ControladorProduto.selecionarTodosProdutos();
+            produtos = this.ctrlProduto.selecionarTodos();
             return produtos;
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -418,7 +421,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
             if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfPreco.getText().equalsIgnoreCase("")) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
-                    ControladorProduto.deletarProduto(produtoAlterarExcluir);
+                    this.ctrlProduto.deletar(produtoAlterarExcluir);
                     atualizarTabelaProdutos();
                 }
             } else {
@@ -443,7 +446,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 if (produtoAlterarExcluir == null) {
 
                     //produto = procurarProdutoNaLista(produto.getDescricao());
-                    ControladorProduto.inserirProduto(new Produto(this.jtfNome.getText(),
+                    this.ctrlProduto.inserir(new Produto(this.jtfNome.getText(),
                             jcbControladoPorLote.isSelected(),
                             Double.parseDouble(this.jtfQtdMinima.getText()),
                             Double.parseDouble(this.jtfPreco.getText()),
@@ -457,7 +460,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                     produtoAlterarExcluir.setQuantidadeMinima(Double.parseDouble(this.jtfQtdMinima.getText()));
                     produtoAlterarExcluir.setUnidadeMedida(unidadeMedidaSelecionada);
 
-                    ControladorProduto.updateProdutoPorCodigo(produtoAlterarExcluir);
+                    this.ctrlProduto.atualizarPorCodigo(produtoAlterarExcluir);
                 }
                 atualizarTabelaProdutos();
             } else {
@@ -515,7 +518,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jlPreco = new javax.swing.JLabel();
         jtfPreco = new javax.swing.JTextField();
         jlUnidadeMedida = new javax.swing.JLabel();
-        jcbUnidadeMedida = new javax.swing.JComboBox<>();
+        jcbUnidadeMedida = new javax.swing.JComboBox<String>();
         jbtnSalvar = new javax.swing.JButton();
         jbtnLimpar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
@@ -526,6 +529,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(584, 443));
         setPreferredSize(new java.awt.Dimension(806, 448));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setName(""); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 200));
@@ -645,7 +649,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         jPanel1.add(jlUnidadeMedida, gridBagConstraints);
 
-        jcbUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        jcbUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         jcbUnidadeMedida.setToolTipText("Selecione uma unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
