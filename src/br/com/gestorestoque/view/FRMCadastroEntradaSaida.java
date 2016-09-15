@@ -5,6 +5,7 @@
  */
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.controller.Controlador;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorFornecedor;
@@ -33,16 +34,14 @@ import javax.swing.event.ChangeListener;
 public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
-
+    ControladorProduto ctrlProduto;
+    ControladorFornecedor ctrlFornecedor;
     /**
      * Creates new form FRMCadastroEntrada
      */
     public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada, String title) {
         super(parent, title, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
-        isEntrada(isEntrada);
-        prepararComponentes();
+        initialize(isEntrada);
     }
 
     /**
@@ -50,9 +49,15 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
      */
     public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada, String title) {
         super(parent, title, modal);
+        initialize(isEntrada);
+    }
+
+    private void initialize(boolean isEntrada) {
         initComponents();
         this.setLocationRelativeTo(null);
         isEntrada(isEntrada);
+        this.ctrlProduto = new ControladorProduto();
+        this.ctrlFornecedor = new ControladorFornecedor();
         prepararComponentes();
     }
 
@@ -423,7 +428,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                     jtfNomeProduto.setText("");
                     return;
                 }
-                Produto p = ControladorProduto.selecionarProdutoPorCodigo(jsProduto.getValue().toString());
+                Produto p = this.ctrlProduto.selecionarPorCodigo(Integer.parseInt(jsProduto.getValue().toString()));
 
                 if (p.getNome() == null) {
                     JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum produto cadastrado!", "Atenção, produto inexistente!", JOptionPane.WARNING_MESSAGE);
@@ -478,7 +483,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                     jtfNomeFornecedor.setText("");
                     return;
                 }
-                Fornecedor f = ControladorFornecedor.selecionarFornecedorPorCodigo(Integer.parseInt(jsCodigoFornecedor.getValue().toString()));
+                Fornecedor f = this.ctrlFornecedor.selecionarPorCodigo(Integer.parseInt(jsCodigoFornecedor.getValue().toString()));
 
                 if (f.getNome() == null) {
                     JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum fornecedor cadastrado!", "Atenção, fornecedor não existe!", JOptionPane.WARNING_MESSAGE);
@@ -659,8 +664,8 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             p.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
             p.setNotaFiscal(Integer.parseInt(jftNotaFiscal.getText()));
             p.setArmazem(ControladorArmazem.selecionarArmazemPorCodigo(this.jsCodigoArmazem1.getValue().toString()));
-            p.setProduto(ControladorProduto.selecionarProdutoPorCodigo(this.jsProduto.getValue().toString()));
-            p.setFornecedor(ControladorFornecedor.selecionarFornecedorPorCodigo(Integer.parseInt(this.jsCodigoFornecedor.getValue().toString())));
+            p.setProduto(new ControladorProduto().selecionarPorCodigo(Integer.parseInt(this.jsProduto.getValue().toString())));
+            p.setFornecedor(this.ctrlFornecedor.selecionarPorCodigo(Integer.parseInt(this.jsCodigoFornecedor.getValue().toString())));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
         }

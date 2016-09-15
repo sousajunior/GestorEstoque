@@ -28,21 +28,30 @@ public class ControladorProdutoArmazenado {
      * @throws SQLException
      */
     public static List<ProdutoArmazenado> selecionarTodosProdutosArmazenados() throws SQLException {
-
+        
         List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
 
         ResultSet rs = CRUD.select(nomeTabela);
 
         while (rs.next()) {
-            ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado(rs.getInt("idProdutoArmazenado"), rs.getString("lote"), rs.getDouble("quantidade"), rs.getInt("notaFiscal"), ControladorProduto.selecionarProdutoPorCodigo("" + rs.getInt("produto_codigoProduto")), ControladorFornecedor.selecionarFornecedorPorCodigo(rs.getInt("fornecedor_idFornecedor")), ControladorArmazem.selecionarArmazemPorCodigo("" + rs.getInt("armazem_codigoArmazem")));
+            ProdutoArmazenado produtoArmazenado
+                    = new ProdutoArmazenado(
+                            rs.getInt("idProdutoArmazenado"),
+                            rs.getString("lote"),
+                            rs.getDouble("quantidade"),
+                            rs.getInt("notaFiscal"),
+                            new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
+                            new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
+                            ControladorArmazem.selecionarArmazemPorCodigo("" + rs.getInt("armazem_codigoArmazem"))
+                    );
             produtosArmazenados.add(produtoArmazenado);
         }
 
         return produtosArmazenados;
 
     }
-    
-    public static ProdutoArmazenado selecionarPorLote()throws SQLException{
+
+    public static ProdutoArmazenado selecionarPorLote() throws SQLException {
         ProdutoArmazenado p = new ProdutoArmazenado();
         return p;
     }
