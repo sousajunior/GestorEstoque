@@ -33,6 +33,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
     TableModel modeloTabelaUnidadeMedida;
     UnidadeMedida unidadeMedidaAlterarExcluir;
+    ControladorUnidadeMedida ctrlUnidadeMedida;
 
     /**
      * Creates new form FRMCadastroProduto
@@ -41,6 +42,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        ctrlUnidadeMedida = new ControladorUnidadeMedida();
         prepararComponentes();
 
     }
@@ -56,7 +58,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
         List<UnidadeMedida> unidadesMedida = new ArrayList<>();
         try {
-            unidadesMedida = ControladorUnidadeMedida.selecionarTodasUnidadesMedida();
+            unidadesMedida = ctrlUnidadeMedida.selecionarTodos();
             return unidadesMedida;
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroUnidadeMedida.class.getName()).log(Level.SEVERE, null, ex);
@@ -309,7 +311,7 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
         try {
             if (!this.jtfNome.getText().equalsIgnoreCase("") && !this.jtfAbreviacao.getText().equalsIgnoreCase("")) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
-                    ControladorUnidadeMedida.deletarUnidadeMedida(unidadeMedidaAlterarExcluir);
+                    ctrlUnidadeMedida.deletar(unidadeMedidaAlterarExcluir);
                     atualizaTabelaUnidadeMedida();
                 }
             } else {
@@ -334,11 +336,12 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
                     UnidadeMedida unidadeMedida = new UnidadeMedida(this.jtfNome.getText(), this.jtfAbreviacao.getText());
 
-                    ControladorUnidadeMedida.inserirUnidadeMedida(unidadeMedida);
+                    ctrlUnidadeMedida.inserir(unidadeMedida);
 
                 } else {
-
-                    ControladorUnidadeMedida.updateUnidadeMedidaPorCodigo(jtfNome.getText(), this.jtfAbreviacao.getText(), unidadeMedidaAlterarExcluir.getCodigo().toString());
+                    unidadeMedidaAlterarExcluir.setNome(jtfNome.getText());
+                    unidadeMedidaAlterarExcluir.setAbreviacao(jtfAbreviacao.getText());
+                    ctrlUnidadeMedida.atualizarPorCodigo(unidadeMedidaAlterarExcluir);
                 }
                 atualizaTabelaUnidadeMedida();
             } else {

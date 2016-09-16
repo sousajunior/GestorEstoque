@@ -28,6 +28,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
     TableModel modeloTabelaArmazem;
     Armazem armazemAlterarExcluir;
     Boolean somentePesquisa;
+    ControladorArmazem ctrlArmazem;
     /**
      * Creates new form FRMCadastroArmazem
      */
@@ -46,6 +47,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
     public void initialize() {
         initComponents();
         this.setLocationRelativeTo(null);
+        ctrlArmazem = new ControladorArmazem();
         prepararComponentes();
     }
 
@@ -60,7 +62,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
 
         List<Armazem> armazens = new ArrayList<>();
         try {
-            armazens = ControladorArmazem.selecionarTodosArmazens();
+            armazens = ctrlArmazem.selecionarTodos();
             return armazens;
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroArmazem.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,8 +272,8 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
      */
     private void tabelaArmazemClicada() {
         this.armazemAlterarExcluir = new Armazem();
-        this.armazemAlterarExcluir = procurarArmazemNaLista(modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 0).toString());
-        jtfDescricao.setText(modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 0).toString());
+        this.armazemAlterarExcluir = procurarArmazemNaLista(modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 1).toString());
+        jtfDescricao.setText(modeloTabelaArmazem.getValueAt(jtArmazens.getSelectedRow(), 1).toString());
     }
 
     /**
@@ -292,7 +294,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
             if (!this.jtfDescricao.getText().equalsIgnoreCase("")) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir este item?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, 3)) {
                     Armazem armazem = new Armazem(this.jtfDescricao.getText());
-                    ControladorArmazem.deletarArmazem(armazem);
+                    ctrlArmazem.deletar(armazem);
                     atualizaTabelaArmazens();
                 }
 
@@ -318,11 +320,11 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
 
                     Armazem armazem = new Armazem(this.jtfDescricao.getText());
                     //armazem = procurarArmazemNaLista(armazem.getDescricao());
-                    ControladorArmazem.inserirArmazem(armazem);
+                    ctrlArmazem.inserir(armazem);
 
                 } else {
-
-                    ControladorArmazem.updateArmazemPorCodigo(jtfDescricao.getText(), armazemAlterarExcluir.getCodigo().toString());
+                    armazemAlterarExcluir.setDescricao(jtfDescricao.getText());
+                    ctrlArmazem.atualizarPorCodigo(armazemAlterarExcluir);
                 }
                 atualizaTabelaArmazens();
             } else {

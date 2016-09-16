@@ -36,6 +36,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
     ControladorProduto ctrlProduto;
     ControladorFornecedor ctrlFornecedor;
+    ControladorArmazem ctrlArmazem;
     /**
      * Creates new form FRMCadastroEntrada
      */
@@ -58,6 +59,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         isEntrada(isEntrada);
         this.ctrlProduto = new ControladorProduto();
         this.ctrlFornecedor = new ControladorFornecedor();
+        this.ctrlArmazem = new ControladorArmazem();
         prepararComponentes();
     }
 
@@ -101,7 +103,6 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         setTitle("Entrada/Saída de Produtos");
         setMinimumSize(new java.awt.Dimension(510, 380));
         setPreferredSize(new java.awt.Dimension(510, 380));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 100));
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -175,7 +176,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsCodigoFornecedor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 8;
@@ -207,7 +208,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlArmazem1, gridBagConstraints);
 
-        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsCodigoArmazem1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 6;
@@ -232,7 +233,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlProduto, gridBagConstraints);
 
-        jsProduto.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jsProduto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 4;
@@ -268,7 +269,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         gridBagConstraints.gridy = 8;
         jPanel1.add(jbtnPesquisarFornecedor, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
@@ -460,7 +461,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
                     jtfNomeArmazem1.setText("");
                     return;
                 }
-                Armazem a = ControladorArmazem.selecionarArmazemPorCodigo(jsCodigoArmazem1.getValue().toString());
+                Armazem a = ctrlArmazem.selecionarPorCodigo(Integer.parseInt(jsCodigoArmazem1.getValue().toString()));
 
                 if (a.getDescricao() == null) {
                     JOptionPane.showMessageDialog(null, "O código fornecido não remete a nenhum armazém cadastrado!", "Atenção, armazém não existe!", JOptionPane.WARNING_MESSAGE);
@@ -663,7 +664,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             p.setLote(jtfLote.getText());
             p.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
             p.setNotaFiscal(Integer.parseInt(jftNotaFiscal.getText()));
-            p.setArmazem(ControladorArmazem.selecionarArmazemPorCodigo(this.jsCodigoArmazem1.getValue().toString()));
+            p.setArmazem(ctrlArmazem.selecionarPorCodigo(Integer.parseInt(this.jsCodigoArmazem1.getValue().toString())));
             p.setProduto(new ControladorProduto().selecionarPorCodigo(Integer.parseInt(this.jsProduto.getValue().toString())));
             p.setFornecedor(this.ctrlFornecedor.selecionarPorCodigo(Integer.parseInt(this.jsCodigoFornecedor.getValue().toString())));
         } catch (SQLException ex) {

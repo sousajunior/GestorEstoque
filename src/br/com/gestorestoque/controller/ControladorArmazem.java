@@ -16,20 +16,28 @@ import java.util.List;
  *
  * @author DG
  */
-public class ControladorArmazem {
+public class ControladorArmazem implements Controlador<Armazem>{
+    private String nomeTabela;
 
+    public ControladorArmazem() {
+        this.nomeTabela = "armazem";
+    }
 
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de dados.
-     * Método select da classe CRUD.
-     * @return List< Armazem >
-     * @throws SQLException 
-     */
-    public  static List<Armazem> selecionarTodosArmazens() throws SQLException {
+    @Override
+    public void inserir(Armazem armazem) throws SQLException {
+        CRUD.insert(nomeTabela, "null,'"+armazem.getDescricao()+"'");
+    }
 
-        List<Armazem> armazens = new ArrayList<>();
+    @Override
+    public void atualizarPorCodigo(Armazem armazem) throws SQLException {
+        CRUD.update(nomeTabela, "descricao = '"+armazem.getDescricao()+"'","codigoArmazem",armazem.getCodigo().toString());
+    }
 
-        ResultSet rs = CRUD.select("armazem");
+    @Override
+    public List<Armazem> selecionarTodos() throws SQLException {
+         List<Armazem> armazens = new ArrayList<>();
+
+        ResultSet rs = CRUD.select(nomeTabela);
 
         while (rs.next()) {
             Armazem armazem = new Armazem(rs.getInt("codigoArmazem"), rs.getString("descricao"));
@@ -37,21 +45,13 @@ public class ControladorArmazem {
         }
 
         return armazens;
-
     }
-    
-     /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de dados.
-     * Método select da classe CRUD.
-     * @param idArmazem String
-     * @return armazem Armazem
-     * @throws SQLException 
-     */
-    public  static Armazem selecionarArmazemPorCodigo(String idArmazem) throws SQLException {
 
+    @Override
+    public Armazem selecionarPorCodigo(int id) throws SQLException {
         Armazem armazem = new Armazem();
 
-        ResultSet rs = CRUD.select("armazem","where codigoArmazem = "+idArmazem);
+        ResultSet rs = CRUD.select(nomeTabela,"codigoArmazem",id);
 
         while (rs.next()) {
             armazem = new Armazem(rs.getInt("codigoArmazem"), rs.getString("descricao"));
@@ -59,45 +59,11 @@ public class ControladorArmazem {
         }
 
         return armazem;
+    }
 
-    }
-   
-    
-    /**
-     * Executa o método insert da classe CRUD, passando tabela armazem e os valores necessários para, inserir um armazém na base de dados.
-     * É necessário passar por parâmetro um armazem.
-     * @param armazem
-     * @throws SQLException 
-     */
-    public static void inserirArmazem(Armazem armazem) throws SQLException{
-        
-        CRUD.insert("armazem", "null,'"+armazem.getDescricao()+"'");
-        
-    }
-    
-    /**
-     * Executa o método update da classe CRUD, passando a tabela de armazem, e os valores necessários para atualizar um armazém que já está cadastrado na base de dados.
-     * é necessário informar via parâmetro a coluna a ser alterada, o valor para esta coluna, e a coluna e valor para a clausula where.
-     * @param valores
-     * @param valorWhere
-     * @throws SQLException 
-     */
-    public static void updateArmazemPorCodigo(String valores,String valorWhere) throws SQLException{
-        
-        CRUD.update("armazem", "descricao = '"+valores+"'","codigoArmazem",valorWhere);
-        
-    }
-    
-    /**
-     * Executa o metodo delete da classe CRUD, passando por parâmetro a tabela, a coluna e valor para a clausula where.
-     * É necessário passar um armazém por parâmetro, ao invocar este método.
-     * @param armazem
-     * @throws SQLException 
-     */
-    public static void deletarArmazem(Armazem armazem) throws SQLException{
-        
-        CRUD.delete("armazem","descricao" ,"'"+armazem.getDescricao()+"'");
-        
+    @Override
+    public void deletar(Armazem armazem) throws SQLException {
+        CRUD.delete(nomeTabela,"descricao","'"+armazem.getDescricao()+"'");
     }
     
 

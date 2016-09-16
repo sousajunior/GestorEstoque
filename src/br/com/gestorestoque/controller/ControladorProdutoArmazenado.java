@@ -18,7 +18,14 @@ import java.util.List;
  */
 public class ControladorProdutoArmazenado {
 
-    public static final String nomeTabela = "produtoArmazenado";
+    private static final String nomeTabela = "produtoArmazenado";
+    //retirar static ao implementar o controlador de produtoArmazenado
+    private static ControladorArmazem ctrlArmazem = new ControladorArmazem();
+
+    //public ControladorProdutoArmazenado() {
+      //  this.nomeTabela = "produtoArmazenado";
+    //}
+    
 
     /**
      * Executa um método que seleciona todos os armazéns cadastrados na base de
@@ -42,7 +49,7 @@ public class ControladorProdutoArmazenado {
                             rs.getInt("notaFiscal"),
                             new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
                             new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
-                            ControladorArmazem.selecionarArmazemPorCodigo("" + rs.getInt("armazem_codigoArmazem"))
+                            ctrlArmazem.selecionarPorCodigo(rs.getInt("armazem_codigoArmazem"))
                     );
             produtosArmazenados.add(produtoArmazenado);
         }

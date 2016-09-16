@@ -21,7 +21,7 @@ public class CRUD {
      * @return query String 
      */
     
-    public static String verificaNull(String query)
+    private static String verificaNull(String query)
     {
         return query.replaceAll("'null'", "null");
     }
@@ -78,13 +78,13 @@ public class CRUD {
     * @param valorWhere String
     * @throws SQLException 
     */
-    public static void update(String tabela,String coluna1,String coluna2, String colunaWhere,String valores,String valores2, String valorWhere) throws SQLException{       
-        valores = verificaNull(valores);
-        valores2 = verificaNull(valores2);
-        String sql = "UPDATE "+ tabela + " SET "+coluna1 +" = "+valores+", "+coluna2+" = "+valores2+" WHERE "+colunaWhere +" = "+valorWhere ;
-        executeSQL(sql);        
-    }
-    
+//    public static void update(String tabela,String coluna1,String coluna2, String colunaWhere,String valores,String valores2, String valorWhere) throws SQLException{       
+//        valores = verificaNull(valores);
+//        valores2 = verificaNull(valores2);
+//        String sql = "UPDATE "+ tabela + " SET "+coluna1 +" = "+valores+", "+coluna2+" = "+valores2+" WHERE "+colunaWhere +" = "+valorWhere ;
+//        executeSQL(sql);        
+//    }
+//    
     
     /**
      * Monta um script de exclusão de registros, deve-se passar a tabela, a coluna para a condição where e o valor para a condição where.
@@ -93,8 +93,9 @@ public class CRUD {
      * @param valores String
      * @throws SQLException 
      */
-    public static void delete(String tabela,String coluna,String valores) throws SQLException{       
+    public static void delete(String tabela,String coluna,String valores) throws SQLException{ 
         String sql = "DELETE FROM "+ tabela + " where "+coluna+" = "+valores;
+        sql = verificaNull(sql);
         executeSQL(sql);        
     }
  
@@ -118,6 +119,7 @@ public class CRUD {
      */
     public static ResultSet  select(String tabela, String where)throws SQLException{      
        String sql = "SELECT * FROM " +tabela+" "+where; 
+       sql = verificaNull(sql);
        return executeSelect(sql);
     }
     
@@ -130,7 +132,8 @@ public class CRUD {
      * @throws SQLException 
      */
     public static ResultSet  select(String tabela,String coluna,int id)throws SQLException{      
-       String sql = "SELECT * FROM " +tabela+ " where "+coluna+" = "+id; 
+       String sql = "SELECT * FROM " +tabela+ " where "+coluna+" = "+id;
+       sql = verificaNull(sql);
        return executeSelect(sql);
     }
     
@@ -155,7 +158,7 @@ public class CRUD {
      * @throws SQLException 
      */
     private static void executeSQL(String script) throws SQLException{
-        System.out.println(script);
+       System.out.println(script);
        Connection con = Conexao.AbrirConexao();
        Statement st = con.createStatement();
        st.execute(script);

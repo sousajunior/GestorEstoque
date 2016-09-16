@@ -35,6 +35,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     List<UnidadeMedida> unidadesMedida = new ArrayList<>();
     Boolean somentePesquisa;
     ControladorProduto ctrlProduto;
+    ControladorUnidadeMedida ctrlUnidadeMedida;
 
     /**
      * Creates new form FRMCadastroProduto
@@ -56,6 +57,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
         this.ctrlProduto = new ControladorProduto();
+        this.ctrlUnidadeMedida = new ControladorUnidadeMedida();
         prepararComponentes();
 
     }
@@ -356,7 +358,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
     private void preencheComboUnidadeMedida() {
         try {
-            unidadesMedida = ControladorUnidadeMedida.selecionarTodasUnidadesMedida();
+            unidadesMedida = ctrlUnidadeMedida.selecionarTodos();
 
             for (UnidadeMedida unidadeMedida : unidadesMedida) {
                 this.jcbUnidadeMedida.addItem(unidadeMedida.getNome());
@@ -518,7 +520,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jlPreco = new javax.swing.JLabel();
         jtfPreco = new javax.swing.JTextField();
         jlUnidadeMedida = new javax.swing.JLabel();
-        jcbUnidadeMedida = new javax.swing.JComboBox<String>();
+        jcbUnidadeMedida = new javax.swing.JComboBox<>();
         jbtnSalvar = new javax.swing.JButton();
         jbtnLimpar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
@@ -529,7 +531,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(584, 443));
         setPreferredSize(new java.awt.Dimension(806, 448));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setName(""); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 200));
@@ -649,7 +650,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         jPanel1.add(jlUnidadeMedida, gridBagConstraints);
 
-        jcbUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jcbUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         jcbUnidadeMedida.setToolTipText("Selecione uma unidade de medida");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
