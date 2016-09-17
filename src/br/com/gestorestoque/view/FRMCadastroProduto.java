@@ -331,7 +331,27 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                     }
                 }
         );
-
+        //impede a escrita de caracteres diferentes de números
+        jtfPreco.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                String caracteres = "0987654321";
+                if (!caracteres.contains(ke.getKeyChar() + "")) {
+                    ke.consume();
+                }
+            }
+        });
+        //impede a escrita de caracteres diferentes de números
+        jtfQtdMinima.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                String caracteres = "0987654321";
+                if (!caracteres.contains(ke.getKeyChar() + "")) {
+                    ke.consume();
+                }
+            }
+        });
+        
         //jdialogProduto
         this.addWindowListener(new WindowAdapter() {
             @Override

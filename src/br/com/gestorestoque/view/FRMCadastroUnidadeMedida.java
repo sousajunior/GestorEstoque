@@ -219,6 +219,15 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
                 }
         );
         
+        jtfAbreviacao.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent ke) {                
+                if (jtfAbreviacao.getText().length() >= 3) {
+                    ke.consume();
+                }
+            }
+        });
+        
         //jdialogUnidadeMedida
         this.addWindowListener(new WindowAdapter() {
             @Override
