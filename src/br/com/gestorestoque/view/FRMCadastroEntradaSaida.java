@@ -726,12 +726,14 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void alterarParaEntrada() {
         habilitaComponentes();
+        limpar();
         jrbEntrada.setSelected(true);
         jrbSaida.setSelected(false);
     }
 
     private void alterarParaSaida() {
         desabilitaComponentes();
+        limpar();
         jrbSaida.setSelected(true);
         jrbEntrada.setSelected(false);
     }
