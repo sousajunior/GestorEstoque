@@ -18,10 +18,10 @@ public class Movimentacao {
     private final int notaFiscal;
     private final char tipoMovimentacao;
     private final Date data;
-    private final int idProdutoArmazenado;
-    private final int idArmazem;
+    private final ProdutoArmazenado idProdutoArmazenado;
+    private final Armazem idArmazem;
 
-    public Movimentacao(int id, String lote, double qtd, int notaFiscal, char tipoMovimentacao, Date data, int idProdutoArmazenado, int idArmazem) {
+    public Movimentacao(int id, String lote, double qtd, int notaFiscal, char tipoMovimentacao, Date data, ProdutoArmazenado idProdutoArmazenado, Armazem idArmazem) {
         this.id = id;
         this.lote = lote;
         this.qtd = qtd;
@@ -30,6 +30,21 @@ public class Movimentacao {
         this.data = data;
         this.idProdutoArmazenado = idProdutoArmazenado;
         this.idArmazem = idArmazem;
+    }
+    
+    public Movimentacao(int id, String lote, double qtd, int notaFiscal, String tipoMovimentacao, Date data, ProdutoArmazenado idProdutoArmazenado, Armazem idArmazem) {
+        this.id = id;
+        this.lote = lote;
+        this.qtd = qtd;
+        this.notaFiscal = notaFiscal;
+        this.tipoMovimentacao = tipoMovimentacao.charAt(0);
+        this.data = data;
+        this.idProdutoArmazenado = idProdutoArmazenado;
+        this.idArmazem = idArmazem;
+    }
+
+    public Movimentacao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -77,14 +92,14 @@ public class Movimentacao {
     /**
      * @return the idProdutoArmazenado
      */
-    public int getIdProdutoArmazenado() {
+    public ProdutoArmazenado getIdProdutoArmazenado() {
         return idProdutoArmazenado;
     }
 
     /**
      * @return the idArmazem
      */
-    public int getIdArmazem() {
+    public Armazem getIdArmazem() {
         return idArmazem;
     }
 
