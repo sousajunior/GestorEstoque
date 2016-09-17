@@ -18,9 +18,17 @@ import java.util.List;
  */
 public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazenado> {
     
-    private static final String nomeTabela = "produtoArmazenado";
-    //retirar static ao implementar o controlador de produtoArmazenado
-    private static ControladorArmazem ctrlArmazem = new ControladorArmazem();
+    private  final String nomeTabela;
+    private  ControladorArmazem ctrlArmazem;
+
+    public ControladorProdutoArmazenado() {
+        this.nomeTabela = "produtoArmazenado";
+        this.ctrlArmazem = new ControladorArmazem();
+    }
+
+    
+    
+    
 
     @Override
     public void inserir(ProdutoArmazenado produto) throws SQLException {

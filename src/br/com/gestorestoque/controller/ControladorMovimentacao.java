@@ -36,6 +36,11 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
                 + movimentacao.getIdProdutoArmazenado() + ","
                 + movimentacao.getIdArmazem());
     }
+/**
+ * @deprecated 
+ * @param movimentacao
+ * @throws SQLException 
+ */
 
     @Override
     public void atualizarPorCodigo(Movimentacao movimentacao) throws SQLException {
@@ -71,7 +76,8 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
         }
         return movimentacoes;
     }
-
+    
+    
     @Override
     public Movimentacao selecionarPorCodigo(int id) throws SQLException {
         Movimentacao movimentacao = new Movimentacao();
@@ -121,7 +127,11 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
                 + ")");
 
     }
-
+    /**
+     * @deprecated 
+     * @param movimentacao
+     * @throws SQLException 
+     */
     @Override
     public void deletar(Movimentacao movimentacao) throws SQLException {
         CRUD.delete(nomeTabela, "idmovimentacao", "" + movimentacao.getId());
