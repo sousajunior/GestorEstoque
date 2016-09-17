@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -30,6 +32,7 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 public class FRMCadastroProduto extends javax.swing.JDialog {
 
     List<Produto> produtos = new ArrayList<>();
+    List<Produto> produtosPesquisa = new ArrayList<>();
     TableModel modeloTabelaProduto;
     Produto produtoAlterarExcluir;
     UnidadeMedida unidadeMedidaSelecionada;
@@ -277,6 +280,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             }
         });
 
+       
+
         //Preparar Botoes 
         //Salvar
         jbtnSalvar.addActionListener(
@@ -318,7 +323,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                     }
                 }
         );
-        
+
         //Relatório (Saldo geral de produtos cadastrados)
         jbtGerarRelatorioSaldoGeral.addActionListener(
                 (e) -> {
@@ -370,6 +375,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         preencheComboUnidadeMedida();
     }
 
+   
+
+    
     private boolean verificarComponentesPreenchidos() {
 
         if (!jtfNome.getText().equalsIgnoreCase("")) {
@@ -439,7 +447,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void btnGerarRelatorioSaldoGeralClicado() throws SQLException {
 
         if (modeloTabelaProduto.getRowCount() > 0) {
@@ -617,9 +625,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jcbControladoPorLote = new javax.swing.JCheckBox();
         jbtGerarRelatorioProdutos = new javax.swing.JButton();
         jbtGerarRelatorioSaldoGeral = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProdutos = new javax.swing.JTable();
@@ -748,9 +753,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel1.add(jcbControladoPorLote, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 12;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 220;
         gridBagConstraints.ipady = -100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
@@ -776,35 +781,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 0);
         jPanel3.add(jbtGerarRelatorioSaldoGeral, gridBagConstraints);
-
-        jTextField1.setText("jTextField1");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 11;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 3);
-        jPanel3.add(jTextField1, gridBagConstraints);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
-        jComboBox1.setToolTipText("Selecione um filtro para produto");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 6;
-        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 0);
-        jPanel3.add(jComboBox1, gridBagConstraints);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/limparFiltro.png"))); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_TRAILING;
-        gridBagConstraints.insets = new java.awt.Insets(0, 103, 0, 0);
-        jPanel3.add(jLabel1, gridBagConstraints);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
@@ -923,13 +899,10 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgControleLote;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton jbtGerarRelatorioProdutos;
     private javax.swing.JButton jbtGerarRelatorioSaldoGeral;
     private javax.swing.JButton jbtnExcluir;
