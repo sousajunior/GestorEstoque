@@ -23,6 +23,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
      * @param parent
      * @param modal
      * @param jrRS
+     * @param nomeRelatorio
      */
     public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS,String nomeRelatorio) {
         super(parent, modal);

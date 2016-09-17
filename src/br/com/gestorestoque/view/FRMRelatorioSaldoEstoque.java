@@ -40,10 +40,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     ControladorArmazem ctrlArmazem;
     ControladorProdutoArmazenado ctrlProdutoArmazenado;
     //Strings de pesquisa
-    static final String validacao = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/*+()_! @#$%<>;:áÁÉéóòÓÒ";
-    static final String validacaoNumerica = "0123456789,.";
-    static final String validacaoNumericaInteiros = "0123456789";
-
+   
     Boolean somentePesquisa;
 
     /**
@@ -96,25 +93,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         return null;
     }
 
-    /**
-     * Executa o método ControladorProduto.selecionarTodosArmazens() da classe
-     * ControladorProduto. Este método retorna uma lista com todos os armazéns
-     * cadastrados na base de dados.
-     *
-     * @return
-     */
-    private List<Armazem> getArmazens() {
-
-        armazens = new ArrayList<>();
-        try {
-            armazens = ctrlArmazem.selecionarTodos();
-            return armazens;
-        } catch (Exception ex) {
-            Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-    }
+   
 
     /**
      * Classe interna que define o TableModel da tabela de Armazém.
@@ -315,8 +294,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         });
 
         //Relatório
-        jbtGerarRelatorio.addActionListener(
-                (e) -> {
+        jbtGerarRelatorio.addActionListener((e) -> {
                     try {
                         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                         btnGerarRelatorioClicado();
@@ -716,7 +694,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     }
 
     private void filtrar() {
-
+        
+        produtosArmazenadosPesquisa= new ArrayList<>();
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
         if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
@@ -1583,10 +1562,10 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
 
-        for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-            //System.out.println(produtosArmazenado.getLote());
-
-        }
+//        for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
+//            //System.out.println(produtosArmazenado.getLote());
+//
+//        }
 
     }
 
@@ -2004,6 +1983,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

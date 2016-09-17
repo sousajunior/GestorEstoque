@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioSaldoEstoque" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c5f5ef3b-1a5e-4c19-b0c4-f07220abf4e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[select case when m.lote IS NULL THEN  ''
+		    else m.lote
+            end  as LOTE,
+	   m.quantidade as QUANTIDADE,
+       m.notaFiscal as NOTA_FISCAL,
+       m.tipo as TIPO,
+       m.data as DATA,
+       p.nome as PRODUTO,
+       a.descricao as ARMAZEM
+from movimentacoes m,
+	 produtoarmazenado pa,
+     produto p,
+     armazem a
+where m.produtoArmazenado_idProdutoArmazenado = pa.idProdutoArmazenado
+and pa.produto_codigoProduto = p.codigoProduto
+and m.armazem_codigoArmazem = a.codigoArmazem]]>
+	</queryString>
+	<field name="LOTE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUANTIDADE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOTA_FISCAL" class="java.lang.Integer"/>
+	<field name="TIPO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRODUTO" class="java.lang.String"/>
+	<field name="ARMAZEM" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="13"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="12"/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band height="4"/>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="140" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="102" y="0" width="700" height="95" backcolor="#FFFFFF" uuid="183bb07c-f68f-4e2b-9707-c693b3bc4d97"/>
+				<staticText>
+					<reportElement style="Title" x="6" y="19" width="684" height="50" forecolor="#A42429" uuid="e22eb148-4563-45ff-b90e-556130c49367"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="33" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório de movimentação de estoque]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="2" y="0" width="99" height="95" uuid="141f1241-d4f9-412c-a688-e0f1ca39c341"/>
+				<imageExpression><![CDATA["src\\br\\com\\gestorestoque\\view\\Imagens\\iconeGestao.png"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="658" y="112" width="144" height="20" forecolor="#A42429" uuid="9e392f25-cc8a-4711-afa4-5c6317207b4c"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="0" width="802" height="37" forecolor="#FFFFFF" backcolor="#A42429" uuid="8fa3c5da-1e16-47ad-ae51-563308e2cc29"/>
+				<staticText>
+					<reportElement x="358" y="0" width="58" height="37" forecolor="#FFFFFF" uuid="3a6c21d4-bd3e-4230-adc7-27e2e0d755f1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DATA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="198" y="0" width="67" height="37" forecolor="#FFFFFF" uuid="e466beb4-db80-4ec5-ae83-4ffe403a0819"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LOTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="11" y="0" width="187" height="37" forecolor="#FFFFFF" uuid="4e94bd4c-3764-4bdc-8c91-3e06e23d9e81"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRODUTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="572" y="0" width="133" height="37" forecolor="#FFFFFF" uuid="8c985bb3-dd0d-484f-aa2b-013c9f574aa1"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QUANTIDADE MÍNIMA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="705" y="0" width="96" height="37" forecolor="#FFFFFF" uuid="32161e31-8459-4729-bcb1-77be9668cab0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ARMAZEM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="265" y="0" width="93" height="37" forecolor="#FFFFFF" uuid="49827351-dc30-40a9-8312-7658ee9ca6d2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QUANTIDADE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="416" y="0" width="100" height="37" forecolor="#FFFFFF" uuid="8f8a3506-083b-4e36-b6e5-b5aa009c02ae"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOTA FISCAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="516" y="0" width="56" height="37" forecolor="#FFFFFF" uuid="7286e913-06a0-42f4-9fe1-dd71bf68a401"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="0" width="187" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRODUTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="573" y="0" width="133" height="30" uuid="4336aa15-1049-488c-9b30-b14a124e69ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="706" y="10" width="96" height="20" uuid="051657fe-da5b-4c62-87b9-56fb565175fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ARMAZEM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="0" width="67" height="30" uuid="82c3ed97-e830-4edd-83e3-5cf22a493c07"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="0" width="58" height="30" uuid="a6c8e853-9033-4c91-8cc1-47aae94fb396"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="93" height="30" uuid="2e0d8aae-4175-418d-aee6-729fcbed2097"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="100" height="33" uuid="f1c505b2-84ba-4b5c-823e-d513e415448f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="517" y="0" width="56" height="30" uuid="f4351abc-38b3-4f3d-8947-c2a07a3359ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6d7e9c91-94e8-4867-aa4d-d3e60369b9fc"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#A42429" uuid="14b2b686-0a7f-44bd-8bd5-bec839cd9102"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="762" y="0" width="40" height="25" forecolor="#FFFFFF" uuid="23bb3451-e5b1-455b-bcff-3b3614d605bf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="2" y="0" width="197" height="25" forecolor="#FFFFFF" uuid="556bb208-6b5b-476c-a500-ad762aeb8d9a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="682" y="0" width="80" height="25" forecolor="#FFFFFF" uuid="77f7b757-f96c-4491-9a75-75d7b70695a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

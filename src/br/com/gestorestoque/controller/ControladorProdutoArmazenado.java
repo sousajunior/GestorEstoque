@@ -59,7 +59,7 @@ public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazena
     public ProdutoArmazenado selecionarPorCodigo(int id) throws SQLException {
         ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
 
-        ResultSet rs = CRUD.select(nomeTabela, "where codigoProduto = " + id);
+        ResultSet rs = CRUD.select(nomeTabela, "where idProdutoArmazenado = " + id);
 
         if(rs.first()){
         produtoArmazenado = new ProdutoArmazenado(

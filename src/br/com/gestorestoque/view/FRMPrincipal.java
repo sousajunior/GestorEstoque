@@ -112,8 +112,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSaldo_Estoque.setText("Saldos em Estoque");
         jmMovimentacao.add(jmiSaldo_Estoque);
 
-        jmiMovimentacoesEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/mov_estoque.png"))); // NOI18N
-        jmiMovimentacoesEstoque.setText("Movimentações");
+        jmiMovimentacoesEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/historicoMovimentacao.png"))); // NOI18N
+        jmiMovimentacoesEstoque.setText("Histórico de Movimentações");
         jmMovimentacao.add(jmiMovimentacoesEstoque);
 
         jMenuBar1.add(jmMovimentacao);
@@ -196,8 +196,16 @@ public class FRMPrincipal extends javax.swing.JFrame {
         new FRMSobre(this,true).setVisible(true);
     }
     
+    private void menuHistoricoMovimentacoesClicado() {
+        new FRMMovimentacao(this,true).setVisible(true);
+    }
+   
     public void prepararComponentes() {
 
+        jmiMovimentacoesEstoque.addActionListener((e) -> {
+            menuHistoricoMovimentacoesClicado();
+        });
+        
         jmiProduto.addActionListener((e) -> {
             menuCadastroProdutoClicado();
         });
