@@ -11,6 +11,8 @@ import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -21,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
@@ -40,7 +45,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     ControladorArmazem ctrlArmazem;
     ControladorProdutoArmazenado ctrlProdutoArmazenado;
     //Strings de pesquisa
-   
+
     Boolean somentePesquisa;
 
     /**
@@ -92,8 +97,6 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         return null;
     }
-
-   
 
     /**
      * Classe interna que define o TableModel da tabela de Armazém.
@@ -200,6 +203,12 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
             }
 
+            if (columnIndex == 10) {
+
+                return produtoArmazenado;
+
+            }
+
             return null;
         }
 
@@ -260,9 +269,34 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 return "Preço";
             }
 
+            if (column == 10) {
+
+                return "Produto Armazenado";
+            }
+
             return null;
         }
 
+    }
+
+    private class qtdMinimaRender extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component c = super.getTableCellRendererComponent(table, value, isSelected,
+                    hasFocus, row, column);
+            if (column == 4) {
+                ProdutoArmazenado p = (ProdutoArmazenado) modeloTabelaProdutoArmazenado.getValueAt(row, 10);                
+                c = super.getTableCellRendererComponent(table, p.getQuantidade(), isSelected,
+                        hasFocus, row, column);
+                if (Double.parseDouble(value.toString()) <= p.getProduto().getQuantidadeMinima()) {
+                    c.setForeground(Color.red);
+                }
+            } else {
+                c.setForeground(Color.black);
+            }
+            return c;
+        }
     }
 
     /**
@@ -295,14 +329,14 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         //Relatório
         jbtGerarRelatorio.addActionListener((e) -> {
-                    try {
-                        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                        btnGerarRelatorioClicado();
-                        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+            try {
+                this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                btnGerarRelatorioClicado();
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            } catch (SQLException ex) {
+                Logger.getLogger(FRMRelatorioSaldoEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         );
         //Limpar
         jbtLimparCamposPesquisa.addActionListener(
@@ -694,8 +728,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     }
 
     private void filtrar() {
-        
-        produtosArmazenadosPesquisa= new ArrayList<>();
+
+        produtosArmazenadosPesquisa = new ArrayList<>();
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
         if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
@@ -1561,12 +1595,13 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
+        DefaultTableCellRenderer tcr = new qtdMinimaRender();
+        jtProdutosArmazenados.setDefaultRenderer(Object.class, tcr);
 
 //        for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
 //            //System.out.println(produtosArmazenado.getLote());
 //
 //        }
-
     }
 
     /**
@@ -1576,6 +1611,8 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private void atualizarTabelaProdutosArmazenados() {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(getProdutosArmazenados());
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
+        DefaultTableCellRenderer tcr = new qtdMinimaRender();
+        jtProdutosArmazenados.setDefaultRenderer(Object.class, tcr);
     }
 
     /**
