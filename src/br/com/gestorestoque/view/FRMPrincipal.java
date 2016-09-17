@@ -49,6 +49,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSaida = new javax.swing.JMenuItem();
         jmiInventario = new javax.swing.JMenuItem();
         jmiSaldo_Estoque = new javax.swing.JMenuItem();
+        jmiMovimentacoesEstoque = new javax.swing.JMenuItem();
         jmSistema = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jmiWindows = new javax.swing.JMenuItem();
@@ -110,6 +111,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSaldo_Estoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/estoque-16.png"))); // NOI18N
         jmiSaldo_Estoque.setText("Saldos em Estoque");
         jmMovimentacao.add(jmiSaldo_Estoque);
+
+        jmiMovimentacoesEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/mov_estoque.png"))); // NOI18N
+        jmiMovimentacoesEstoque.setText("Movimentações");
+        jmMovimentacao.add(jmiMovimentacoesEstoque);
 
         jMenuBar1.add(jmMovimentacao);
 
@@ -353,6 +358,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiLiquid;
     private javax.swing.JMenuItem jmiMetal;
     private javax.swing.JMenuItem jmiMotif;
+    private javax.swing.JMenuItem jmiMovimentacoesEstoque;
     private javax.swing.JMenuItem jmiNimbus;
     private javax.swing.JMenuItem jmiProduto;
     private javax.swing.JMenuItem jmiSaida;

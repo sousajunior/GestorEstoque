@@ -5,7 +5,6 @@
  */
 package br.com.gestorestoque.view;
 
-import br.com.gestorestoque.controller.Controlador;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorFornecedor;
@@ -18,8 +17,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -37,8 +34,13 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     ControladorProduto ctrlProduto;
     ControladorFornecedor ctrlFornecedor;
     ControladorArmazem ctrlArmazem;
+    ControladorProdutoArmazenado ctrlProdutoArmazenado;
     /**
      * Creates new form FRMCadastroEntrada
+     * @param parent
+     * @param modal
+     * @param isEntrada
+     * @param title
      */
     public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada, String title) {
         super(parent, title, modal);
@@ -47,6 +49,10 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMCadastroEntrada
+     * @param parent
+     * @param modal
+     * @param isEntrada
+     * @param title
      */
     public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada, String title) {
         super(parent, title, modal);
@@ -59,6 +65,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         isEntrada(isEntrada);
         this.ctrlProduto = new ControladorProduto();
         this.ctrlFornecedor = new ControladorFornecedor();
+        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         this.ctrlArmazem = new ControladorArmazem();
         prepararComponentes();
     }
@@ -523,6 +530,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void pesquisaArmazem() {
         FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);
+        cadastroArmazem.jtArmazens.setToolTipText("Duplo clique para selecionar um armazém!");
         cadastroArmazem.setVisible(true);
         cadastroArmazem.addWindowListener(new WindowAdapter() {
             @Override
@@ -539,6 +547,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void pesquisaFornecedor() {
         FRMCadastroFornecedor cadastroFornecedor = new FRMCadastroFornecedor(this, true);
+        cadastroFornecedor.jtFornecedor.setToolTipText("Duplo clique para selecionar um fornecedor!");
         cadastroFornecedor.setVisible(true);
         cadastroFornecedor.addWindowListener(new WindowAdapter() {
             @Override
@@ -560,6 +569,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             frmSaldo.jbtEntradaProduto.setEnabled(false);
             frmSaldo.jbtSaidaProduto.setEnabled(false);
             frmSaldo.jbtnventario.setEnabled(false);
+            frmSaldo.jtProdutosArmazenados.setToolTipText("Duplo clique para selecionar um produto!");
             frmSaldo.setVisible(true);
 
             frmSaldo.addWindowListener(new WindowAdapter() {
@@ -594,7 +604,9 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
         } else {
             FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
+            cadastroProduto.jtProdutos.setToolTipText("Duplo clique para selecionar um produto!");
             cadastroProduto.setVisible(true);
+            
             cadastroProduto.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -641,13 +653,13 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             if (this.jrbEntrada.isSelected()) {
                 produtoArmazenado = carregarCampos();
                 //if(produtoArmazenado.getProduto().getNome().equalsIgnoreCase(jtf))
-                ControladorProdutoArmazenado.inserirProduto(produtoArmazenado);
+                ctrlProdutoArmazenado.inserir(produtoArmazenado);
                 JOptionPane.showMessageDialog(null, "Entrada realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             } else //da baixa se a quantidade for válida
             if (produtoArmazenado.getQuantidade() >= Double.parseDouble(jsQtd.getValue().toString())) {
                 produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble("" + jsQtd.getValue())));
-                ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
+                ctrlProdutoArmazenado.atualizarPorCodigo(produtoArmazenado);
                 JOptionPane.showMessageDialog(null, "Saída realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             } else {

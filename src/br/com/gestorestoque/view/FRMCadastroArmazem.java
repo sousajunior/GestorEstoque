@@ -31,6 +31,8 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
     ControladorArmazem ctrlArmazem;
     /**
      * Creates new form FRMCadastroArmazem
+     * @param parent
+     * @param modal
      */
     public FRMCadastroArmazem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -531,7 +533,7 @@ public class FRMCadastroArmazem extends javax.swing.JDialog {
     private javax.swing.JButton jbtnLimpar;
     private javax.swing.JButton jbtnSalvar;
     private javax.swing.JLabel jlDescricao;
-    private javax.swing.JTable jtArmazens;
+    protected javax.swing.JTable jtArmazens;
     private javax.swing.JTextField jtfDescricao;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,8 +5,6 @@
  */
 package br.com.gestorestoque.view;
 
-import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -24,20 +22,20 @@ public class FRMRelatorio extends javax.swing.JDialog {
      * Creates new form FRMRelatorio
      * @param parent
      * @param modal
-     * @param rs
+     * @param jrRS
      */
-    public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS) {
+    public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS,String nomeRelatorio) {
         super(parent, modal);
         initComponents();
 
-        vizualizarRelatorio(jrRS);
+        vizualizarRelatorio(jrRS,nomeRelatorio);
     }
 
-    private void vizualizarRelatorio(JRResultSetDataSource jrRS) {
+    private void vizualizarRelatorio(JRResultSetDataSource jrRS,String nomeRelatorio) {
         try {
             
             
-            JasperPrint jasperPrint = JasperFillManager.fillReport("src/br/com/gestorestoque/relatorio/RelatorioSaldoEstoque.jasper", new HashMap(), jrRS);
+            JasperPrint jasperPrint = JasperFillManager.fillReport("src/br/com/gestorestoque/relatorio/"+nomeRelatorio+".jasper", new HashMap(), jrRS);
             JasperViewer jrViewer = new JasperViewer(jasperPrint, true);
             jrViewer.setSize(1200, 700);
             //Adicionando o relatorio no Jdialog  
@@ -61,17 +59,6 @@ public class FRMRelatorio extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
 
         setSize(new java.awt.Dimension(1200, 700));
         setLocationRelativeTo(null);
@@ -115,7 +102,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true,null);
+                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true,null,"");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

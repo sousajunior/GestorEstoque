@@ -21,6 +21,8 @@ public class FRMSobre extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMSobre
+     * @param parent
+     * @param modal
      */
     public FRMSobre(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

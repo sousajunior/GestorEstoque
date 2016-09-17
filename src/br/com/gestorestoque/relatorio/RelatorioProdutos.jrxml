@@ -15,38 +15,26 @@
 	</style>
 	<queryString>
 		<![CDATA[select p.nome as PRODUTO,
-       pa.lote as LOTE,
-       f.nome as FORNECEDOR,
-       pa.quantidade as SALDO,
        um.abreviacao as UM,
-       a.descricao as ARMAZEM,
        p.controladoPorLote as CONTROLADO_POR_LOTE,
-       pa.notaFiscal as NOTA_FISCAL,
-       p.preco as PRECO
-from  produtoArmazenado pa,
-      fornecedor f,
-      produto p,
-      unidademedida um,
-      armazem a
-where pa.fornecedor_idFornecedor = f.idFornecedor
-and pa.produto_codigoProduto = p.codigoProduto
-and p.unidadeMedida_idunidadeMedida = um.idunidadeMedida
-and pa.armazem_codigoArmazem = a.codigoArmazem
-/*and pa.idprodutoArmazenado in(1,2)*/]]>
+       p.preco as PRECO,
+       case when p.quantidadeMinima IS NULL THEN
+                                  ''
+                            else
+                            p.quantidadeMinima
+                            end  as qtdMinima
+from  produto p,
+      unidademedida um
+where p.unidadeMedida_idunidadeMedida = um.idunidadeMedida
+/*and p.codigoProduto in( 1, 2, 3, 4)*/]]>
 	</queryString>
 	<field name="PRODUTO" class="java.lang.String"/>
-	<field name="LOTE" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="FORNECEDOR" class="java.lang.String"/>
-	<field name="SALDO" class="java.lang.String"/>
 	<field name="UM" class="java.lang.String"/>
-	<field name="ARMAZEM" class="java.lang.String"/>
 	<field name="CONTROLADO_POR_LOTE" class="java.lang.Boolean"/>
-	<field name="NOTA_FISCAL" class="java.lang.Integer"/>
 	<field name="PRECO" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="qtdMinima" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
 		<groupHeader>
@@ -74,7 +62,7 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="31" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Relatório de saldo de estoque]]></text>
+					<text><![CDATA[Relatório de produtos]]></text>
 				</staticText>
 			</frame>
 			<image>
@@ -98,67 +86,39 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 			<frame>
 				<reportElement mode="Opaque" x="1" y="0" width="802" height="37" forecolor="#FFFFFF" backcolor="#A42429" uuid="8fa3c5da-1e16-47ad-ae51-563308e2cc29"/>
 				<staticText>
-					<reportElement x="127" y="0" width="88" height="37" forecolor="#FFFFFF" uuid="9cc5af86-48f4-421c-96f7-777a6f78cec3"/>
+					<reportElement x="403" y="0" width="31" height="37" forecolor="#FFFFFF" uuid="3a6c21d4-bd3e-4230-adc7-27e2e0d755f1"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[LOTE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="215" y="0" width="116" height="37" forecolor="#FFFFFF" uuid="63fee106-4d02-45e4-bb59-6891f044efd9"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[FORNECEDOR]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="331" y="0" width="84" height="37" forecolor="#FFFFFF" uuid="247863bc-2149-4ca0-8d12-cf8f29bc694a"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[SALDO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="415" y="0" width="31" height="37" forecolor="#FFFFFF" uuid="3a6c21d4-bd3e-4230-adc7-27e2e0d755f1"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[U.M.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="446" y="0" width="86" height="37" forecolor="#FFFFFF" uuid="17e67335-3d94-4200-9433-0cd118af427d"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ARMAZÉM]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="532" y="0" width="86" height="37" forecolor="#FFFFFF" uuid="e466beb4-db80-4ec5-ae83-4ffe403a0819"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[CON. LOTE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="618" y="0" width="102" height="37" forecolor="#FFFFFF" uuid="4f161ba7-819f-49b0-82fc-c17336f5a384"/>
+					<reportElement x="249" y="0" width="142" height="37" forecolor="#FFFFFF" uuid="e466beb4-db80-4ec5-ae83-4ffe403a0819"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
-					<text><![CDATA[NOTA FISCAL]]></text>
+					<text><![CDATA[CONTROLADO POR LOTE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="720" y="0" width="82" height="37" forecolor="#FFFFFF" uuid="139fd805-2c75-4902-89bb-32b0b1eb890c"/>
+					<reportElement x="449" y="0" width="123" height="37" forecolor="#FFFFFF" uuid="139fd805-2c75-4902-89bb-32b0b1eb890c"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PREÇO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="6" y="0" width="121" height="37" forecolor="#FFFFFF" uuid="4e94bd4c-3764-4bdc-8c91-3e06e23d9e81"/>
+					<reportElement x="11" y="0" width="238" height="37" forecolor="#FFFFFF" uuid="4e94bd4c-3764-4bdc-8c91-3e06e23d9e81"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PRODUTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="572" y="0" width="133" height="37" forecolor="#FFFFFF" uuid="8c985bb3-dd0d-484f-aa2b-013c9f574aa1"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QUANTIDADE MÍNIMA]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -166,49 +126,29 @@ and pa.armazem_codigoArmazem = a.codigoArmazem
 	<detail>
 		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="6" y="0" width="122" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
+				<reportElement x="12" y="0" width="238" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PRODUTO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="128" y="0" width="88" height="30" uuid="063389d4-922b-4fb0-a0fc-cbf76e6ad4f1"/>
+				<reportElement x="404" y="0" width="31" height="30" uuid="87679c67-6a69-40e7-99f6-d0fb02a2ab52"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="216" y="0" width="116" height="30" uuid="e4f055c6-3406-4c3a-ba66-950877ca95b5"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{FORNECEDOR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="332" y="0" width="84" height="30" uuid="c3bc9d3c-9190-44ff-be47-4a19818f62db"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="416" y="0" width="31" height="30" uuid="87679c67-6a69-40e7-99f6-d0fb02a2ab52"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{UM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="447" y="0" width="86" height="30" uuid="b2986598-66c6-42e8-b678-300090fc07f9"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{ARMAZEM}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="533" y="0" width="86" height="30" uuid="265694c6-9a8c-4621-9ce4-92be54899f29"/>
+				<reportElement x="250" y="3" width="142" height="30" uuid="265694c6-9a8c-4621-9ce4-92be54899f29"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}.equals(Boolean.TRUE) ? "SIM" : "NÂO"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CONTROLADO_POR_LOTE}.equals(Boolean.TRUE) ? "SIM" : "NÃO"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="619" y="0" width="102" height="30" uuid="11f00c3c-65db-4bb3-8ac5-643e35c26255"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="721" y="0" width="82" height="30" uuid="0fd20f54-0f6a-4372-810b-5af109bd9c36"/>
+				<reportElement x="450" y="0" width="123" height="30" uuid="0fd20f54-0f6a-4372-810b-5af109bd9c36"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="573" y="0" width="133" height="30" uuid="4336aa15-1049-488c-9b30-b14a124e69ec"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtdMinima}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

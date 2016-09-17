@@ -16,26 +16,24 @@ import java.util.List;
  *
  * @author DG
  */
-public class ControladorProdutoArmazenado {
-
+public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazenado> {
+    
     private static final String nomeTabela = "produtoArmazenado";
     //retirar static ao implementar o controlador de produtoArmazenado
     private static ControladorArmazem ctrlArmazem = new ControladorArmazem();
 
-    //public ControladorProdutoArmazenado() {
-      //  this.nomeTabela = "produtoArmazenado";
-    //}
-    
+    @Override
+    public void inserir(ProdutoArmazenado produto) throws SQLException {
+        CRUD.insert("produtoarmazenado", "null,'" + produto.getLote() + "'," + produto.getQuantidade() + "," + produto.getNotaFiscal() + "," + produto.getArmazem().getCodigo() + "," + produto.getFornecedor().getIdFornecedor() + "," + produto.getProduto().getCodigo());
+    }
 
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de
-     * dados. Método select da classe CRUD.
-     *
-     * @return List< Produto >
-     * @throws SQLException
-     */
-    public static List<ProdutoArmazenado> selecionarTodosProdutosArmazenados() throws SQLException {
-        
+    @Override
+    public void atualizarPorCodigo(ProdutoArmazenado produtoArmazenado) throws SQLException {
+        CRUD.update(nomeTabela, "quantidade = '" + produtoArmazenado.getQuantidade() + "'", "idProdutoArmazenado", "" + produtoArmazenado.getCodigo());
+    }
+
+    @Override
+    public List<ProdutoArmazenado> selecionarTodos() throws SQLException {
         List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
 
         ResultSet rs = CRUD.select(nomeTabela);
@@ -55,14 +53,36 @@ public class ControladorProdutoArmazenado {
         }
 
         return produtosArmazenados;
-
     }
 
-    public static ProdutoArmazenado selecionarPorLote() throws SQLException {
-        ProdutoArmazenado p = new ProdutoArmazenado();
-        return p;
+    @Override
+    public ProdutoArmazenado selecionarPorCodigo(int id) throws SQLException {
+        ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
+
+        ResultSet rs = CRUD.select(nomeTabela, "where codigoProduto = " + id);
+
+        if(rs.first()){
+        produtoArmazenado = new ProdutoArmazenado(
+                rs.getInt("idProdutoArmazenado"),
+                rs.getString("lote"),
+                rs.getDouble("quantidade"),
+                rs.getInt("notaFiscal"),
+                new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
+                new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
+                ctrlArmazem.selecionarPorCodigo(rs.getInt("armazem_codigoArmazem"))
+        );
+        }
+
+        return produtoArmazenado;
     }
 
+    @Override
+    public void deletar(ProdutoArmazenado produto) throws SQLException {
+        CRUD.delete(nomeTabela, "idProdutoArmazenado", "" + produto.getCodigo());
+    }
+
+    
+    
     /**
      * Executa um método que seleciona todos os armazéns cadastrados na base de
      * dados. Método select da classe CRUD.
@@ -71,7 +91,7 @@ public class ControladorProdutoArmazenado {
      * @return rs ResultSet
      * @throws SQLException
      */
-    public static ResultSet selecionarParaRelatorio(String codigosProdutosArmazenados) throws SQLException {
+    public  ResultSet selecionarParaRelatorio(String codigosProdutosArmazenados) throws SQLException {
 
         return CRUD.queryRelatorio("select p.nome as PRODUTO,\n"
                 + "       case when pa.lote IS NULL THEN\n"
@@ -100,6 +120,48 @@ public class ControladorProdutoArmazenado {
 
     }
 
+   /*
+    //public ControladorProdutoArmazenado() {
+    //  this.nomeTabela = "produtoArmazenado";
+    //}
+    /**
+     * Executa um método que seleciona todos os armazéns cadastrados na base de
+     * dados. Método select da classe CRUD.
+     *
+     * @return List< Produto >
+     * @throws SQLException
+     
+    public static List<ProdutoArmazenado> selecionarTodosProdutosArmazenados() throws SQLException {
+
+        List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
+
+        ResultSet rs = CRUD.select(nomeTabela);
+
+        while (rs.next()) {
+            ProdutoArmazenado produtoArmazenado
+                    = new ProdutoArmazenado(
+                            rs.getInt("idProdutoArmazenado"),
+                            rs.getString("lote"),
+                            rs.getDouble("quantidade"),
+                            rs.getInt("notaFiscal"),
+                            new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
+                            new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
+                            ctrlArmazem.selecionarPorCodigo(rs.getInt("armazem_codigoArmazem"))
+                    );
+            produtosArmazenados.add(produtoArmazenado);
+        }
+
+        return produtosArmazenados;
+
+    }
+
+    public static ProdutoArmazenado selecionarPorLote() throws SQLException {
+        ProdutoArmazenado p = new ProdutoArmazenado();
+        return p;
+    }
+
+    
+
     /**
      * Executa o método insert da classe CRUD, passando tabela produto e os
      * valores necessários para, inserir um produto na base de dados. É
@@ -107,7 +169,7 @@ public class ControladorProdutoArmazenado {
      *
      * @param produto
      * @throws SQLException
-     */
+     
     public static void inserirProduto(ProdutoArmazenado produto) throws SQLException {
         CRUD.insert("produtoarmazenado", "null,'" + produto.getLote() + "'," + produto.getQuantidade() + "," + produto.getNotaFiscal() + "," + produto.getArmazem().getCodigo() + "," + produto.getFornecedor().getIdFornecedor() + "," + produto.getProduto().getCodigo());
     }
@@ -121,7 +183,7 @@ public class ControladorProdutoArmazenado {
      *
      * @param produtoArmazenado
      * @throws SQLException
-     */
+     
     public static void updateSaldoProdutoArmazenado(ProdutoArmazenado produtoArmazenado) throws SQLException {
 
         CRUD.update(nomeTabela, "quantidade = '" + produtoArmazenado.getQuantidade() + "'", "idProdutoArmazenado", "" + produtoArmazenado.getCodigo());
@@ -155,5 +217,5 @@ public class ControladorProdutoArmazenado {
 //    
 //
 //    
-//
+//*/
 }

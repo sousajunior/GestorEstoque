@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author Carlinhos
@@ -23,18 +24,24 @@ public class FRMInventario extends javax.swing.JDialog {
 
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
     Produto produto = new Produto();
+    ControladorProdutoArmazenado ctrlProdutoArmazenado;
 
     /**
      * Creates new form FRMInventario
+     * @param parent
+     * @param modal
      */
     public FRMInventario(java.awt.Frame parent, boolean modal) {
+        
         super(parent, modal);
+        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
 
     public FRMInventario(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
@@ -121,6 +128,7 @@ public class FRMInventario extends javax.swing.JDialog {
         frmSaldo.jbtEntradaProduto.setEnabled(false);
         frmSaldo.jbtSaidaProduto.setEnabled(false);
         frmSaldo.jbtnventario.setEnabled(false);
+        frmSaldo.jtProdutosArmazenados.setToolTipText("Duplo clique para selecionar um produto!");
         frmSaldo.setVisible(true);
 
         frmSaldo.addWindowListener(new WindowAdapter() {
@@ -166,7 +174,7 @@ public class FRMInventario extends javax.swing.JDialog {
 
             produtoArmazenado.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
 
-            ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
+            ctrlProdutoArmazenado.atualizarPorCodigo(produtoArmazenado);
             JOptionPane.showMessageDialog(null, "Inventário realizado com sucesso! ", "Inventário", JOptionPane.INFORMATION_MESSAGE);
             btnLimparClicado();
 
@@ -212,7 +220,6 @@ public class FRMInventario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inventário");
         setPreferredSize(new java.awt.Dimension(480, 380));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
@@ -244,7 +251,7 @@ public class FRMInventario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao3, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;

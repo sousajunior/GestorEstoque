@@ -8,7 +8,6 @@ package br.com.gestorestoque.view;
 import br.com.gestorestoque.controller.ControladorFornecedor;
 import br.com.gestorestoque.model.Fornecedor;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
@@ -39,8 +38,12 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     Fornecedor fornecedorAlterarExcluir;
     Boolean somentePesquisa;
     ControladorFornecedor ctrlFornecedor;
+
     /**
      * Creates new form FRMCadastroProduto
+     *
+     * @param parent
+     * @param modal
      */
     public FRMCadastroFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -312,8 +315,12 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         jfCPF.setText(fornecedorAlterarExcluir.getCpf());
         jfCNPJ.setText(fornecedorAlterarExcluir.getCnpj());
         try {
-            jfCPF.commitEdit();
-            jfCNPJ.commitEdit();
+            if (fornecedorAlterarExcluir.getCpf() != null) {
+                jfCPF.commitEdit();
+            }
+            if (fornecedorAlterarExcluir.getCnpj() != null) {
+                jfCNPJ.commitEdit();
+            }
         } catch (ParseException ex) {
             Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -400,7 +407,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
 
                 } else {
                     fornecedor.setIdFornecedor(fornecedorAlterarExcluir.getIdFornecedor());
-                    this.ctrlFornecedor.atualizarPorCodigo(fornecedor); 
+                    this.ctrlFornecedor.atualizarPorCodigo(fornecedor);
                     btnLimparClicado();
                 }
                 atualizaFornecedor();
@@ -489,6 +496,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jtFornecedor.setToolTipText("Tabela de fornecedores");
         jScrollPane1.setViewportView(jtFornecedor);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -649,7 +657,7 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
     private javax.swing.JLabel jlCNPJ;
     private javax.swing.JLabel jlCPF;
     private javax.swing.JLabel jlNome;
-    private javax.swing.JTable jtFornecedor;
+    protected javax.swing.JTable jtFornecedor;
     private javax.swing.JTextField jtfNome;
     // End of variables declaration//GEN-END:variables
 }

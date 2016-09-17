@@ -5,6 +5,7 @@ import br.com.gestorestoque.controller.ControladorUnidadeMedida;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.UnidadeMedida;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -18,9 +19,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 /**
  *
@@ -39,6 +40,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMCadastroProduto
+     *
+     * @param parent
+     * @param modal
      */
     public FRMCadastroProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -115,7 +119,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
          */
         @Override
         public int getColumnCount() {
-            return 6;
+            return 5;
         }
 
         /**
@@ -138,14 +142,10 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             Produto produto = produtos.get(rowIndex);
 
             if (columnIndex == 0) {
-                return produto.getCodigo();
-            }
-
-            if (columnIndex == 1) {
                 return produto.getNome();
             }
 
-            if (columnIndex == 2) {
+            if (columnIndex == 1) {
                 if (produto.isControladoPorLote()) {
                     return "S";
                 } else {
@@ -153,20 +153,24 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 }
             }
 
+            if (columnIndex == 2) {
+                return produto.getPreco();
+            }
+
             if (columnIndex == 3) {
 
-                return produto.getPreco();
+                return produto.getQuantidadeMinima();
 
             }
 
             if (columnIndex == 4) {
 
-                return produto.getQuantidadeMinima();
+                return produto.getUnidadeMedida().getNome();
 
             }
             if (columnIndex == 5) {
 
-                return produto.getUnidadeMedida().getNome();
+                return produto.getCodigo();
 
             }
 
@@ -184,32 +188,32 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         public String getColumnName(int column) {
 
             if (column == 0) {
-                return "Código";
+                return "Nome";
             }
 
             if (column == 1) {
 
-                return "Nome";
+                return "Controlado por Lote";
             }
 
             if (column == 2) {
-                return "Controlado por Lote";
+                return "Preço";
             }
 
             if (column == 3) {
 
-                return "Preço";
+                return "Quantidade Mínima";
 
             }
 
             if (column == 4) {
 
-                return "Quantidade Mínima";
+                return "Unidade de Medida";
             }
 
             if (column == 5) {
 
-                return "Unidade de Medida";
+                return "Código";
             }
 
             return null;
@@ -233,8 +237,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 if (e.getClickCount() > 1) {
                     if (somentePesquisa) {
                         produtoAlterarExcluir = new Produto();
-                        produtoAlterarExcluir.setCodigo(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 0)));
-                        produtoAlterarExcluir.setNome(modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 1).toString());
+                        produtoAlterarExcluir.setCodigo(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 5)));
+                        produtoAlterarExcluir.setNome(modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 0).toString());
                         dispose();
                     }
                 } else {
@@ -299,6 +303,32 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jcbUnidadeMedida.addActionListener(
                 (e) -> {
                     itemComboSelecionado();
+                }
+        );
+
+        //Relatório (lista de produtos cadastrados)
+        jbtGerarRelatorioProdutos.addActionListener(
+                (e) -> {
+                    try {
+                        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                        btnGerarRelatorioClicado();
+                        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        );
+        
+        //Relatório (Saldo geral de produtos cadastrados)
+        jbtGerarRelatorioSaldoGeral.addActionListener(
+                (e) -> {
+                    try {
+                        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                        btnGerarRelatorioSaldoGeralClicado();
+                        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
         );
 
@@ -369,6 +399,48 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         }
     }
 
+    private void btnGerarRelatorioClicado() throws SQLException {
+
+        if (modeloTabelaProduto.getRowCount() > 0) {
+            String codigosProdutos = "";
+            for (int i = 0; i < modeloTabelaProduto.getRowCount(); i++) {
+                codigosProdutos += " " + modeloTabelaProduto.getValueAt(i, 5) + ",";
+                // System.out.println(" "+modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0) + ",");
+                // System.out.println(codigosProdutosArmazenados);
+            }
+            if (codigosProdutos.length() > 0) {
+
+                new FRMRelatorio(this,
+                        true,
+                        new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                        "RelatorioProdutos").setVisible(true);
+
+            }
+        }
+
+    }
+    
+    private void btnGerarRelatorioSaldoGeralClicado() throws SQLException {
+
+        if (modeloTabelaProduto.getRowCount() > 0) {
+            String codigosProdutos = "";
+            for (int i = 0; i < modeloTabelaProduto.getRowCount(); i++) {
+                codigosProdutos += " " + modeloTabelaProduto.getValueAt(i, 5) + ",";
+                // System.out.println(" "+modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0) + ",");
+                // System.out.println(codigosProdutosArmazenados);
+            }
+            if (codigosProdutos.length() > 0) {
+
+                new FRMRelatorio(this,
+                        true,
+                        new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                        "RelatorioSaldoGeralProdutos").setVisible(true);
+
+            }
+        }
+
+    }
+
     /**
      * Atualiza as linhas da tabela de armazéns com todos os armazéns
      * cadastrados na base.
@@ -383,7 +455,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
      */
     private void tabelaProdutoClicada() {
         this.produtoAlterarExcluir = new Produto();
-        this.produtoAlterarExcluir = procurarProdutoNaLista(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 0)));
+        this.produtoAlterarExcluir = procurarProdutoNaLista(Integer.parseInt("" + modeloTabelaProduto.getValueAt(jtProdutos.getSelectedRow(), 5)));
 
         jtfNome.setText(produtoAlterarExcluir.getNome());
 
@@ -509,8 +581,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         bgControleLote = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtProdutos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jlNome = new javax.swing.JLabel();
@@ -525,58 +595,20 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jbtnLimpar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
         jcbControladoPorLote = new javax.swing.JCheckBox();
+        jbtGerarRelatorioProdutos = new javax.swing.JButton();
+        jbtGerarRelatorioSaldoGeral = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro/Edição de Produtos");
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(584, 443));
-        setPreferredSize(new java.awt.Dimension(806, 448));
-
-        jScrollPane1.setName(""); // NOI18N
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 200));
-
-        jtProdutos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jtProdutos.setToolTipText("Tabela de produtos");
-        jtProdutos.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jtProdutos);
-
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(806, 500));
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -698,12 +730,131 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 12;
         gridBagConstraints.ipadx = 220;
         gridBagConstraints.ipady = -100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(17, 0, 0, 0);
         jPanel3.add(jPanel1, gridBagConstraints);
 
+        jbtGerarRelatorioProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtGerarRelatorioProdutos.setToolTipText("Gerar relatório da listagem de produtos cadastrados(De acordo com os dados atuais da tabela)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 1);
+        jPanel3.add(jbtGerarRelatorioProdutos, gridBagConstraints);
+
+        jbtGerarRelatorioSaldoGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtGerarRelatorioSaldoGeral.setToolTipText("Gerar relatório de saldo geral de produtos com os dados atuais da tabela");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 0);
+        jPanel3.add(jbtGerarRelatorioSaldoGeral, gridBagConstraints);
+
+        jTextField1.setText("jTextField1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 11;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 3);
+        jPanel3.add(jTextField1, gridBagConstraints);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Contém a expressão", "Igual a" }));
+        jComboBox1.setToolTipText("Selecione um filtro para produto");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 6;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 0);
+        jPanel3.add(jComboBox1, gridBagConstraints);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/limparFiltro.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_TRAILING;
+        gridBagConstraints.insets = new java.awt.Insets(0, 103, 0, 0);
+        jPanel3.add(jLabel1, gridBagConstraints);
+
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
+
+        jPanel2.setMinimumSize(new java.awt.Dimension(400, 200));
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 200));
+        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
+        jPanel2Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel2Layout.rowHeights = new int[] {0};
+        jPanel2.setLayout(jPanel2Layout);
+
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 190));
+        jScrollPane1.setName(""); // NOI18N
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(20, 200));
+
+        jtProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "null", "null"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtProdutos.setToolTipText("Tabela de produtos");
+        jtProdutos.setMaximumSize(new java.awt.Dimension(300, 200));
+        jtProdutos.setMinimumSize(new java.awt.Dimension(300, 200));
+        jtProdutos.setPreferredSize(new java.awt.Dimension(300, 200));
+        jtProdutos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jtProdutos);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 43;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.insets = new java.awt.Insets(4, 7, 9, 7);
+        jPanel2.add(jScrollPane1, gridBagConstraints);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -752,9 +903,15 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgControleLote;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbtGerarRelatorioProdutos;
+    private javax.swing.JButton jbtGerarRelatorioSaldoGeral;
     private javax.swing.JButton jbtnExcluir;
     private javax.swing.JButton jbtnLimpar;
     private javax.swing.JButton jbtnSalvar;
@@ -764,7 +921,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private javax.swing.JLabel jlPreco;
     private javax.swing.JLabel jlQtdMinima;
     private javax.swing.JLabel jlUnidadeMedida;
-    private javax.swing.JTable jtProdutos;
+    protected javax.swing.JTable jtProdutos;
     private javax.swing.JTextField jtfNome;
     private javax.swing.JTextField jtfPreco;
     private javax.swing.JTextField jtfQtdMinima;

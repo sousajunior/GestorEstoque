@@ -37,11 +37,12 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMCadastroProduto
+     * @param parent
+     * @param modal
      */
     public FRMCadastroUnidadeMedida(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
         ctrlUnidadeMedida = new ControladorUnidadeMedida();
         prepararComponentes();
 
@@ -511,7 +512,8 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
-        pack();
+        setSize(new java.awt.Dimension(667, 440));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
