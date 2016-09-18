@@ -115,19 +115,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
             Movimentacao movimentacao = movimentacoes.get(rowIndex);
 
             if (columnIndex == 0) {
-                return movimentacao.getLote();
-            }
-
-            if (columnIndex == 1) {
-                return movimentacao.getQtd();
-            }
-
-            if (columnIndex == 2) {
-                return movimentacao.getNotaFiscal();
-            }
-
-            if (columnIndex == 3) {
-
                 String tipo = "" + movimentacao.getTipoMovimentacao();
 
                 if (tipo.equalsIgnoreCase("e")) {
@@ -143,6 +130,18 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 }
 
                 return "";
+            }
+
+            if (columnIndex == 1) {
+                return movimentacao.getLote();
+            }
+
+            if (columnIndex == 2) {
+                return movimentacao.getQtd();
+            }
+
+            if (columnIndex == 3) {
+                return movimentacao.getNotaFiscal();
 
             }
 
@@ -183,21 +182,20 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         public String getColumnName(int column) {
 
             if (column == 0) {
-                return "Lote";
+                return "Tipo da movimentção";
             }
 
             if (column == 1) {
 
-                return "Quantidade";
+                return "Lote";
             }
 
             if (column == 2) {
-                return "Nota fiscal";
+                return "Quantidade";
             }
 
             if (column == 3) {
-
-                return "Tipo da movimentção";
+                return "Nota fiscal";
 
             }
 
@@ -244,15 +242,12 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 }
         );
 
-     
         //pesquisar
         jbtPesquisar.addActionListener(
                 (e) -> {
                     btnPesquisarClicado();
                 }
         );
-
-     
 
         //combo de condição para lote
         jcbCondicaoLote.addActionListener(
@@ -267,8 +262,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                     itemComboCondicaoProdutoSelecionado();
                 }
         );
-
-     
 
         //combo de condição para Saldo
         jcbCondicaoQuantidade.addActionListener(
@@ -290,8 +283,8 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                     itemComboCondicaoArmazemSelecionado();
                 }
         );
-        
-         //combo de condição para Saldo
+
+        //combo de condição para Saldo
         jcbCondicaoQuantidade.addActionListener(
                 (e) -> {
                     itemComboCondicaoQuantidadeSelecionado();
@@ -311,8 +304,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
             }
 
         });
-      
-     
+
         //listener do campo de lote
         jtfLote.addKeyListener(new KeyAdapter() {
 
@@ -369,7 +361,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         });
 
-       
         //listener do campo de armazem
         jtfArmazem.addKeyListener(new KeyAdapter() {
 
@@ -384,8 +375,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         });
 
-       
-
         jbtnGerarRelatorioMovimentacoes.addActionListener(
                 (e) -> {
                     try {
@@ -399,7 +388,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         );
 
     }
-    
+
     private void btnLimparClicado() {
 
         this.jcbCondicaoLote.setSelectedIndex(0);
@@ -407,20 +396,20 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         this.jcbCondicaoQuantidade.setSelectedIndex(0);
         this.jcbCondicaoArmazem.setSelectedIndex(0);
         this.jcbCondicaoNotaFiscal.setSelectedIndex(0);
-        
+
         atualizarTabelaMovimentacao();
         movimentacoesPesquisa = new ArrayList<>();
 
     }
-    
-     protected void btnPesquisarClicado() {
+
+    protected void btnPesquisarClicado() {
 
         movimentacoesPesquisa = new ArrayList<>();
         filtrar();
 
     }
-     
-     private void itemComboCondicaoLoteSelecionado() {
+
+    private void itemComboCondicaoLoteSelecionado() {
 
         if (this.jcbCondicaoLote.getSelectedIndex() == 0) {
             this.jtfLote.setText("");
@@ -441,7 +430,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void itemComboCondicaoQuantidadeSelecionado() {
 
         if (this.jcbCondicaoQuantidade.getSelectedIndex() == 0) {
@@ -505,10 +494,9 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         jtMovimentacoes.setModel(modeloTabelaMovimentacoes);
     }
 
-    
     private void filtrar() {
-        
-        movimentacoesPesquisa= new ArrayList<>();
+
+        movimentacoesPesquisa = new ArrayList<>();
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
         if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
@@ -957,7 +945,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         }
 
-        
         //Filtro por armazem
         //Verificar se o combo de condição por armazem não está ocm o traço selecionado
         if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
@@ -1001,14 +988,12 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
                     for (Movimentacao movimentacao : movimentacoes) {
 
-                        
-                            if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
+                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
 
-                                movimentacoesPesquisa.add(movimentacao);
+                            movimentacoesPesquisa.add(movimentacao);
 
-                            }
+                        }
 
-                        
                     }
 
                 } else {
@@ -1017,14 +1002,12 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
                     for (Movimentacao movimentacao : movimentacoesPesquisa) {
 
-                        
-                            if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
+                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
 
-                                movimentacoesPesquisa2.add(movimentacao);
+                            movimentacoesPesquisa2.add(movimentacao);
 
-                            }
+                        }
 
-                        
                     }
 
                     movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
@@ -1040,15 +1023,13 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         atualizarTabelaMovimentacaoComPesquisa();
 
     }
-    
-     private void atualizarTabelaMovimentacaoComPesquisa() {
+
+    private void atualizarTabelaMovimentacaoComPesquisa() {
         modeloTabelaMovimentacoes = new MovimentacaoTableModel(movimentacoesPesquisa);
         jtMovimentacoes.setModel(modeloTabelaMovimentacoes);
 
-       
-
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1107,7 +1088,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         ));
         jtMovimentacoes.setToolTipText("Tabela de movimentações");
         jtMovimentacoes.setMinimumSize(new java.awt.Dimension(80, 230));
-        jtMovimentacoes.setPreferredSize(new java.awt.Dimension(80, 230));
         jScrollPane1.setViewportView(jtMovimentacoes);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1305,7 +1285,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(720, 584));
+        setSize(new java.awt.Dimension(720, 590));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

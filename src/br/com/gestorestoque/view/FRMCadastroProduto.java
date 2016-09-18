@@ -278,8 +278,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             }
         });
 
-       
-
         //Preparar Botoes 
         //Salvar
         jbtnSalvar.addActionListener(
@@ -310,7 +308,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         );
 
         //Relatório (lista de produtos cadastrados)
-        jbtGerarRelatorioProdutos.addActionListener(
+        jbtGerarRelatorio.addActionListener(
                 (e) -> {
                     try {
                         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -322,18 +320,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 }
         );
 
-        //Relatório (Saldo geral de produtos cadastrados)
-        jbtGerarRelatorioSaldoGeral.addActionListener(
-                (e) -> {
-                    try {
-                        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                        btnGerarRelatorioSaldoGeralClicado();
-                        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-        );
         //impede a escrita de caracteres diferentes de números
         jtfPreco.addKeyListener(new KeyAdapter() {
             @Override
@@ -354,7 +340,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 }
             }
         });
-        
+
         //jdialogProduto
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -373,9 +359,6 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         preencheComboUnidadeMedida();
     }
 
-   
-
-    
     private boolean verificarComponentesPreenchidos() {
 
         if (!jtfNome.getText().equalsIgnoreCase("")) {
@@ -436,31 +419,19 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             }
             if (codigosProdutos.length() > 0) {
 
-                new FRMRelatorio(this,
-                        true,
-                        new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                        "RelatorioProdutos").setVisible(true);
-
-            }
-        }
-
-    }
-
-    private void btnGerarRelatorioSaldoGeralClicado() throws SQLException {
-
-        if (modeloTabelaProduto.getRowCount() > 0) {
-            String codigosProdutos = "";
-            for (int i = 0; i < modeloTabelaProduto.getRowCount(); i++) {
-                codigosProdutos += " " + modeloTabelaProduto.getValueAt(i, 5) + ",";
-                // System.out.println(" "+modeloTabelaProdutoArmazenado.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0) + ",");
-                // System.out.println(codigosProdutosArmazenados);
-            }
-            if (codigosProdutos.length() > 0) {
-
-                new FRMRelatorio(this,
-                        true,
-                        new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                        "RelatorioSaldoGeralProdutos").setVisible(true);
+                if (jcbRelatorios.getSelectedIndex() == 1) {
+                    new FRMRelatorio(this,
+                            true,
+                            new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                            "RelatorioSaldoGeralProdutos").setVisible(true);
+                }
+                
+                if (jcbRelatorios.getSelectedIndex() == 2) {
+                    new FRMRelatorio(this,
+                            true,
+                            new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                            "RelatorioProdutos").setVisible(true);
+                }
 
             }
         }
@@ -621,8 +592,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jbtnLimpar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
         jcbControladoPorLote = new javax.swing.JCheckBox();
-        jbtGerarRelatorioProdutos = new javax.swing.JButton();
-        jbtGerarRelatorioSaldoGeral = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jbtGerarRelatorio = new javax.swing.JButton();
+        jcbRelatorios = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProdutos = new javax.swing.JTable();
@@ -633,7 +605,10 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(806, 500));
 
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel3Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jPanel3.setLayout(jPanel3Layout);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1000, 1000));
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 100));
@@ -751,34 +726,45 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel1.add(jcbControladoPorLote, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.gridwidth = 43;
         gridBagConstraints.ipadx = 220;
         gridBagConstraints.ipady = -100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         gridBagConstraints.insets = new java.awt.Insets(17, 0, 0, 0);
         jPanel3.add(jPanel1, gridBagConstraints);
 
-        jbtGerarRelatorioProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
-        jbtGerarRelatorioProdutos.setToolTipText("Gerar relatório da listagem de produtos cadastrados(De acordo com os dados atuais da tabela)");
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Relatórios"));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jbtGerarRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtGerarRelatorio.setToolTipText("Gerar relatório (Obs os relatórios serão gerados de acordo com os dados atuais da tabela)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridx = 21;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 1);
-        jPanel3.add(jbtGerarRelatorioProdutos, gridBagConstraints);
+        jPanel4.add(jbtGerarRelatorio, gridBagConstraints);
 
-        jbtGerarRelatorioSaldoGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
-        jbtGerarRelatorioSaldoGeral.setToolTipText("Gerar relatório de saldo geral de produtos com os dados atuais da tabela");
+        jcbRelatorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Relatório Saldo Geral Produtos", "Relação de Produtos" }));
+        jcbRelatorios.setToolTipText("Escolha um relatório a ser gerado.");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 0);
-        jPanel3.add(jbtGerarRelatorioSaldoGeral, gridBagConstraints);
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 22);
+        jPanel4.add(jcbRelatorios, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 43;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel3.add(jPanel4, gridBagConstraints);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
@@ -900,13 +886,14 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtGerarRelatorioProdutos;
-    private javax.swing.JButton jbtGerarRelatorioSaldoGeral;
+    private javax.swing.JButton jbtGerarRelatorio;
     private javax.swing.JButton jbtnExcluir;
     private javax.swing.JButton jbtnLimpar;
     private javax.swing.JButton jbtnSalvar;
     private javax.swing.JCheckBox jcbControladoPorLote;
+    private javax.swing.JComboBox<String> jcbRelatorios;
     private javax.swing.JComboBox<String> jcbUnidadeMedida;
     private javax.swing.JLabel jlNome;
     private javax.swing.JLabel jlPreco;

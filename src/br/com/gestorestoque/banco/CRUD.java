@@ -144,7 +144,7 @@ public class CRUD {
      * @return
      * @throws SQLException 
      */
-    public static ResultSet  queryRelatorio(String query)throws SQLException{      
+    public static ResultSet  queryCompleta(String query)throws SQLException{      
         if(!query.equalsIgnoreCase("")){
             return executeSelect(query);
         }

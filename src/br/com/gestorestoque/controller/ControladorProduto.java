@@ -90,7 +90,7 @@ public class ControladorProduto implements Controlador<Produto> {
      */
     public ResultSet selecionarParaRelatorio(String codigosProdutos) throws SQLException {
 
-        return CRUD.queryRelatorio("select p.nome as PRODUTO,\n"
+        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
                 + "       um.abreviacao as UM,\n"
                 + "       p.controladoPorLote as CONTROLADO_POR_LOTE,\n"
                 + "       p.preco as PRECO,\n"
@@ -117,7 +117,7 @@ public class ControladorProduto implements Controlador<Produto> {
      */
     public ResultSet selecionarParaRelatorioSaldoGeral(String codigosProdutos) throws SQLException {
 
-        return CRUD.queryRelatorio("select p.nome as PRODUTO,\n"
+        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
                 + "       sum(pa.quantidade) as SALDO,\n"
                 + "       um.abreviacao as UM,\n"
                 + "       a.descricao as ARMAZEM,\n"

@@ -316,10 +316,14 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         jfCNPJ.setText(fornecedorAlterarExcluir.getCnpj());
         try {
             if (fornecedorAlterarExcluir.getCpf() != null) {
+                if(!jfCPF.getText().equalsIgnoreCase("   .   .   -  ")){
                 jfCPF.commitEdit();
+                }
             }
             if (fornecedorAlterarExcluir.getCnpj() != null) {
+                if(!jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")){
                 jfCNPJ.commitEdit();
+                }
             }
         } catch (ParseException ex) {
             Logger.getLogger(FRMCadastroFornecedor.class.getName()).log(Level.SEVERE, null, ex);

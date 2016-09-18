@@ -83,6 +83,27 @@ public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazena
 
         return produtoArmazenado;
     }
+    
+    public ProdutoArmazenado selecionarUltimoRegistro() throws SQLException {
+        ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
+
+        ResultSet rs = CRUD.queryCompleta("SELECT * FROM produtoarmazenado ORDER BY idprodutoarmazenado DESC LIMIT 1");
+
+        if(rs.first()){
+        produtoArmazenado = new ProdutoArmazenado(
+                rs.getInt("idProdutoArmazenado"),
+                rs.getString("lote"),
+                rs.getDouble("quantidade"),
+                rs.getInt("notaFiscal"),
+                new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
+                new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
+                ctrlArmazem.selecionarPorCodigo(rs.getInt("armazem_codigoArmazem"))
+        );
+        }
+
+        return produtoArmazenado;
+    }
+    
 
     @Override
     public void deletar(ProdutoArmazenado produto) throws SQLException {
@@ -101,7 +122,7 @@ public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazena
      */
     public  ResultSet selecionarParaRelatorio(String codigosProdutosArmazenados) throws SQLException {
 
-        return CRUD.queryRelatorio("select p.nome as PRODUTO,\n"
+        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
                 + "       case when pa.lote IS NULL THEN\n"
                 + "                  ''\n"
                 + "            else\n"

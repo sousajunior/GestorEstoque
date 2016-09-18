@@ -207,4 +207,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+ALTER TABLE `estoquedb`.`movimentacoes` 
+CHANGE COLUMN `idmovimentacao` `idmovimentacao` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
 -- Dump completed on 2016-09-07 12:40:31

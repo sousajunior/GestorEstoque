@@ -5,7 +5,10 @@
  */
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.controller.Controlador;
+import br.com.gestorestoque.controller.ControladorMovimentacao;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
+import br.com.gestorestoque.model.Movimentacao;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.awt.event.MouseAdapter;
@@ -13,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 
@@ -24,7 +28,8 @@ public class FRMInventario extends javax.swing.JDialog {
 
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
     Produto produto = new Produto();
-    ControladorProdutoArmazenado ctrlProdutoArmazenado;
+    Controlador controlador;
+    
 
     /**
      * Creates new form FRMInventario
@@ -34,14 +39,14 @@ public class FRMInventario extends javax.swing.JDialog {
     public FRMInventario(java.awt.Frame parent, boolean modal) {
         
         super(parent, modal);
-        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
+        this.controlador = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
 
     public FRMInventario(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
-        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
+        this.controlador = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
@@ -174,7 +179,11 @@ public class FRMInventario extends javax.swing.JDialog {
 
             produtoArmazenado.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
 
-            ctrlProdutoArmazenado.atualizarPorCodigo(produtoArmazenado);
+            controlador.atualizarPorCodigo(produtoArmazenado);
+            
+            //Salvar movimentação
+            controlador = new ControladorMovimentacao();
+            controlador.inserir(new Movimentacao( produtoArmazenado.getLote(), produtoArmazenado.getQuantidade(), produtoArmazenado.getNotaFiscal(),"I", new Date(), produtoArmazenado, produtoArmazenado.getArmazem()));
             JOptionPane.showMessageDialog(null, "Inventário realizado com sucesso! ", "Inventário", JOptionPane.INFORMATION_MESSAGE);
             btnLimparClicado();
 

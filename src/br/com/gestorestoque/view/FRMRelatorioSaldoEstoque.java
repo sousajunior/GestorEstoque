@@ -6,6 +6,7 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorArmazem;
+import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,12 +38,15 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
     List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
+    List<Produto> produtos = new ArrayList<>();
     List<Armazem> armazens = new ArrayList<>();
     List<Armazem> armazensPesquisa = new ArrayList<>();
     TableModel modeloTabelaProdutoArmazenado;
     ProdutoArmazenado produtoArmazenadoPesquisa;
     ControladorArmazem ctrlArmazem;
     ControladorProdutoArmazenado ctrlProdutoArmazenado;
+    ControladorProduto ctrlProduto;
+    List<Produto> produtosQtdMinima = new ArrayList<>();
     //Strings de pesquisa
 
     Boolean somentePesquisa;
@@ -58,6 +61,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         super(parent, modal);
         this.ctrlArmazem = new ControladorArmazem();
         this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
+        this.ctrlProduto = new ControladorProduto();
         initComponents();
         somentePesquisa = false;
         prepararComponentes();
@@ -75,6 +79,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         initComponents();
         somentePesquisa = true;
+        this.jScrollPane1.setAutoscrolls(true); 
         prepararComponentes();
     }
 
@@ -91,6 +96,27 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         try {
             produtosArmazenados = ctrlProdutoArmazenado.selecionarTodos();
             return produtosArmazenados;
+        } catch (SQLException ex) {
+            Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    /**
+     * Executa o método ControladorProduto.selecionarTodosArmazens() da classe
+     * ControladorProduto. Este método retorna uma lista com todos os armazéns
+     * cadastrados na base de dados.
+     *
+     * @return
+     */
+    private List<Produto> getProdutos() {
+
+        produtos = new ArrayList<>();
+        try {
+            ctrlProduto = new ControladorProduto();
+            produtos = ctrlProduto.selecionarTodos();
+            return produtos;
         } catch (SQLException ex) {
             Logger.getLogger(FRMCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -286,11 +312,16 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
             Component c = super.getTableCellRendererComponent(table, value, isSelected,
                     hasFocus, row, column);
             if (column == 4) {
-                ProdutoArmazenado p = (ProdutoArmazenado) modeloTabelaProdutoArmazenado.getValueAt(row, 10);                
+                ProdutoArmazenado p = (ProdutoArmazenado) modeloTabelaProdutoArmazenado.getValueAt(row, 10);
                 c = super.getTableCellRendererComponent(table, p.getQuantidade(), isSelected,
                         hasFocus, row, column);
-                if (Double.parseDouble(value.toString()) <= p.getProduto().getQuantidadeMinima()) {
-                    c.setForeground(Color.red);
+                for (Produto produto : produtosQtdMinima) {
+
+                    if (produto.getCodigo() == p.getProduto().getCodigo()) {
+                        //if (Double.parseDouble(value.toString()) <= p.getProduto().getQuantidadeMinima()) {
+                        c.setForeground(Color.red);
+                        //}
+                    }
                 }
             } else {
                 c.setForeground(Color.black);
@@ -306,8 +337,11 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     public void prepararComponentes() {
 
         //Preparar Jtable de produtos
+        
+        getProdutosArmazenados();
+        atualizarListaProdutosQuantidadeMinima();
         atualizarTabelaProdutosArmazenados();
-
+        
         jtProdutosArmazenados.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -576,6 +610,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoUnidadeMedida.setSelectedIndex(0);
 
         atualizarTabelaProdutosArmazenados();
+        
         produtosArmazenadosPesquisa = new ArrayList<>();
 
     }
@@ -1595,13 +1630,31 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
+        atualizarListaProdutosQuantidadeMinima();
         DefaultTableCellRenderer tcr = new qtdMinimaRender();
         jtProdutosArmazenados.setDefaultRenderer(Object.class, tcr);
+        
 
-//        for (ProdutoArmazenado produtosArmazenado : produtosArmazenadosPesquisa) {
-//            //System.out.println(produtosArmazenado.getLote());
-//
-//        }
+    }
+
+    private void atualizarListaProdutosQuantidadeMinima() {
+
+        produtos = getProdutos();
+        produtosQtdMinima = new ArrayList<>();
+        double qtdSaldo = 0;
+        for (Produto produto : produtos) {
+
+            for (ProdutoArmazenado produtosArmazenado : produtosArmazenados) {
+                if (produtosArmazenado.getProduto().getCodigo() == produto.getCodigo()) {
+                    qtdSaldo += produtosArmazenado.getQuantidade();
+                }
+            }
+            if (qtdSaldo <= produto.getQuantidadeMinima()) {
+                produtosQtdMinima.add(produto);
+            }
+            qtdSaldo = 0;
+        }
+
     }
 
     /**
@@ -1611,8 +1664,10 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
     private void atualizarTabelaProdutosArmazenados() {
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(getProdutosArmazenados());
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
+        atualizarListaProdutosQuantidadeMinima();
         DefaultTableCellRenderer tcr = new qtdMinimaRender();
         jtProdutosArmazenados.setDefaultRenderer(Object.class, tcr);
+
     }
 
     /**
@@ -1669,6 +1724,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
         jpBaixo.setLayout(new java.awt.GridBagLayout());
 
+        jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setMinimumSize(new java.awt.Dimension(80, 230));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(80, 230));
 
@@ -1683,10 +1739,9 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtProdutosArmazenados.setToolTipText("Tabela de saldo dos produtos");
+        jtProdutosArmazenados.setToolTipText("Tabela de saldo dos produtos. Itens em vermelho chegaram na quantidade mínima(ponto de pedido)");
         jtProdutosArmazenados.setMaximumSize(new java.awt.Dimension(300, 200));
         jtProdutosArmazenados.setMinimumSize(new java.awt.Dimension(300, 200));
-        jtProdutosArmazenados.setPreferredSize(new java.awt.Dimension(300, 200));
         jScrollPane1.setViewportView(jtProdutosArmazenados);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1991,7 +2046,7 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
         jPanel2.getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new java.awt.Dimension(813, 675));
+        setSize(new java.awt.Dimension(852, 675));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

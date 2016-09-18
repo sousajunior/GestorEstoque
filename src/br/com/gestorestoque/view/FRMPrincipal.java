@@ -316,6 +316,12 @@ public class FRMPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    private void atualizarListaProdutosPontoPedido(){
+        
+        
+    }
 
     /**
      * @param args the command line arguments

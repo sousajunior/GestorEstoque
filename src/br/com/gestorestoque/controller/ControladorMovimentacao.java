@@ -7,6 +7,7 @@ package br.com.gestorestoque.controller;
 
 import br.com.gestorestoque.banco.CRUD;
 import br.com.gestorestoque.model.Movimentacao;
+import br.com.gestorestoque.util.EstoqueDataUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
     public void inserir(Movimentacao movimentacao) throws SQLException {
         CRUD.insert(nomeTabela, "null,'" + movimentacao.getLote() + "',"
                 + movimentacao.getQtd() + ",'"
-                + movimentacao.getNotaFiscal() + "',"
-                + movimentacao.getTipoMovimentacao() + ",'"
-                + movimentacao.getData() + "',"
-                + movimentacao.getIdProdutoArmazenado() + ","
-                + movimentacao.getIdArmazem());
+                + movimentacao.getNotaFiscal() + "','"
+                + movimentacao.getTipoMovimentacao() + "','"
+                + EstoqueDataUtil.converteDataEmString(movimentacao.getData()) + "',"
+                + movimentacao.getIdProdutoArmazenado().getCodigo() + ","
+                + movimentacao.getIdArmazem().getCodigo());
     }
 /**
  * @deprecated 
@@ -107,7 +108,7 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
      */
     public ResultSet selecionarParaRelatorio(String codigosMovimentacoes) throws SQLException {
 
-        return CRUD.queryRelatorio("select case when m.lote IS NULL THEN  ''\n"
+        return CRUD.queryCompleta("select case when m.lote IS NULL THEN  ''\n"
                 + "		    else m.lote\n"
                 + "            end  as LOTE,\n"
                 + "	   m.quantidade as QUANTIDADE,\n"

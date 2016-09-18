@@ -7,7 +7,9 @@ package br.com.gestorestoque.view;
 
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+
 import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -44,6 +46,8 @@ public class FRMRelatorio extends javax.swing.JDialog {
             this.revalidate();
             //Deixar True para exibir a tela no sistema  
             //this.setVisible(true);
+        }catch (JRRuntimeException  e){
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:"+e.getMessage(),"Erro",0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:"+e.getMessage(),"Erro",0);
         }

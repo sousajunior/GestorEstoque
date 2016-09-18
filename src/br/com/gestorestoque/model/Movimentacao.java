@@ -12,14 +12,14 @@ import java.util.Date;
  * @author Matheus
  */
 public class Movimentacao {
-    private final int id;
-    private final String lote;
-    private final double qtd;
-    private final int notaFiscal;
-    private final char tipoMovimentacao;
-    private final Date data;
-    private final ProdutoArmazenado idProdutoArmazenado;
-    private final Armazem idArmazem;
+    private  int id;
+    private  String lote;
+    private  double qtd;
+    private  int notaFiscal;
+    private  char tipoMovimentacao;
+    private  Date data;
+    private  ProdutoArmazenado idProdutoArmazenado;
+    private  Armazem idArmazem;
 
     public Movimentacao(int id, String lote, double qtd, int notaFiscal, char tipoMovimentacao, Date data, ProdutoArmazenado idProdutoArmazenado, Armazem idArmazem) {
         this.id = id;
@@ -42,9 +42,20 @@ public class Movimentacao {
         this.idProdutoArmazenado = idProdutoArmazenado;
         this.idArmazem = idArmazem;
     }
+    
+    public Movimentacao( String lote, double qtd, int notaFiscal, String tipoMovimentacao, Date data, ProdutoArmazenado idProdutoArmazenado, Armazem idArmazem) {
+        
+        this.lote = lote;
+        this.qtd = qtd;
+        this.notaFiscal = notaFiscal;
+        this.tipoMovimentacao = tipoMovimentacao.charAt(0);
+        this.data = data;
+        this.idProdutoArmazenado = idProdutoArmazenado;
+        this.idArmazem = idArmazem;
+    }
 
     public Movimentacao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     /**
