@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `movimentacoes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movimentacoes` (
-  `idmovimentacao` int(11) NOT NULL,
+  `idmovimentacao` int(11) NOT NULL  AUTO_INCREMENT,
   `lote` varchar(45) DEFAULT NULL,
   `quantidade` varchar(45) DEFAULT NULL,
   `notaFiscal` int(11) DEFAULT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE `produtoarmazenado` (
 
 LOCK TABLES `produtoarmazenado` WRITE;
 /*!40000 ALTER TABLE `produtoarmazenado` DISABLE KEYS */;
-INSERT INTO `produtoarmazenado` VALUES (1,'09FEV-A','50',56395,1,2,1),(2,'SAD23SET-C','100',1110,2,1,2),(3,'SAD23SET-B','20',1110,2,1,2),(4,NULL,'1',27062016,1,3,6);
+INSERT INTO `produtoarmazenado` VALUES (1,NULL,'50',56395,1,2,1),(2,'SAD23SET-C','100',1110,2,1,2),(3,'SAD23SET-B','20',1110,2,1,2),(4,NULL,'1',27062016,1,3,6);
 /*!40000 ALTER TABLE `produtoarmazenado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,9 +206,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
-ALTER TABLE `estoquedb`.`movimentacoes` 
-CHANGE COLUMN `idmovimentacao` `idmovimentacao` INT(11) NOT NULL AUTO_INCREMENT ;
 
 
 -- Dump completed on 2016-09-07 12:40:31
