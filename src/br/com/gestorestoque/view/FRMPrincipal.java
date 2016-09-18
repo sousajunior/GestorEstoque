@@ -7,7 +7,11 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.util.FRMUtil;
 import java.awt.Color;
+import java.awt.Component;
+import javafx.scene.control.RadioMenuItem;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -51,15 +55,15 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSaldo_Estoque = new javax.swing.JMenuItem();
         jmiMovimentacoesEstoque = new javax.swing.JMenuItem();
         jmSistema = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jmiWindows = new javax.swing.JMenuItem();
-        jmiWindowsClassic = new javax.swing.JMenuItem();
-        jmiMotif = new javax.swing.JMenuItem();
-        jmiNimbus = new javax.swing.JMenuItem();
-        jmiLiquid = new javax.swing.JMenuItem();
-        jmiMetal = new javax.swing.JMenuItem();
-        jmiSynthetica = new javax.swing.JMenuItem();
-        jmiWebLaf = new javax.swing.JMenuItem();
+        jMenuAparencia = new javax.swing.JMenu();
+        jmiWindows = new javax.swing.JRadioButtonMenuItem();
+        jmiWindowsClassic = new javax.swing.JRadioButtonMenuItem();
+        jmiMotif = new javax.swing.JRadioButtonMenuItem();
+        jmiNimbus = new javax.swing.JRadioButtonMenuItem();
+        jmiLiquid = new javax.swing.JRadioButtonMenuItem();
+        jmiMetal = new javax.swing.JRadioButtonMenuItem();
+        jmiSynthetica = new javax.swing.JRadioButtonMenuItem();
+        jmiWebLaf = new javax.swing.JRadioButtonMenuItem();
         jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,34 +124,35 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jmSistema.setText("Sistema");
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/looknfeel.png"))); // NOI18N
-        jMenu1.setText("Aparência");
+        jMenuAparencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/looknfeel.png"))); // NOI18N
+        jMenuAparencia.setText("Aparência");
 
         jmiWindows.setText("Windows");
-        jMenu1.add(jmiWindows);
+        jMenuAparencia.add(jmiWindows);
 
         jmiWindowsClassic.setText("Windows Classic");
-        jMenu1.add(jmiWindowsClassic);
+        jMenuAparencia.add(jmiWindowsClassic);
 
         jmiMotif.setText("Motif");
-        jMenu1.add(jmiMotif);
+        jMenuAparencia.add(jmiMotif);
 
         jmiNimbus.setText("Nimbus");
-        jMenu1.add(jmiNimbus);
+        jMenuAparencia.add(jmiNimbus);
 
         jmiLiquid.setText("Liquid");
-        jMenu1.add(jmiLiquid);
+        jMenuAparencia.add(jmiLiquid);
 
         jmiMetal.setText("Metal");
-        jMenu1.add(jmiMetal);
+        jMenuAparencia.add(jmiMetal);
 
         jmiSynthetica.setText("Synthetica");
-        jMenu1.add(jmiSynthetica);
+        jMenuAparencia.add(jmiSynthetica);
 
+        jmiWebLaf.setSelected(true);
         jmiWebLaf.setText("WebLaf");
-        jMenu1.add(jmiWebLaf);
+        jMenuAparencia.add(jmiWebLaf);
 
-        jmSistema.add(jMenu1);
+        jmSistema.add(jMenuAparencia);
 
         jmiSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/sobre.png"))); // NOI18N
         jmiSobre.setText("Sobre");
@@ -160,13 +165,13 @@ public class FRMPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void menuMovimentacaoEntradaClicado(){
-        
-        new FRMCadastroEntradaSaida(this, true, true,"Entrada de produtos").setVisible(true);
+    public void menuMovimentacaoEntradaClicado() {
+
+        new FRMCadastroEntradaSaida(this, true, true, "Entrada de produtos").setVisible(true);
     }
-    
+
     private void menuMovimentacaoSaidaClicado() {
-         new FRMCadastroEntradaSaida(this, true, false,"Saída de produtos").setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, false, "Saída de produtos").setVisible(true);
     }
 
     private void menuCadastroInventarioClicado() {
@@ -176,7 +181,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private void menuRelatorioSaldoEstoqueClicado() {
         new FRMRelatorioSaldoEstoque(this, true).setVisible(true);
     }
-    
+
     public void menuCadastroProdutoClicado() {
         new FRMCadastroProduto(this, true).setVisible(true);
     }
@@ -188,24 +193,25 @@ public class FRMPrincipal extends javax.swing.JFrame {
     public void menuCadastroArmazemClicado() {
         new FRMCadastroArmazem(this, true).setVisible(true);
     }
-    
+
     private void menuCadastroFornecedorClicado() {
         new FRMCadastroFornecedor(this, true).setVisible(true);
     }
+
     private void menuSobreClicado() {
-        new FRMSobre(this,true).setVisible(true);
+        new FRMSobre(this, true).setVisible(true);
     }
-    
+
     private void menuHistoricoMovimentacoesClicado() {
-        new FRMMovimentacao(this,true).setVisible(true);
+        new FRMMovimentacao(this, true).setVisible(true);
     }
-   
+
     public void prepararComponentes() {
 
         jmiMovimentacoesEstoque.addActionListener((e) -> {
             menuHistoricoMovimentacoesClicado();
         });
-        
+
         jmiProduto.addActionListener((e) -> {
             menuCadastroProdutoClicado();
         });
@@ -223,22 +229,22 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiEntrada.addActionListener((e) -> {
             menuMovimentacaoEntradaClicado();
         });
-        
+
         jmiSaida.addActionListener((e) -> {
             menuMovimentacaoSaidaClicado();
         });
-        
+
         jmiInventario.addActionListener((e) -> {
             menuCadastroInventarioClicado();
         });
-        
+
         jmiSaldo_Estoque.addActionListener((e) -> {
             menuRelatorioSaldoEstoqueClicado();
         });
         jmiSobre.addActionListener((e) -> {
             menuSobreClicado();
         });
-        
+
         //=====================================
         //Itens de menu da aparência do sistema
         //=====================================
@@ -246,6 +252,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiWindows.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel", this);
+                uncheck();
+                jmiWindows.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -255,6 +263,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiWindowsClassic.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel", this);
+                uncheck();
+                jmiWindowsClassic.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -264,6 +274,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiMotif.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel", this);
+                uncheck();
+                jmiMotif .setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -273,6 +285,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiNimbus.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel", this);
+                uncheck();
+                jmiNimbus.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -282,6 +296,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiLiquid.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel", this);
+                uncheck();
+                jmiLiquid.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -291,6 +307,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiMetal.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel", this);
+                uncheck();
+                jmiMetal .setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
@@ -300,27 +318,37 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSynthetica.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel", this);
+                uncheck();
+                jmiSynthetica.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
         });
-
-        
 
         // WebLaf
         jmiWebLaf.addActionListener((e) -> {
             try {
                 FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", this);
+                uncheck();
+                jmiWebLaf.setSelected(true);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
         });
     }
-    
-    
-    private void atualizarListaProdutosPontoPedido(){
-        
-        
+
+    private void atualizarListaProdutosPontoPedido() {
+
+    }
+
+    private void uncheck() {
+        for (Component radio : jMenuAparencia.getMenuComponents()) {
+            JRadioButtonMenuItem jr = (JRadioButtonMenuItem) radio;
+            if (jr.isSelected()) {
+                jr.setSelected(false);
+            }
+
+        }
     }
 
     /**
@@ -360,7 +388,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLImagemPrincipal;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenuAparencia;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmCadastros;
     private javax.swing.JMenu jmMovimentacao;
@@ -369,23 +397,20 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiEntrada;
     private javax.swing.JMenuItem jmiFornecedor;
     private javax.swing.JMenuItem jmiInventario;
-    private javax.swing.JMenuItem jmiLiquid;
-    private javax.swing.JMenuItem jmiMetal;
-    private javax.swing.JMenuItem jmiMotif;
+    private javax.swing.JRadioButtonMenuItem jmiLiquid;
+    private javax.swing.JRadioButtonMenuItem jmiMetal;
+    private javax.swing.JRadioButtonMenuItem jmiMotif;
     private javax.swing.JMenuItem jmiMovimentacoesEstoque;
-    private javax.swing.JMenuItem jmiNimbus;
+    private javax.swing.JRadioButtonMenuItem jmiNimbus;
     private javax.swing.JMenuItem jmiProduto;
     private javax.swing.JMenuItem jmiSaida;
     private javax.swing.JMenuItem jmiSaldo_Estoque;
     private javax.swing.JMenuItem jmiSobre;
-    private javax.swing.JMenuItem jmiSynthetica;
+    private javax.swing.JRadioButtonMenuItem jmiSynthetica;
     private javax.swing.JMenuItem jmiUnidadeMedida;
-    private javax.swing.JMenuItem jmiWebLaf;
-    private javax.swing.JMenuItem jmiWindows;
-    private javax.swing.JMenuItem jmiWindowsClassic;
+    private javax.swing.JRadioButtonMenuItem jmiWebLaf;
+    private javax.swing.JRadioButtonMenuItem jmiWindows;
+    private javax.swing.JRadioButtonMenuItem jmiWindowsClassic;
     // End of variables declaration//GEN-END:variables
 
-    
-
-    
 }

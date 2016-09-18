@@ -98,7 +98,7 @@
             <Property name="text" type="java.lang.String" value="Sistema"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu1">
+            <Menu class="javax.swing.JMenu" name="jMenuAparencia">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/looknfeel.png"/>
@@ -106,43 +106,44 @@
                 <Property name="text" type="java.lang.String" value="Apar&#xea;ncia"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiWindows">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiWindows">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Windows"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiWindowsClassic">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiWindowsClassic">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Windows Classic"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiMotif">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiMotif">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Motif"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiNimbus">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiNimbus">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Nimbus"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiLiquid">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiLiquid">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Liquid"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiMetal">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiMetal">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Metal"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiSynthetica">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiSynthetica">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Synthetica"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jmiWebLaf">
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmiWebLaf">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="WebLaf"/>
                   </Properties>
                 </MenuItem>
