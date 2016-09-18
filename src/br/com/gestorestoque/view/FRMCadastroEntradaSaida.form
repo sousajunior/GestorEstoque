@@ -244,6 +244,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/search-16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Abre tela de armaz&#xe9;ns. (duplo clique na tabela para selecionar um Armaz&#xe9;m)"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -256,6 +257,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/search-16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Abre tela de produtos. (duplo clique na tabela para selecionar um produto)"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -268,6 +270,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/search-16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Abre tela de fornecedores. (duplo clique na tabela para selecionar um fornecedor)"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

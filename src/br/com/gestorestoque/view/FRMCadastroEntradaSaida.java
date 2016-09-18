@@ -268,18 +268,21 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jPanel1.add(jtfNomeProduto, gridBagConstraints);
 
         jbtnPesquisarArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarArmazem.setToolTipText("Abre tela de armazéns. (duplo clique na tabela para selecionar um Armazém)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 6;
         jPanel1.add(jbtnPesquisarArmazem, gridBagConstraints);
 
         jbtnPesquisarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarProduto.setToolTipText("Abre tela de produtos. (duplo clique na tabela para selecionar um produto)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 4;
         jPanel1.add(jbtnPesquisarProduto, gridBagConstraints);
 
         jbtnPesquisarFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarFornecedor.setToolTipText("Abre tela de fornecedores. (duplo clique na tabela para selecionar um fornecedor)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 8;
