@@ -305,7 +305,7 @@ public class FRMInventario extends javax.swing.JDialog {
         jPanel1.add(jtfNomeProduto, gridBagConstraints);
 
         jbtnPesquisarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
-        jbtnPesquisarProduto.setToolTipText("Abre tela de produtos. (duplo clique na tabela para selecionar um produto)");
+        jbtnPesquisarProduto.setToolTipText("Abre a tela de produtos. (duplo clique na tabela para selecionar um produto)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 18;
         gridBagConstraints.gridy = 6;
