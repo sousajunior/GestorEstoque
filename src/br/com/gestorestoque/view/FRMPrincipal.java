@@ -6,10 +6,13 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.util.FRMUtil;
+import br.com.gestorestoque.view.menu.fabrica.AbstractFabricaMenus;
+import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
+import br.com.gestorestoque.view.menu.fabrica.CriadorFabricaMenu;
+import br.com.gestorestoque.view.menu.fabrica.TipoMenu;
 import java.awt.Color;
 import java.awt.Component;
-import javafx.scene.control.RadioMenuItem;
-import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,6 +22,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Matheus
  */
 public class FRMPrincipal extends javax.swing.JFrame {
+    
+    
+    private static FRMPrincipal fRMPrincipalUnicaInstancia;
 
     /**
      * Creates new form FRMPrincipal
@@ -31,6 +37,15 @@ public class FRMPrincipal extends javax.swing.JFrame {
         prepararComponentes();
     }
 
+    public static synchronized FRMPrincipal getInstance() {
+
+        if (fRMPrincipalUnicaInstancia == null)
+			fRMPrincipalUnicaInstancia = new FRMPrincipal();
+
+		return fRMPrincipalUnicaInstancia;
+	}
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +57,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jLImagemPrincipal = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jmbPrincipal = new javax.swing.JMenuBar();
         jmCadastros = new javax.swing.JMenu();
         jmiProduto = new javax.swing.JMenuItem();
         jmiUnidadeMedida = new javax.swing.JMenuItem();
@@ -95,7 +110,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiFornecedor.setText("Fornecedor");
         jmCadastros.add(jmiFornecedor);
 
-        jMenuBar1.add(jmCadastros);
+        jmbPrincipal.add(jmCadastros);
 
         jmMovimentacao.setText("Estoque");
 
@@ -120,7 +135,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiMovimentacoesEstoque.setText("Histórico de Movimentações");
         jmMovimentacao.add(jmiMovimentacoesEstoque);
 
-        jMenuBar1.add(jmMovimentacao);
+        jmbPrincipal.add(jmMovimentacao);
 
         jmSistema.setText("Sistema");
 
@@ -158,9 +173,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jmiSobre.setText("Sobre");
         jmSistema.add(jmiSobre);
 
-        jMenuBar1.add(jmSistema);
+        jmbPrincipal.add(jmSistema);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jmbPrincipal);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -208,6 +223,12 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
     public void prepararComponentes() {
 
+         AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(TipoMenu.ADMIN); 
+         BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
+         //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
+         this.setJMenuBar(barraMenu.montarMenu());
+        
+        
         jmiMovimentacoesEstoque.addActionListener((e) -> {
             menuHistoricoMovimentacoesClicado();
         });
@@ -337,10 +358,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
         });
     }
 
-    private void atualizarListaProdutosPontoPedido() {
-
-    }
-
     private void uncheck() {
         for (Component radio : jMenuAparencia.getMenuComponents()) {
             JRadioButtonMenuItem jr = (JRadioButtonMenuItem) radio;
@@ -389,10 +406,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLImagemPrincipal;
     private javax.swing.JMenu jMenuAparencia;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmCadastros;
     private javax.swing.JMenu jmMovimentacao;
     private javax.swing.JMenu jmSistema;
+    private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JMenuItem jmiArmazem;
     private javax.swing.JMenuItem jmiEntrada;
     private javax.swing.JMenuItem jmiFornecedor;

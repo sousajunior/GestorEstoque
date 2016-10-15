@@ -207,5 +207,41 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+use estoquedb;
+CREATE TABLE `estoquedb`.`usuario` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome_completo` VARCHAR(45) NOT NULL,
+  `nome_usuario` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+CREATE TABLE `estoquedb`.`grupo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome_grupo` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+
+CREATE TABLE `estoquedb`.`usuario_grupo` (
+  `id_usuario` INT NOT NULL,
+  `id_grupo` INT NOT NULL,
+  INDEX `fk_usuario_idx` (`id_usuario` ASC),
+  INDEX `fk_grupo_idx` (`id_grupo` ASC),
+  CONSTRAINT `fk_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `estoquedb`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_grupo`
+    FOREIGN KEY (`id_grupo`)
+    REFERENCES `estoquedb`.`grupo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+insert into usuario values(1,'Geam Felipe Dos Santos','Geam','123');
+insert into grupo values(1,'ADMINISTRADORES');
+insert into grupo values(2,'ALMOXARIFADO');
+INSERT INTO USUARIO_GRUPO VALUES(1,1);
+
 
 -- Dump completed on 2016-09-07 12:40:31

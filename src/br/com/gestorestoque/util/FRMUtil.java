@@ -1,5 +1,6 @@
 package br.com.gestorestoque.util;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -16,18 +17,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class FRMUtil {
 
     /**
-     * Metodo que seta os ícones nos cantos da tela.
-     * É obrigatório passar por parâmetro pelo menos um, JFrame ou um JDialog.
+     * Metodo que seta os ícones nos cantos da tela. É obrigatório passar por
+     * parâmetro pelo menos um, JFrame ou um JDialog.
+     *
      * @param frame
      * @param dialog
-     * 
+     *
      */
     public void setarIcone(JFrame frame, JDialog dialog) {
 
         // coloca uma figura na barra de título da janela  
         URL url = getClass().getResource("/br/com/gestorestoque/view/imagens/iconeSistema.png");
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-        
+
         if (frame != null) {
             frame.setIconImage(imagemTitulo);
         }
@@ -37,24 +39,26 @@ public class FRMUtil {
         }
 
     }
-    
+
     /**
-     * Método altera o lookAndFeel da aplicação, na chamado do método, 
-     * é necessário passar a String do lookAndFeel e o Frame.
+     * Método altera o lookAndFeel da aplicação, na chamado do método, é
+     * necessário passar a String do lookAndFeel e o Frame.
+     *
      * @param lookAndFeel String
-     * @param frame JFrame
+     * @param componente JFrame
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
-     * @throws UnsupportedLookAndFeelException 
+     * @throws UnsupportedLookAndFeelException
      */
-    public static void alterarLookAndFeel(String lookAndFeel, JFrame frame) throws ClassNotFoundException, IllegalAccessException, InstantiationException, UnsupportedLookAndFeelException {
+    public static void alterarLookAndFeel(String lookAndFeel, Component componente) throws ClassNotFoundException, IllegalAccessException, InstantiationException, UnsupportedLookAndFeelException {
 
         try {
             UIManager.setLookAndFeel(lookAndFeel);
-            SwingUtilities.updateComponentTreeUI(frame);
-
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException erro) {
+            SwingUtilities.updateComponentTreeUI(componente);
+            componente.revalidate();
+            componente.repaint();
+        } catch (UnsupportedLookAndFeelException erro) {
             throw erro;
         }
 

@@ -1,7 +1,5 @@
 
-import br.com.gestorestoque.banco.CRUD;
 import br.com.gestorestoque.view.SplashScreen;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /*
