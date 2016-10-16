@@ -6,13 +6,13 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.util.FRMUtil;
+import br.com.gestorestoque.util.SelecionaTipoMenu;
 import br.com.gestorestoque.view.menu.fabrica.AbstractFabricaMenus;
 import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
 import br.com.gestorestoque.view.menu.fabrica.CriadorFabricaMenu;
 import br.com.gestorestoque.view.menu.fabrica.TipoMenu;
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -39,12 +39,13 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
     public static synchronized FRMPrincipal getInstance() {
 
-        if (fRMPrincipalUnicaInstancia == null)
-			fRMPrincipalUnicaInstancia = new FRMPrincipal();
+        if (fRMPrincipalUnicaInstancia == null) {
+            fRMPrincipalUnicaInstancia = new FRMPrincipal();
+        }
 
-		return fRMPrincipalUnicaInstancia;
-	}
-    
+        return fRMPrincipalUnicaInstancia;
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -223,7 +224,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
     public void prepararComponentes() {
 
-         AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(TipoMenu.ADMIN); 
+         AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu()); 
          BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
          //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
          this.setJMenuBar(barraMenu.montarMenu());

@@ -19,13 +19,13 @@ public class BarraDeMenuAdmin extends JMenuBar implements BarraMenu{
     protected void criaItensDoMenu() {
         
         
-        
-        JMenu menu = new JMenu("Admin Menu");
-        menu.add( new JMenuItem("logoff"));
-        menu.add( new JMenuItem("Cadastrar produto"));
-        menu.add( new JMenuItem("Cadastrar atendente"));
-        add(menu);
         add(new BarraDeMenuAlmoxarifado().criaItensDoMenu());//cria o menu de atendente
+        JMenu menu = new JMenu("Admin Menu");
+        menu.add( new JMenuItem("Logoff"));
+        menu.add( new JMenuItem("Acesso Grupos"));
+        menu.add( new JMenuItem("Cadastro de usuários"));
+        add(menu);
+        
         
     }
 

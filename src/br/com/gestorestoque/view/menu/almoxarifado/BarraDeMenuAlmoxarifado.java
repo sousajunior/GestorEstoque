@@ -31,12 +31,12 @@ public class BarraDeMenuAlmoxarifado extends JMenuBar implements BarraMenu{
     public BarraDeMenuAlmoxarifado() {
         super();
  //       criaItensDoMenu();
-       // montarMenu();
+        //montarMenu();
     }
 
     
     
-    public JMenu criaItensDoMenu() {
+    public JMenuBar criaItensDoMenu() {
         
         //Menu de cadastros
         MenuCadastros menuCadastros = new MenuCadastros();
@@ -61,7 +61,8 @@ public class BarraDeMenuAlmoxarifado extends JMenuBar implements BarraMenu{
         add(menuCadastros);
         add(menuEstoque);
         add(menuSistema);
-        return menuCadastros;
+    
+        return this;
         
     }
 

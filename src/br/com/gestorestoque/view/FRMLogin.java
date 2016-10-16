@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.controller.ControladorGrupoUsuario;
+import br.com.gestorestoque.controller.ControladorUsuario;
+import br.com.gestorestoque.model.Usuario;
+import br.com.gestorestoque.model.UsuarioGrupo;
 import br.com.gestorestoque.util.FRMUtil;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,21 +27,18 @@ public class FRMLogin extends javax.swing.JFrame {
         prepararComponentes();
     }
 
-    
     /**
      * Prepara os componentes da tela para o uso da mesma. O preparo dos
      * componentes envolve adição de listeners
      */
     public void prepararComponentes() {
 
-        
         jBtLogin.addActionListener(
                 (e) -> {
                     logar();
                 }
         );
-        
-        
+
         jTfSenha.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent ke) {
@@ -51,15 +48,30 @@ public class FRMLogin extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    public void logar(){
 
-        FRMPrincipal janelaPrincipal = new FRMPrincipal();
-       // janelaPrincipal.setAlwaysOnTop(true);
-        janelaPrincipal.setVisible(true);
-        janelaPrincipal.setAlwaysOnTop(false);
-        dispose();
+    public void logar() {
+     
+        if (jTfSenha.getText().equals("") && jTfUsuario.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Informe usuário e senha!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+
+                Usuario usuario = new ControladorUsuario().selecionarPorUsuarioSenha(this.jTfUsuario.getText(), this.jTfSenha.getText());
+
+                if (usuario.getId() == null) {
+                    JOptionPane.showMessageDialog(null, "Usuário sem acesso a aplicação!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                } else {
+
+                    UsuarioGrupo usuarioGrupo = new ControladorGrupoUsuario().selecionarPorCodigo(usuario.getId());
+                    FRMPrincipal janelaPrincipal = new FRMPrincipal();
+                    janelaPrincipal.setVisible(true);
+                    janelaPrincipal.setAlwaysOnTop(false);
+                    dispose();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar o login devido ao erro: " + ex, "Erro!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     /**

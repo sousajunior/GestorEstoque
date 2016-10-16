@@ -66,7 +66,7 @@ public class SplashScreen extends JWindow {
                         FRMLogin frmLogin = new FRMLogin();
                         FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin);
                         frmLogin.setVisible(true);
-                        frmLogin.setAlwaysOnTop(true);
+                        //frmLogin.setAlwaysOnTop(true);
                         SplashScreen.this.setVisible(false);
                     } else {
                         SplashScreen.this.setAlwaysOnTop(false);
