@@ -37,7 +37,7 @@ public class BarraDeMenuAlmoxarifado extends JMenuBar implements BarraMenu{
     
     
     public JMenuBar criaItensDoMenu() {
-        
+             
         //Menu de cadastros
         MenuCadastros menuCadastros = new MenuCadastros();
         menuCadastros.add(new ItemMenuCadastroProduto());
