@@ -34,11 +34,9 @@ public class BarraDeMenuAlmoxarifado extends JMenuBar implements BarraMenu{
         //montarMenu();
     }
 
-    
-    
-    public JMenuBar criaItensDoMenu() {
-             
-        //Menu de cadastros
+    @Override
+    public JMenuBar montarMenu() {
+                //Menu de cadastros
         MenuCadastros menuCadastros = new MenuCadastros();
         menuCadastros.add(new ItemMenuCadastroProduto());
         menuCadastros.add(new ItemMenuCadastroFornecedor());
@@ -62,13 +60,6 @@ public class BarraDeMenuAlmoxarifado extends JMenuBar implements BarraMenu{
         add(menuEstoque);
         add(menuSistema);
     
-        return this;
-        
-    }
-
-    @Override
-    public JMenuBar montarMenu() {
-        criaItensDoMenu();
         return this;
     }
     

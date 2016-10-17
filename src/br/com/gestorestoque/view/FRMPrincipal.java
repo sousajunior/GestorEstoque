@@ -10,7 +10,6 @@ import br.com.gestorestoque.util.SelecionaTipoMenu;
 import br.com.gestorestoque.view.menu.fabrica.AbstractFabricaMenus;
 import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
 import br.com.gestorestoque.view.menu.fabrica.CriadorFabricaMenu;
-import br.com.gestorestoque.view.menu.fabrica.TipoMenu;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
