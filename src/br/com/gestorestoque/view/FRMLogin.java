@@ -49,7 +49,7 @@ public class FRMLogin extends javax.swing.JFrame {
         });
     }
 
-    public void logar() {
+    public void logar() {        
      
         if (jTfSenha.getText().equals("") && jTfUsuario.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Informe usuário e senha!", "Atenção!", JOptionPane.WARNING_MESSAGE);
