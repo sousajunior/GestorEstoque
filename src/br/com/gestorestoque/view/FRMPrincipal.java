@@ -222,9 +222,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
         new FRMMovimentacao(this, true).setVisible(true);
     }
 
-    public void prepararComponentes() {
-
-         AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu()); 
+    public void prepararComponentes() {                 
+     
+            AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu()); 
          BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
          //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
          this.setJMenuBar(barraMenu.montarMenu());
