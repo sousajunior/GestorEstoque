@@ -17,6 +17,9 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -27,6 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class FRMPrincipal extends javax.swing.JFrame {
 
     private static FRMPrincipal fRMPrincipalUnicaInstancia;
+    private static int cont = 0;
     UsuarioGrupo usuarioLogado = UsuarioGrupo.getInstance();
     /**
      * Creates new form FRMPrincipal
@@ -37,14 +41,15 @@ public class FRMPrincipal extends javax.swing.JFrame {
         getContentPane().setBackground(Color.WHITE);
         setExtendedState(MAXIMIZED_BOTH);
         prepararComponentes();
+        
     }
 
     public static synchronized FRMPrincipal getInstance() {
 
         if (fRMPrincipalUnicaInstancia == null) {
             fRMPrincipalUnicaInstancia = new FRMPrincipal();
+            System.out.println(cont++);
         }
-
         return fRMPrincipalUnicaInstancia;
     }
 
@@ -236,19 +241,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
                 sairDoSistema();
             }
 
-        });
+        });      
     }
 
-    private void uncheck() {
-        for (Component radio : jMenuAparencia.getMenuComponents()) {
-            JRadioButtonMenuItem jr = (JRadioButtonMenuItem) radio;
-            if (jr.isSelected()) {
-                jr.setSelected(false);
-            }
-
-        }
-    }
-
+    
     private void sairDoSistema() {
 
         if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja mesmo sair do sistema?", "Logoff", JOptionPane.YES_NO_OPTION, 3)) {

@@ -6,6 +6,9 @@ import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -63,5 +66,19 @@ public class FRMUtil {
         }
 
     }
+    
+    
+     public static void uncheck( JPopupMenu menu) {
+         
+        for (Component radio : menu.getComponents()) {
+          
+            JRadioButtonMenuItem jr = (JRadioButtonMenuItem) radio;
+            if (jr.isSelected()) {
+                jr.setSelected(false);
+            }
+
+        }
+    }
+
 
 }
