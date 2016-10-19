@@ -5,6 +5,8 @@
  */
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.model.UsuarioGrupo;
+import br.com.gestorestoque.util.EstoqueDataUtil;
 import br.com.gestorestoque.util.FRMUtil;
 import br.com.gestorestoque.util.SelecionaTipoMenu;
 import br.com.gestorestoque.view.menu.fabrica.AbstractFabricaMenus;
@@ -12,19 +14,20 @@ import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
 import br.com.gestorestoque.view.menu.fabrica.CriadorFabricaMenu;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Matheus
  */
 public class FRMPrincipal extends javax.swing.JFrame {
-    
-    
-    private static FRMPrincipal fRMPrincipalUnicaInstancia;
 
+    private static FRMPrincipal fRMPrincipalUnicaInstancia;
+    UsuarioGrupo usuarioLogado = UsuarioGrupo.getInstance();
     /**
      * Creates new form FRMPrincipal
      */
@@ -45,7 +48,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
         return fRMPrincipalUnicaInstancia;
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +58,12 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLImagemPrincipal = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLblUsuario = new javax.swing.JLabel();
+        jLblData = new javax.swing.JLabel();
+        jLblSair = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         jmbPrincipal = new javax.swing.JMenuBar();
         jmCadastros = new javax.swing.JMenu();
         jmiProduto = new javax.swing.JMenuItem();
@@ -84,13 +91,37 @@ public class FRMPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor de estoque - Início");
         setSize(new java.awt.Dimension(591, 355));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jLImagemPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestor-estoque-transparente.png"))); // NOI18N
-        jLImagemPrincipal.setName(""); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        getContentPane().add(jLImagemPrincipal, gridBagConstraints);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLblUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/user - 32.png"))); // NOI18N
+        jLblUsuario.setText("Usuário");
+        jLblUsuario.setToolTipText("Usuário logado");
+        jPanel1.add(jLblUsuario, java.awt.BorderLayout.WEST);
+
+        jLblData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLblData.setText("Data");
+        jPanel1.add(jLblData, java.awt.BorderLayout.CENTER);
+
+        jLblSair.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLblSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/logoff - 32.png"))); // NOI18N
+        jLblSair.setToolTipText("Sair");
+        jLblSair.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jPanel1.add(jLblSair, java.awt.BorderLayout.LINE_END);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestao-de-estoque.png"))); // NOI18N
+        jPanel2.add(jLabel5, new java.awt.GridBagConstraints());
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jmCadastros.setText("Cadastros");
 
@@ -180,181 +211,31 @@ public class FRMPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void menuMovimentacaoEntradaClicado() {
+    public void prepararComponentes() {
 
-        new FRMCadastroEntradaSaida(this, true, true, "Entrada de produtos").setVisible(true);
-    }
+        AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu());
+        BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
+        //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
+        this.setJMenuBar(barraMenu.montarMenu());
 
-    private void menuMovimentacaoSaidaClicado() {
-        new FRMCadastroEntradaSaida(this, true, false, "Saída de produtos").setVisible(true);
-    }
-
-    private void menuCadastroInventarioClicado() {
-        new FRMInventario(this, true).setVisible(true);
-    }
-
-    private void menuRelatorioSaldoEstoqueClicado() {
-        new FRMRelatorioSaldoEstoque(this, true).setVisible(true);
-    }
-
-    public void menuCadastroProdutoClicado() {
-        new FRMCadastroProduto(this, true).setVisible(true);
-    }
-
-    public void menuCadastroUnidadeMediadaClicado() {
-        new FRMCadastroUnidadeMedida(this, true).setVisible(true);
-    }
-
-    public void menuCadastroArmazemClicado() {
-        new FRMCadastroArmazem(this, true).setVisible(true);
-    }
-
-    private void menuCadastroFornecedorClicado() {
-        new FRMCadastroFornecedor(this, true).setVisible(true);
-    }
-
-    private void menuSobreClicado() {
-        new FRMSobre(this, true).setVisible(true);
-    }
-
-    private void menuHistoricoMovimentacoesClicado() {
-        new FRMMovimentacao(this, true).setVisible(true);
-    }
-
-    public void prepararComponentes() {                 
-     
-            AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu()); 
-         BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
-         //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
-         this.setJMenuBar(barraMenu.montarMenu());
+    
+        jLblUsuario.setText(usuarioLogado.getIdUsuario().getNomeCompleto()+" ("+usuarioLogado.getIdUsuario().getNomeUsuario()+")");
         
-        
-        jmiMovimentacoesEstoque.addActionListener((e) -> {
-            menuHistoricoMovimentacoesClicado();
-        });
+        jLblData.setText(EstoqueDataUtil.pegarDataAtual());
+         
+        jLblSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        jmiProduto.addActionListener((e) -> {
-            menuCadastroProdutoClicado();
-        });
-
-        jmiUnidadeMedida.addActionListener((e) -> {
-            menuCadastroUnidadeMediadaClicado();
-        });
-        jmiArmazem.addActionListener((e) -> {
-            menuCadastroArmazemClicado();
-        });
-        jmiFornecedor.addActionListener((e) -> {
-            menuCadastroFornecedorClicado();
-        });
-
-        jmiEntrada.addActionListener((e) -> {
-            menuMovimentacaoEntradaClicado();
-        });
-
-        jmiSaida.addActionListener((e) -> {
-            menuMovimentacaoSaidaClicado();
-        });
-
-        jmiInventario.addActionListener((e) -> {
-            menuCadastroInventarioClicado();
-        });
-
-        jmiSaldo_Estoque.addActionListener((e) -> {
-            menuRelatorioSaldoEstoqueClicado();
-        });
-        jmiSobre.addActionListener((e) -> {
-            menuSobreClicado();
-        });
-
-        //=====================================
-        //Itens de menu da aparência do sistema
-        //=====================================
-        //Windows
-        jmiWindows.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel", this);
-                uncheck();
-                jmiWindows.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
+        jLblSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                sairDoSistema();
             }
-        });
 
-        //Windows Classic
-        jmiWindowsClassic.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel", this);
-                uncheck();
-                jmiWindowsClassic.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sairDoSistema();
             }
-        });
 
-        // Motif
-        jmiMotif.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel", this);
-                uncheck();
-                jmiMotif .setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
-
-        // Nimbus
-        jmiNimbus.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel", this);
-                uncheck();
-                jmiNimbus.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
-
-        // Liquid
-        jmiLiquid.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel", this);
-                uncheck();
-                jmiLiquid.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
-
-        // Metal
-        jmiMetal.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel", this);
-                uncheck();
-                jmiMetal .setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
-
-        // Synthetica
-        jmiSynthetica.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel", this);
-                uncheck();
-                jmiSynthetica.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
-        });
-
-        // WebLaf
-        jmiWebLaf.addActionListener((e) -> {
-            try {
-                FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", this);
-                uncheck();
-                jmiWebLaf.setSelected(true);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
-            }
         });
     }
 
@@ -366,6 +247,16 @@ public class FRMPrincipal extends javax.swing.JFrame {
             }
 
         }
+    }
+
+    private void sairDoSistema() {
+
+        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja mesmo sair do sistema?", "Logoff", JOptionPane.YES_NO_OPTION, 3)) {
+            usuarioLogado.logoff();
+            dispose();
+            new FRMLogin().setVisible(true);
+        }
+
     }
 
     /**
@@ -404,8 +295,13 @@ public class FRMPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLImagemPrincipal;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLblData;
+    private javax.swing.JLabel jLblSair;
+    private javax.swing.JLabel jLblUsuario;
     private javax.swing.JMenu jMenuAparencia;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JMenu jmCadastros;
     private javax.swing.JMenu jmMovimentacao;
     private javax.swing.JMenu jmSistema;

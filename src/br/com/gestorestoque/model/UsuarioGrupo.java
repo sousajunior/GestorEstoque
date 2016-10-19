@@ -18,6 +18,11 @@ public class UsuarioGrupo {
         return usuarioGrupo;
     }
 
+    public void logoff(){
+        this.idUsuario = null;
+        this.idGrupos.clear();
+    }
+    
     public UsuarioGrupo(Usuario idUsuario, List<GrupoAcesso> idGrupo) {
         this.idUsuario = idUsuario;
         this.idGrupos = idGrupo;

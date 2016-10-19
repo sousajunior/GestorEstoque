@@ -33,7 +33,7 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
                 + movimentacao.getQtd() + ",'"
                 + movimentacao.getNotaFiscal() + "','"
                 + movimentacao.getTipoMovimentacao() + "','"
-                + EstoqueDataUtil.converteDataEmString(movimentacao.getData()) + "',"
+                + EstoqueDataUtil.converterDataEmString(movimentacao.getData()) + "',"
                 + movimentacao.getIdProdutoArmazenado().getCodigo() + ","
                 + movimentacao.getIdArmazem().getCodigo());
     }

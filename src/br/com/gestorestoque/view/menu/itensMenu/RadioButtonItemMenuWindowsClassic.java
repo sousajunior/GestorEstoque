@@ -21,9 +21,9 @@ public class RadioButtonItemMenuWindowsClassic extends JRadioButtonMenuItem {
         setText("Windows Classic");
         addActionListener((e) -> {
               try {
-        
-                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel", FRMPrincipal.getInstance());
-
+                FRMPrincipal frmPrincipal = FRMPrincipal.getInstance();  
+                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel", frmPrincipal);
+                frmPrincipal.prepararComponentes();
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu um erro ao alterar a aparência do sistema!\nErro: " + ex.getMessage(), "GGlass - Erro", 0);
             }
