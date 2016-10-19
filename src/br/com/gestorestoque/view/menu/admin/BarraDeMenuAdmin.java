@@ -15,28 +15,22 @@ public class BarraDeMenuAdmin extends JMenuBar implements BarraMenu{
       //  montarMenu();
     }
 
-    
-    protected void criaItensDoMenu() {
-        
-        
-        add(new BarraDeMenuAlmoxarifado().criaItensDoMenu());//cria o menu de atendente
-        JMenu menu = new JMenu("Admin Menu");
-        menu.add( new JMenuItem("Logoff"));
-        menu.add( new JMenuItem("Acesso Grupos"));
-        menu.add( new JMenuItem("Cadastro de usuários"));
-        add(menu);
-        
-        
-    }
-
     /**
      *
      * @return
      */
     @Override
     public JMenuBar montarMenu() {
-        criaItensDoMenu();
-        return this;
+        JMenu menu = new JMenu("Admin Menu");
+        menu.add( new JMenuItem("Logoff"));
+        menu.add( new JMenuItem("Acesso Grupos"));
+        menu.add( new JMenuItem("Cadastro de usuários"));
+        
+        BarraMenu barraMenu = new BarraDeMenuAlmoxarifado();
+        JMenuBar menuBar = barraMenu.montarMenu();// .add(menu);
+        menuBar.add(menu);
+        
+        return menuBar;
     }
     
 }
