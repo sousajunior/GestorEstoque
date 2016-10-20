@@ -24,7 +24,7 @@ public class RadioButtonItemMenuNimbus extends JRadioButtonMenuItem {
         addActionListener((e) -> {
             try {
         
-                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel", FRMPrincipal.getInstance());
+                FRMUtil.alterarLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel", FRMPrincipal.getInstance());
                 FRMUtil.uncheck((JPopupMenu)this.getParent());
                 this.setSelected(true);
 
