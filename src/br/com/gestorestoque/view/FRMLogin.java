@@ -5,6 +5,7 @@ import br.com.gestorestoque.controller.ControladorUsuario;
 import br.com.gestorestoque.model.Usuario;
 import br.com.gestorestoque.model.UsuarioGrupo;
 import br.com.gestorestoque.util.FRMUtil;
+import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;

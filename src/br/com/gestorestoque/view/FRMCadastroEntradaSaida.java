@@ -47,10 +47,9 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
      * @param parent
      * @param modal
      * @param isEntrada
-     * @param title
      */
-    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada, String title) {
-        super(parent, title, modal);
+    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada) {        
+        super(parent,modal);
         initialize(isEntrada);
     }
 
@@ -62,13 +61,21 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
      * @param isEntrada
      * @param title
      */
-    public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada, String title) {
-        super(parent, title, modal);
+    public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada) {
+        super(parent, modal);
         initialize(isEntrada);
     }
 
     private void initialize(boolean isEntrada) {
         initComponents();
+        
+        if(isEntrada)
+        {
+            this.setTitle("Entrada de Produtos");
+        }else
+        {
+            this.setTitle("Saída de Produtos");
+        }
         this.setLocationRelativeTo(null);
         isEntrada(isEntrada);
         this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
@@ -341,7 +348,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true, "");
+                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

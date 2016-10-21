@@ -665,12 +665,12 @@ public class FRMRelatorioSaldoEstoque extends javax.swing.JDialog {
 
     private void btnEntradaProdutoClicado() {
 
-        new FRMCadastroEntradaSaida(this, true, true, "Entrada de produtos").setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, true).setVisible(true);
         this.btnLimparClicado();
     }
 
     private void btnSaidaProdutoClicado() {
-        new FRMCadastroEntradaSaida(this, true, false, "Saída de produtos").setVisible(true);
+        new FRMCadastroEntradaSaida(this, true, false).setVisible(true);
         this.btnLimparClicado();
     }
 

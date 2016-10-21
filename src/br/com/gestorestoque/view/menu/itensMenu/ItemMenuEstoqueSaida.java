@@ -19,7 +19,7 @@ public class ItemMenuEstoqueSaida extends JMenuItem {
         setText("Saída");
 
         addActionListener((e) -> {
-            new FRMCadastroEntradaSaida(FRMPrincipal.getInstance(), true,false,"Saída de produtos").setVisible(true);
+            new FRMCadastroEntradaSaida(FRMPrincipal.getInstance(), true,false).setVisible(true);
 
         });
 

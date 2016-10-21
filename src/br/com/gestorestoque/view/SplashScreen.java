@@ -65,9 +65,12 @@ public class SplashScreen extends JWindow {
                         SplashScreen.this.setAlwaysOnTop(false);
                         FRMLogin frmLogin = new FRMLogin();
                         FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin);
-                        frmLogin.setVisible(true);
                         //frmLogin.setAlwaysOnTop(true);
                         SplashScreen.this.setVisible(false);
+                        frmLogin.setAutoRequestFocus(true);
+                        frmLogin.setVisible(true);
+                        frmLogin.toFront();
+
                     } else {
                         SplashScreen.this.setAlwaysOnTop(false);
                         JOptionPane.showMessageDialog(null, "Erro: Não foi possivel se conectar com o banco de dados!\nVerifique a sua conexão com a internet e inicie o programa novamente.", "Erro!", JOptionPane.ERROR_MESSAGE);
