@@ -7,6 +7,7 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioJasperAdapter;
 import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioService;
+import br.com.gestorestoque.view.enumerado.Relatorio;
 import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import javax.swing.JOptionPane;
 
@@ -26,14 +27,14 @@ public class FRMRelatorio extends javax.swing.JDialog {
      * @param jrRS
      * @param nomeRelatorio
      */
-    public FRMRelatorio(java.awt.Dialog parent, boolean modal, String codigos, String nomeRelatorio, TipoRelatorio tipoRelatorio) {
+    public FRMRelatorio(java.awt.Dialog parent, boolean modal, String codigos, Relatorio relatorio, TipoRelatorio tipoRelatorio) {
         super(parent, modal);
         initComponents();
 
-        vizualizarRelatorio(codigos, nomeRelatorio, tipoRelatorio);
+        vizualizarRelatorio(codigos, relatorio, tipoRelatorio);
     }
 
-    private void vizualizarRelatorio(String codigosConsulta, String nomeRelatorio, TipoRelatorio tipoRelatorio) {
+    private void vizualizarRelatorio(String codigosConsulta, Relatorio relatorio, TipoRelatorio tipoRelatorio) {
         try {
 
             GeradorRelatorioService geradorRelatorioService;
@@ -43,13 +44,15 @@ public class FRMRelatorio extends javax.swing.JDialog {
                 geradorRelatorioService = new GeradorRelatorioJasperAdapter();
                 
                 //Adicionando o relatorio no Jdialog  
-                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(nomeRelatorio, codigosConsulta));
+                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(relatorio, codigosConsulta).getContentPane());
                 //Deixar True para exibir a tela no sistema  
             }
         } catch (JRRuntimeException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
+            dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
+            dispose();
         }
     }
 
@@ -107,7 +110,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true, "", "", TipoRelatorio.PDF);
+                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true, "", Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.PDF);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

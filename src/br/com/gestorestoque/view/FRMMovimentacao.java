@@ -7,6 +7,7 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorMovimentacao;
 import br.com.gestorestoque.model.Movimentacao;
+import br.com.gestorestoque.view.enumerado.Relatorio;
 import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -18,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 /**
  *
@@ -292,7 +292,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 }
         );
 
-        //combo de condição para Saldo
+        
         jcbTipoRelatorio.addActionListener(
                 (e) -> {
                     itemComboTipoRelatorioSelecionado();
@@ -496,7 +496,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
                     new FRMRelatorio(this,
                             true,codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
-                            "RelatorioMovimentacoes", TipoRelatorio.PDF).setVisible(true);
+                            Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.PDF).setVisible(true);
                 }
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {

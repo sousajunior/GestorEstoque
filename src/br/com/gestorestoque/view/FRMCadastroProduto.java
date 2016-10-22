@@ -4,6 +4,8 @@ import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.controller.ControladorUnidadeMedida;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.UnidadeMedida;
+import br.com.gestorestoque.view.enumerado.Relatorio;
+import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
@@ -299,6 +301,19 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
+        
+        
+        jcbRelatorios.addActionListener(
+                (e) -> {
+                    itemComboRelatoriosSelecionado();
+                }
+        );
+        
+        jcbTipoRelatorio.addActionListener(
+                (e) -> {
+                    itemComboTipoRelatorioSelecionado();
+                }
+        );
 
         //combo de unidade de medida
         jcbUnidadeMedida.addActionListener(
@@ -384,6 +399,27 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         return false;
     }
 
+    private void  itemComboRelatoriosSelecionado(){
+        if (this.jcbRelatorios.getSelectedIndex() == 0) {
+            this.jcbTipoRelatorio.setSelectedIndex(0);
+            this.jcbTipoRelatorio.setEnabled(false);
+        } else {
+            this.jcbTipoRelatorio.setEnabled(true);
+        }
+        
+        itemComboTipoRelatorioSelecionado();
+    }
+    
+    private void itemComboTipoRelatorioSelecionado() {
+
+        if (this.jcbTipoRelatorio.getSelectedIndex() == 0) {
+            this.jbtGerarRelatorio.setEnabled(false);
+        } else {
+            this.jbtGerarRelatorio.setEnabled(true);
+        }
+
+    }
+    
     private void itemComboSelecionado() {
 
         for (UnidadeMedida unidadeMedida : unidadesMedida) {
@@ -410,6 +446,8 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
 
     private void btnGerarRelatorioClicado() throws SQLException {
 
+        Relatorio relatorio = null;
+        
         if (modeloTabelaProduto.getRowCount() > 0) {
             String codigosProdutos = "";
             for (int i = 0; i < modeloTabelaProduto.getRowCount(); i++) {
@@ -420,22 +458,25 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             if (codigosProdutos.length() > 0) {
 
                 if (jcbRelatorios.getSelectedIndex() == 1) {
-                   // new FRMRelatorio(this,
-                       //     true,
-                       //     new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                        //    "RelatorioSaldoGeralProdutos").setVisible(true);
+                     relatorio = Relatorio.RelatorioSaldoGeralProdutos;
                 }
                 
                 if (jcbRelatorios.getSelectedIndex() == 2) {
-                    //new FRMRelatorio(this,
-                   //         true,
-                      //      new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                       //     "RelatorioProdutos").setVisible(true);
+                     relatorio = Relatorio.RelatorioProdutos;
+                }
+                
+                   if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
+                    new FRMRelatorio(this,
+                            true,codigosProdutos.substring(0, codigosProdutos.length() - 1),
+                            relatorio, TipoRelatorio.PDF).setVisible(true);
                 }
 
+                if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+                }
+
+                
             }
         }
-
     }
 
     /**
@@ -595,6 +636,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jbtGerarRelatorio = new javax.swing.JButton();
         jcbRelatorios = new javax.swing.JComboBox<>();
+        jcbTipoRelatorio = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProdutos = new javax.swing.JTable();
@@ -736,15 +778,19 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jPanel3.add(jPanel1, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Relatórios"));
-        jPanel4.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout jPanel4Layout = new java.awt.GridBagLayout();
+        jPanel4Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel4Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jPanel4.setLayout(jPanel4Layout);
 
         jbtGerarRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
         jbtGerarRelatorio.setToolTipText("Gerar relatório (Obs os relatórios serão gerados de acordo com os dados atuais da tabela)");
+        jbtGerarRelatorio.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 21;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 46;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 1);
         jPanel4.add(jbtGerarRelatorio, gridBagConstraints);
@@ -752,12 +798,20 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
         jcbRelatorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Relatório Saldo Geral Produtos", "Relação de Produtos" }));
         jcbRelatorios.setToolTipText("Escolha um relatório a ser gerado.");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.gridx = 22;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 19;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 22);
         jPanel4.add(jcbRelatorios, gridBagConstraints);
+
+        jcbTipoRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PDF", "EXCEL" }));
+        jcbTipoRelatorio.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 42;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel4.add(jcbTipoRelatorio, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -894,6 +948,7 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
     private javax.swing.JButton jbtnSalvar;
     private javax.swing.JCheckBox jcbControladoPorLote;
     private javax.swing.JComboBox<String> jcbRelatorios;
+    private javax.swing.JComboBox<String> jcbTipoRelatorio;
     private javax.swing.JComboBox<String> jcbUnidadeMedida;
     private javax.swing.JLabel jlNome;
     private javax.swing.JLabel jlPreco;

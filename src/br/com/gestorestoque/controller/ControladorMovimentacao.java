@@ -98,37 +98,7 @@ public class ControladorMovimentacao implements Controlador<Movimentacao> {
         return movimentacao;
     }
 
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de
-     * dados. Método select da classe CRUD.
-     *
-     * @param codigosMovimentacoes
-     * @return rs ResultSet
-     * @throws SQLException
-     */
-    public ResultSet selecionarParaRelatorio(String codigosMovimentacoes) throws SQLException {
-
-        return CRUD.queryCompleta("select case when m.lote IS NULL THEN  ''\n"
-                + "		    else m.lote\n"
-                + "            end  as LOTE,\n"
-                + "	   m.quantidade as QUANTIDADE,\n"
-                + "       m.notaFiscal as NOTA_FISCAL,\n"
-                + "       UPPER (m.tipo) as TIPO,\n"
-                + "       m.data as DATA,\n"
-                + "       p.nome as PRODUTO,\n"
-                + "       a.descricao as ARMAZEM\n"
-                + "from movimentacoes m,\n"
-                + "	 produtoarmazenado pa,\n"
-                + "     produto p,\n"
-                + "     armazem a\n"
-                + "where m.produtoArmazenado_idProdutoArmazenado = pa.idProdutoArmazenado\n"
-                + "and pa.produto_codigoProduto = p.codigoProduto\n"
-                + "and m.armazem_codigoArmazem = a.codigoArmazem\n"
-                + "and idmovimentacao in(" + codigosMovimentacoes
-                + ")");
-
-    }
-    /**
+        /**
      * @deprecated 
      * @param movimentacao
      * @throws SQLException 

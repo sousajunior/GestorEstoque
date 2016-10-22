@@ -80,61 +80,7 @@ public class ControladorProduto implements Controlador<Produto> {
         return produto;
     }
 
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de
-     * dados. Método select da classe CRUD.
-     *
-     * @param codigosProdutos
-     * @return rs ResultSet
-     * @throws SQLException
-     */
-    public ResultSet selecionarParaRelatorio(String codigosProdutos) throws SQLException {
 
-        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
-                + "       um.abreviacao as UM,\n"
-                + "       p.controladoPorLote as CONTROLADO_POR_LOTE,\n"
-                + "       p.preco as PRECO,\n"
-                + "       case when p.quantidadeMinima IS NULL THEN\n"
-                + "                                  ''\n"
-                + "                            else\n"
-                + "                            p.quantidadeMinima\n"
-                + "                            end  as qtdMinima\n"
-                + "from  produto p,\n"
-                + "      unidademedida um\n"
-                + "where p.unidadeMedida_idunidadeMedida = um.idunidadeMedida\n"
-                + "and p.codigoProduto in(" + codigosProdutos
-                + ")");
-
-    }
-
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de
-     * dados. Método select da classe CRUD.
-     *
-     * @param codigosProdutos
-     * @return rs ResultSet
-     * @throws SQLException
-     */
-    public ResultSet selecionarParaRelatorioSaldoGeral(String codigosProdutos) throws SQLException {
-
-        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
-                + "       sum(pa.quantidade) as SALDO,\n"
-                + "       um.abreviacao as UM,\n"
-                + "       a.descricao as ARMAZEM,\n"
-                + "       p.controladoPorLote as CONTROLADO_POR_LOTE,\n"
-                + "       p.preco as PRECO\n"
-                + "from  produtoArmazenado pa,\n"
-                + "      produto p,\n"
-                + "      unidademedida um,\n"
-                + "      armazem a\n"
-                + "where  pa.produto_codigoProduto = p.codigoProduto\n"
-                + "and p.unidadeMedida_idunidadeMedida = um.idunidadeMedida\n"
-                + "and pa.armazem_codigoArmazem = a.codigoArmazem\n"
-                + "/*and pa.idprodutoArmazenado in(1,2)*/\n"
-                + "and p.codigoProduto in(" + codigosProdutos + ")"
-                + "group by PRODUTO,UM, ARMAZEM,CONTROLADO_POR_LOTE ");
-
-    }
 
     @Override
     public void deletar(Produto produto) throws SQLException {
