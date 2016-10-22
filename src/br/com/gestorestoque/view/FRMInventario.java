@@ -129,7 +129,7 @@ public class FRMInventario extends javax.swing.JDialog {
 
     private void pesquisaProduto() {
 
-        FRMRelatorioSaldoEstoque frmSaldo = new FRMRelatorioSaldoEstoque(this, true);
+        FRMSaldoEstoque frmSaldo = new FRMSaldoEstoque(this, true);
         frmSaldo.jbtEntradaProduto.setEnabled(false);
         frmSaldo.jbtSaidaProduto.setEnabled(false);
         frmSaldo.jbtnventario.setEnabled(false);

@@ -43,10 +43,10 @@ public class SplashScreen extends JWindow {
         barra.setStringPainted(true);
         barra.setString("Testando Conexão com o banco de dados ...");
         label.setIcon(imagem);
-        this.setAlwaysOnTop(true);
-        this.getContentPane().setLayout(absoluto);
-        this.getContentPane().add(label, absImagem);
-        this.getContentPane().add(barra, absBarra);
+        requestFocus();
+        getContentPane().setLayout(absoluto);
+        getContentPane().add(label, absImagem);
+        getContentPane().add(barra, absBarra);
 
         new Thread() {
             @Override
@@ -67,9 +67,9 @@ public class SplashScreen extends JWindow {
                         FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin);
                         //frmLogin.setAlwaysOnTop(true);
                         SplashScreen.this.setVisible(false);
-                        frmLogin.setAutoRequestFocus(true);
+                        frmLogin.requestFocus();
+                        //frmLogin.setAutoRequestFocus(true);
                         frmLogin.setVisible(true);
-                        frmLogin.toFront();
 
                     } else {
                         SplashScreen.this.setAlwaysOnTop(false);
@@ -85,9 +85,9 @@ public class SplashScreen extends JWindow {
             }
 
         }.start();
-        this.pack();
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
+        pack();
+        setVisible(true);
+        setLocationRelativeTo(null);
 
     }
 

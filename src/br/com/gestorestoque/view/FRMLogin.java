@@ -5,7 +5,6 @@ import br.com.gestorestoque.controller.ControladorUsuario;
 import br.com.gestorestoque.model.Usuario;
 import br.com.gestorestoque.model.UsuarioGrupo;
 import br.com.gestorestoque.util.FRMUtil;
-import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -95,7 +94,6 @@ public class FRMLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor Estoque - Login");
         setPreferredSize(new java.awt.Dimension(321, 234));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};

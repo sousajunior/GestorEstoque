@@ -1,7 +1,7 @@
 package br.com.gestorestoque.view.menu.itensMenu;
 
 import br.com.gestorestoque.view.FRMPrincipal;
-import br.com.gestorestoque.view.FRMRelatorioSaldoEstoque;
+import br.com.gestorestoque.view.FRMSaldoEstoque;
 import javax.swing.JMenuItem;
 
 /**
@@ -19,7 +19,7 @@ public class ItemMenuEstoqueSaldosEmEstoque extends JMenuItem {
         setText("Saldos em estoque");
 
         addActionListener((e) -> {
-            new FRMRelatorioSaldoEstoque(FRMPrincipal.getInstance(), true).setVisible(true);
+            new FRMSaldoEstoque(FRMPrincipal.getInstance(), true).setVisible(true);
 
         });
 

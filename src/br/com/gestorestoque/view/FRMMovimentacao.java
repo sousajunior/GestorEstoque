@@ -7,6 +7,7 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorMovimentacao;
 import br.com.gestorestoque.model.Movimentacao;
+import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -291,6 +292,13 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 }
         );
 
+        //combo de condição para Saldo
+        jcbTipoRelatorio.addActionListener(
+                (e) -> {
+                    itemComboTipoRelatorioSelecionado();
+                }
+        );
+
         //listener do campo de quantidade(saldo)
         jtfQuantidade.addKeyListener(new KeyAdapter() {
 
@@ -409,6 +417,16 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
     }
 
+    private void itemComboTipoRelatorioSelecionado() {
+
+        if (this.jcbTipoRelatorio.getSelectedIndex() == 0) {
+            this.jbtnGerarRelatorioMovimentacoes.setEnabled(false);
+        } else {
+            this.jbtnGerarRelatorioMovimentacoes.setEnabled(true);
+        }
+
+    }
+
     private void itemComboCondicaoLoteSelecionado() {
 
         if (this.jcbCondicaoLote.getSelectedIndex() == 0) {
@@ -475,10 +493,14 @@ public class FRMMovimentacao extends javax.swing.JDialog {
             }
             if (codigosMovimentacoes.length() > 0) {
 
-                new FRMRelatorio(this,
-                        true,
-                        new JRResultSetDataSource(ctrlMovimentacao.selecionarParaRelatorio(codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1))),
-                        "RelatorioMovimentacoes").setVisible(true);
+                if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
+                    new FRMRelatorio(this,
+                            true,codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
+                            "RelatorioMovimentacoes", TipoRelatorio.PDF).setVisible(true);
+                }
+
+                if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+                }
 
             }
         }
@@ -1044,7 +1066,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtMovimentacoes = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jbtnGerarRelatorioMovimentacoes = new javax.swing.JButton();
         jpPesquisa = new javax.swing.JPanel();
         jlbLote = new javax.swing.JLabel();
         jtfLote = new javax.swing.JTextField();
@@ -1063,6 +1084,10 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         jlArmazem = new javax.swing.JLabel();
         jtfQuantidade = new javax.swing.JFormattedTextField();
         jbtPesquisar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jcbTipoRelatorio = new javax.swing.JComboBox<>();
+        jbtnGerarRelatorioMovimentacoes = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Histórico de movimentações");
@@ -1101,18 +1126,9 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
-        jPanel2Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jPanel2Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel2Layout.rowHeights = new int[] {0, 5, 0, 5, 0};
         jPanel2.setLayout(jPanel2Layout);
-
-        jbtnGerarRelatorioMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
-        jbtnGerarRelatorioMovimentacoes.setToolTipText("Gerar relatório das movimentações");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 42;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanel2.add(jbtnGerarRelatorioMovimentacoes, gridBagConstraints);
 
         jpPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
         java.awt.GridBagLayout jpPesquisaLayout = new java.awt.GridBagLayout();
@@ -1277,11 +1293,40 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 47;
-        gridBagConstraints.ipadx = -3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 25, 2, 0);
+        gridBagConstraints.gridwidth = 55;
         jPanel2.add(jpPesquisa, gridBagConstraints);
+
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel3Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        jPanel3.setLayout(jPanel3Layout);
+
+        jcbTipoRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PDF", "EXCEL" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 86;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        jPanel3.add(jcbTipoRelatorio, gridBagConstraints);
+
+        jbtnGerarRelatorioMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtnGerarRelatorioMovimentacoes.setToolTipText("Gerar relatório das movimentações");
+        jbtnGerarRelatorioMovimentacoes.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 90;
+        gridBagConstraints.gridy = 4;
+        jPanel3.add(jbtnGerarRelatorioMovimentacoes, gridBagConstraints);
+
+        jLabel1.setText("Relatório");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 84;
+        gridBagConstraints.gridy = 4;
+        jPanel3.add(jLabel1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 55;
+        jPanel2.add(jPanel3, gridBagConstraints);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -1333,8 +1378,10 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Produto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtLimparCamposPesquisa;
     private javax.swing.JButton jbtPesquisar;
@@ -1344,6 +1391,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jcbCondicaoNotaFiscal;
     protected javax.swing.JComboBox<String> jcbCondicaoProduto;
     private javax.swing.JComboBox<String> jcbCondicaoQuantidade;
+    private javax.swing.JComboBox<String> jcbTipoRelatorio;
     private javax.swing.JLabel jlArmazem;
     private javax.swing.JLabel jlbLote;
     private javax.swing.JLabel jlbNotaFiscal;

@@ -5,14 +5,12 @@
  */
 package br.com.gestorestoque.view;
 
-import java.util.HashMap;
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioJasperAdapter;
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioService;
+import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import javax.swing.JOptionPane;
 
-import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JRRuntimeException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -22,34 +20,36 @@ public class FRMRelatorio extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMRelatorio
+     *
      * @param parent
      * @param modal
      * @param jrRS
      * @param nomeRelatorio
      */
-    public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS,String nomeRelatorio) {
+    public FRMRelatorio(java.awt.Dialog parent, boolean modal, String codigos, String nomeRelatorio, TipoRelatorio tipoRelatorio) {
         super(parent, modal);
         initComponents();
 
-        vizualizarRelatorio(jrRS,nomeRelatorio);
+        vizualizarRelatorio(codigos, nomeRelatorio, tipoRelatorio);
     }
 
-    private void vizualizarRelatorio(JRResultSetDataSource jrRS,String nomeRelatorio) {
+    private void vizualizarRelatorio(String codigosConsulta, String nomeRelatorio, TipoRelatorio tipoRelatorio) {
         try {
+
+            GeradorRelatorioService geradorRelatorioService;
             
-            
-            JasperPrint jasperPrint = JasperFillManager.fillReport("src/br/com/gestorestoque/relatorio/"+nomeRelatorio+".jasper", new HashMap(), jrRS);
-            JasperViewer jrViewer = new JasperViewer(jasperPrint, true);
-            jrViewer.setSize(1200, 700);
-            //Adicionando o relatorio no Jdialog  
-            this.getContentPane().add(jrViewer.getContentPane());
-            this.revalidate();
-            //Deixar True para exibir a tela no sistema  
-            //this.setVisible(true);
-        }catch (JRRuntimeException  e){
-            JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:"+e.getMessage(),"Erro",0);
+            if (tipoRelatorio == TipoRelatorio.PDF) {
+                
+                geradorRelatorioService = new GeradorRelatorioJasperAdapter();
+                
+                //Adicionando o relatorio no Jdialog  
+                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(nomeRelatorio, codigosConsulta));
+                //Deixar True para exibir a tela no sistema  
+            }
+        } catch (JRRuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:"+e.getMessage(),"Erro",0);
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
         }
     }
 
@@ -107,7 +107,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true,null,"");
+                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true, "", "", TipoRelatorio.PDF);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
