@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.view;
+package br.com.gestorestoque.view.menu;
 
 import br.com.gestorestoque.view.menu.fabrica.CriadorFrame;
 import br.com.gestorestoque.view.menu.fabrica.EnumFRM;

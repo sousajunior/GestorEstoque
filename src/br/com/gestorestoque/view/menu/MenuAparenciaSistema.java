@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.view;
+package br.com.gestorestoque.view.menu;
 
-import br.com.gestorestoque.view.JRadioButtonMenuItemLAF;
+import br.com.gestorestoque.view.menu.JRadioButtonMenuItemLAF;
 import java.awt.Component;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;

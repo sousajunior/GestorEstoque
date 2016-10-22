@@ -2,9 +2,9 @@
 package br.com.gestorestoque.view.menu.almoxarifado;
 
 import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
-import br.com.gestorestoque.view.MenuCadastros;
-import br.com.gestorestoque.view.MenuEstoque;
-import br.com.gestorestoque.view.MenuSistema;
+import br.com.gestorestoque.view.menu.MenuCadastros;
+import br.com.gestorestoque.view.menu.MenuEstoque;
+import br.com.gestorestoque.view.menu.MenuSistema;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
