@@ -12,6 +12,8 @@ import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import br.com.gestorestoque.view.enumerado.Relatorio;
+import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -28,7 +30,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 /**
  *
@@ -79,7 +80,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         initComponents();
         somentePesquisa = true;
-        this.jScrollPane1.setAutoscrolls(true); 
+        this.jScrollPane1.setAutoscrolls(true);
         prepararComponentes();
     }
 
@@ -337,11 +338,10 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
     public void prepararComponentes() {
 
         //Preparar Jtable de produtos
-        
         getProdutosArmazenados();
         atualizarListaProdutosQuantidadeMinima();
         atualizarTabelaProdutosArmazenados();
-        
+
         jtProdutosArmazenados.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -379,6 +379,13 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
                 }
         );
 
+        
+        jcbTipoRelatorio.addActionListener(
+                (e) -> {
+                    itemComboTipoRelatorioSelecionado();
+                }
+        );
+        
         //entrada de produto
         jbtEntradaProduto.addActionListener(
                 (e) -> {
@@ -577,8 +584,18 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
 
     }
 
-    private void btnGerarRelatorioClicado() throws SQLException {
+    private void itemComboTipoRelatorioSelecionado() {
 
+        if (this.jcbTipoRelatorio.getSelectedIndex() == 0) {
+            this.jbtGerarRelatorio.setEnabled(false);
+        } else {
+            this.jbtGerarRelatorio.setEnabled(true);
+        }
+
+    }
+    
+    private void btnGerarRelatorioClicado() throws SQLException {
+        
         if (modeloTabelaProdutoArmazenado.getRowCount() > 0) {
             String codigosProdutosArmazenados = "";
             for (int i = 0; i < modeloTabelaProdutoArmazenado.getRowCount(); i++) {
@@ -588,14 +605,18 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             }
             if (codigosProdutosArmazenados.length() > 0) {
 
-                new FRMRelatorio(this,
-                        true,
-                        new JRResultSetDataSource(ctrlProdutoArmazenado.selecionarParaRelatorio(codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1))),
-                        "RelatorioSaldoEstoque").setVisible(true);
+                      if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
+                    new FRMRelatorio(this,
+                            true,codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1),
+                            Relatorio.RelatorioSaldoEstoque, TipoRelatorio.PDF).setVisible(true);
+                }
+
+                if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+                }
 
             }
         }
-
+        
     }
 
     private void btnLimparClicado() {
@@ -610,7 +631,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         this.jcbCondicaoUnidadeMedida.setSelectedIndex(0);
 
         atualizarTabelaProdutosArmazenados();
-        
+
         produtosArmazenadosPesquisa = new ArrayList<>();
 
     }
@@ -1633,7 +1654,6 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         atualizarListaProdutosQuantidadeMinima();
         DefaultTableCellRenderer tcr = new qtdMinimaRender();
         jtProdutosArmazenados.setDefaultRenderer(Object.class, tcr);
-        
 
     }
 
@@ -1711,7 +1731,10 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         jtfPreco = new javax.swing.JTextField();
         jcbCondicaoPreco = new javax.swing.JComboBox<>();
         jbtPesquisar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jcbTipoRelatorio = new javax.swing.JComboBox<>();
         jbtGerarRelatorio = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jbtEntradaProduto = new javax.swing.JButton();
         jbtnventario = new javax.swing.JButton();
@@ -1999,13 +2022,33 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 0, 2, 0);
         jPanel1.add(jpPesquisa, gridBagConstraints);
 
-        jbtGerarRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
-        jbtGerarRelatorio.setToolTipText("Gerar relatório com os dados atuais da tabela.");
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+
+        jcbTipoRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PDF", "EXCEL" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 5);
-        jPanel1.add(jbtGerarRelatorio, gridBagConstraints);
+        gridBagConstraints.gridx = 90;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        jPanel3.add(jcbTipoRelatorio, gridBagConstraints);
+
+        jbtGerarRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/report.png"))); // NOI18N
+        jbtGerarRelatorio.setToolTipText("Gerar relatório das movimentações");
+        jbtGerarRelatorio.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 94;
+        gridBagConstraints.gridy = 4;
+        jPanel3.add(jbtGerarRelatorio, gridBagConstraints);
+
+        jLabel1.setText("Relatório");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 88;
+        gridBagConstraints.gridy = 4;
+        jPanel3.add(jLabel1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        jPanel1.add(jPanel3, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -2100,9 +2143,11 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Produto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JButton jbtEntradaProduto;
     private javax.swing.JButton jbtGerarRelatorio;
@@ -2118,6 +2163,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
     protected javax.swing.JComboBox<String> jcbCondicaoProduto;
     private javax.swing.JComboBox<String> jcbCondicaoSaldo;
     private javax.swing.JComboBox<String> jcbCondicaoUnidadeMedida;
+    private javax.swing.JComboBox<String> jcbTipoRelatorio;
     private javax.swing.JLabel jlArmazem;
     private javax.swing.JLabel jlPreco;
     private javax.swing.JLabel jlbLote;

@@ -1,7 +1,8 @@
 package br.com.gestorestoque.geradorRelatorio;
 
+import br.com.gestorestoque.view.enumerado.Relatorio;
 import java.sql.SQLException;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -10,6 +11,6 @@ import net.sf.jasperreports.engine.JRException;
  */
 public interface GeradorRelatorioService {
 
-    JPanel vizualizarRelatorio(String nomeRelatorio,String codigosConsulta) throws JRException,SQLException;
+    JFrame vizualizarRelatorio(Relatorio relatorio,String codigosConsulta) throws JRException,SQLException;
     
 }

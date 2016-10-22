@@ -112,42 +112,6 @@ public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazena
 
     
     
-    /**
-     * Executa um método que seleciona todos os armazéns cadastrados na base de
-     * dados. Método select da classe CRUD.
-     *
-     * @param codigosProdutosArmazenados
-     * @return rs ResultSet
-     * @throws SQLException
-     */
-    public  ResultSet selecionarParaRelatorio(String codigosProdutosArmazenados) throws SQLException {
-
-        return CRUD.queryCompleta("select p.nome as PRODUTO,\n"
-                + "       case when pa.lote IS NULL THEN\n"
-                + "                  ''\n"
-                + "            else\n"
-                + "            pa.lote\n"
-                + "            end  as LOTE,\n"
-                + "       f.nome as FORNECEDOR,\n"
-                + "       pa.quantidade as SALDO,\n"
-                + "       um.abreviacao as UM,\n"
-                + "       a.descricao as ARMAZEM,\n"
-                + "       p.controladoPorLote as CONTROLADO_POR_LOTE,\n"
-                + "       pa.notaFiscal as NOTA_FISCAL,\n"
-                + "       p.preco as PRECO\n"
-                + "from  produtoArmazenado pa,\n"
-                + "      fornecedor f,\n"
-                + "      produto p,\n"
-                + "      unidademedida um,\n"
-                + "      armazem a\n"
-                + "where pa.fornecedor_idFornecedor = f.idFornecedor\n"
-                + "and pa.produto_codigoProduto = p.codigoProduto\n"
-                + "and p.unidadeMedida_idunidadeMedida = um.idunidadeMedida\n"
-                + "and pa.armazem_codigoArmazem = a.codigoArmazem\n"
-                + "and pa.idprodutoArmazenado in(" + codigosProdutosArmazenados
-                + ")");
-
-    }
 
    /*
     //public ControladorProdutoArmazenado() {
