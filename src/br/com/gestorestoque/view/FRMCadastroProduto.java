@@ -420,17 +420,17 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
             if (codigosProdutos.length() > 0) {
 
                 if (jcbRelatorios.getSelectedIndex() == 1) {
-                    new FRMRelatorio(this,
-                            true,
-                            new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                            "RelatorioSaldoGeralProdutos").setVisible(true);
+                   // new FRMRelatorio(this,
+                       //     true,
+                       //     new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorioSaldoGeral(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                        //    "RelatorioSaldoGeralProdutos").setVisible(true);
                 }
                 
                 if (jcbRelatorios.getSelectedIndex() == 2) {
-                    new FRMRelatorio(this,
-                            true,
-                            new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
-                            "RelatorioProdutos").setVisible(true);
+                    //new FRMRelatorio(this,
+                   //         true,
+                      //      new JRResultSetDataSource(ctrlProduto.selecionarParaRelatorio(codigosProdutos.substring(0, codigosProdutos.length() - 1))),
+                       //     "RelatorioProdutos").setVisible(true);
                 }
 
             }

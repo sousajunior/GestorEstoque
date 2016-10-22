@@ -588,10 +588,10 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             }
             if (codigosProdutosArmazenados.length() > 0) {
 
-                new FRMRelatorio(this,
-                        true,
-                        new JRResultSetDataSource(ctrlProdutoArmazenado.selecionarParaRelatorio(codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1))),
-                        "RelatorioSaldoEstoque").setVisible(true);
+               // new FRMRelatorio(this,
+                     //   true,
+                    //    new JRResultSetDataSource(ctrlProdutoArmazenado.selecionarParaRelatorio(codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1))),
+                     //   "RelatorioSaldoEstoque").setVisible(true);
 
             }
         }

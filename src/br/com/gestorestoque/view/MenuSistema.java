@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.view.menu.menus;
+package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.view.JItemMenu;
+import br.com.gestorestoque.view.menu.fabrica.EnumFRM;
 import javax.swing.JMenu;
 
 /**
@@ -14,11 +16,10 @@ import javax.swing.JMenu;
 public class MenuSistema extends JMenu{
 
     public MenuSistema() {
-    montarMenu();
-    }
-    
-    public void montarMenu(){
         setText("Sistema");
+        add(new MenuAparenciaSistema());
+        add(new JItemMenu("/br/com/gestorestoque/view/Imagens/sobre.png", "Sobre", EnumFRM.SOBRE));
     }
     
+            
 }
