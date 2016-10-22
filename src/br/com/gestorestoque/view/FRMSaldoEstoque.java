@@ -2019,15 +2019,19 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = -3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 0, 2, 0);
+        gridBagConstraints.insets = new java.awt.Insets(1, 0, 0, 0);
         jPanel1.add(jpPesquisa, gridBagConstraints);
 
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Relatórios"));
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel3Layout.rowHeights = new int[] {0, 5, 0};
+        jPanel3.setLayout(jPanel3Layout);
 
         jcbTipoRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PDF", "EXCEL" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 90;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 88;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
         jPanel3.add(jcbTipoRelatorio, gridBagConstraints);
 
@@ -2035,19 +2039,20 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         jbtGerarRelatorio.setToolTipText("Gerar relatório das movimentações");
         jbtGerarRelatorio.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 94;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 92;
+        gridBagConstraints.gridy = 0;
         jPanel3.add(jbtGerarRelatorio, gridBagConstraints);
 
         jLabel1.setText("Relatório");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 88;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 86;
+        gridBagConstraints.gridy = 0;
         jPanel3.add(jLabel1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jPanel3, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -2064,7 +2069,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         jPanel2.add(jbtEntradaProduto, gridBagConstraints);
 
         jbtnventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/inventario-32.png"))); // NOI18N
@@ -2073,7 +2078,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         jPanel2.add(jbtnventario, gridBagConstraints);
 
         jbtSaidaProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/saida-32.png"))); // NOI18N
@@ -2082,13 +2087,13 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(21, 21, 21, 21);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         jPanel2.add(jbtSaidaProduto, gridBagConstraints);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
         jPanel2.getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new java.awt.Dimension(852, 675));
+        setSize(new java.awt.Dimension(852, 699));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
