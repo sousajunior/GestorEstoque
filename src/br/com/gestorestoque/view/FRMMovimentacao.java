@@ -1291,19 +1291,20 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         jpPesquisa.add(jbtPesquisar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 55;
+        gridBagConstraints.gridwidth = 41;
         jPanel2.add(jpPesquisa, gridBagConstraints);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Relatórios"));
         java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
-        jPanel3Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
+        jPanel3Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
         jPanel3Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
         jPanel3.setLayout(jPanel3Layout);
 
         jcbTipoRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PDF", "EXCEL" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 86;
+        gridBagConstraints.gridx = 76;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 3;
         jPanel3.add(jcbTipoRelatorio, gridBagConstraints);
@@ -1312,20 +1313,21 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         jbtnGerarRelatorioMovimentacoes.setToolTipText("Gerar relatório das movimentações");
         jbtnGerarRelatorioMovimentacoes.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 90;
+        gridBagConstraints.gridx = 80;
         gridBagConstraints.gridy = 4;
         jPanel3.add(jbtnGerarRelatorioMovimentacoes, gridBagConstraints);
 
         jLabel1.setText("Relatório");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 84;
+        gridBagConstraints.gridx = 74;
         gridBagConstraints.gridy = 4;
         jPanel3.add(jLabel1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 55;
+        gridBagConstraints.gridwidth = 41;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(jPanel3, gridBagConstraints);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
