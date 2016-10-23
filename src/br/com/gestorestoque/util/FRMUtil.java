@@ -12,6 +12,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 /**
  *
@@ -54,11 +55,14 @@ public class FRMUtil {
      * @throws InstantiationException
      * @throws UnsupportedLookAndFeelException
      */
-    public static void alterarLookAndFeel(String lookAndFeel, Component componente) throws ClassNotFoundException, IllegalAccessException, InstantiationException, UnsupportedLookAndFeelException {
+    public static void alterarLookAndFeel(String lookAndFeel, Component componente, String skin) throws ClassNotFoundException, IllegalAccessException, InstantiationException, UnsupportedLookAndFeelException {
 
         try {
             UIManager.setLookAndFeel(lookAndFeel);
             SwingUtilities.updateComponentTreeUI(componente);
+            if (!skin.equalsIgnoreCase("")) {
+                SubstanceLookAndFeel.setSkin(skin);
+            }
             componente.revalidate();
             componente.repaint();
         } catch (UnsupportedLookAndFeelException erro) {
@@ -66,12 +70,11 @@ public class FRMUtil {
         }
 
     }
-    
-    
-     public static void uncheck( JPopupMenu menu) {
-         
+
+    public static void uncheck(JPopupMenu menu) {
+
         for (Component radio : menu.getComponents()) {
-          
+
             JRadioButtonMenuItem jr = (JRadioButtonMenuItem) radio;
             if (jr.isSelected()) {
                 jr.setSelected(false);
@@ -79,6 +82,5 @@ public class FRMUtil {
 
         }
     }
-
 
 }

@@ -1764,6 +1764,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         jtProdutosArmazenados.setToolTipText("Tabela de saldo dos produtos. Itens em vermelho chegaram na quantidade mínima(ponto de pedido)");
         jtProdutosArmazenados.setMaximumSize(new java.awt.Dimension(300, 200));
         jtProdutosArmazenados.setMinimumSize(new java.awt.Dimension(300, 200));
+        jtProdutosArmazenados.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jtProdutosArmazenados);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

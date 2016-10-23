@@ -18,11 +18,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author 5927161
  */
 public class JRadioButtonMenuItemLAF extends JRadioButtonMenuItem {
-    private final String url,nome;
+    private final String url,nome,skin;
 
-    public JRadioButtonMenuItemLAF(String url, String nome) {
+    public JRadioButtonMenuItemLAF(String url, String nome, String skin) {
         this.url = url;
         this.nome = nome;
+        this.skin = skin;
         montarItemMenu();
     }
     
@@ -36,7 +37,7 @@ public class JRadioButtonMenuItemLAF extends JRadioButtonMenuItem {
                try {
         
                    
-                FRMUtil.alterarLookAndFeel(url, FRMPrincipal.getInstance());
+                FRMUtil.alterarLookAndFeel(url, FRMPrincipal.getInstance(), skin);
                 FRMUtil.uncheck((JPopupMenu)this.getParent());
                 this.setSelected(true);
 

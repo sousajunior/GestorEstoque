@@ -5,6 +5,8 @@ import br.com.gestorestoque.util.FRMUtil;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -64,7 +66,7 @@ public class SplashScreen extends JWindow {
                     if (conectado) {
                         SplashScreen.this.setAlwaysOnTop(false);
                         FRMLogin frmLogin = new FRMLogin();
-                        FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin);
+                        FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin,"");
                         //frmLogin.setAlwaysOnTop(true);
                         SplashScreen.this.setVisible(false);
                         frmLogin.requestFocus();
@@ -77,9 +79,8 @@ public class SplashScreen extends JWindow {
                         System.exit(0);
                     }
 
-                } catch (HeadlessException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | InterruptedException e) {
-
-                    JOptionPane.showMessageDialog(null, "Erro: " + e, "Erro!", JOptionPane.ERROR_MESSAGE);
+                } catch (HeadlessException | UnsupportedLookAndFeelException | InterruptedException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro: " + ex, "Erro!", JOptionPane.ERROR_MESSAGE);
 
                 }
             }

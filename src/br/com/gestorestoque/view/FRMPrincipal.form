@@ -273,7 +273,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/gestao-de-estoque.png"/>
+              <Image iconType="3" name="/br/com/gestorestoque/view/Imagens/gestor-estoque-transparente.png"/>
             </Property>
           </Properties>
           <Constraints>

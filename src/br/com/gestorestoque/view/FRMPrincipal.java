@@ -13,15 +13,17 @@ import br.com.gestorestoque.view.menu.fabrica.AbstractFabricaMenus;
 import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
 import br.com.gestorestoque.view.menu.fabrica.CriadorFabricaMenu;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JMenu;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceChallengerDeepLookAndFeel;
+import org.pushingpixels.substance.api.skin.TwilightSkin;
 
 /**
  *
@@ -32,6 +34,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     private static FRMPrincipal fRMPrincipalUnicaInstancia;
     private static int cont = 0;
     UsuarioGrupo usuarioLogado = UsuarioGrupo.getInstance();
+
     /**
      * Creates new form FRMPrincipal
      */
@@ -41,7 +44,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         getContentPane().setBackground(Color.WHITE);
         setExtendedState(MAXIMIZED_BOTH);
         prepararComponentes();
-        
+
     }
 
     public static synchronized FRMPrincipal getInstance() {
@@ -61,7 +64,6 @@ public class FRMPrincipal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLblUsuario = new javax.swing.JLabel();
@@ -123,7 +125,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestao-de-estoque.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestor-estoque-transparente.png"))); // NOI18N
         jPanel2.add(jLabel5, new java.awt.GridBagConstraints());
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -223,17 +225,17 @@ public class FRMPrincipal extends javax.swing.JFrame {
         //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
         this.setJMenuBar(barraMenu.montarMenu());
 
-    
-        jLblUsuario.setText(usuarioLogado.getIdUsuario().getNomeCompleto()+" ("+usuarioLogado.getIdUsuario().getNomeUsuario()+")");
-        
+        jLblUsuario.setText(usuarioLogado.getIdUsuario().getNomeCompleto() + " (" + usuarioLogado.getIdUsuario().getNomeUsuario() + ")");
+
         jLblData.setText(EstoqueDataUtil.pegarDataAtual());
-         
+
         jLblSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         jLblSair.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 sairDoSistema();
+
             }
 
             @Override
@@ -241,10 +243,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
                 sairDoSistema();
             }
 
-        });      
+        });
     }
 
-    
     private void sairDoSistema() {
 
         if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja mesmo sair do sistema?", "Logoff", JOptionPane.YES_NO_OPTION, 3)) {
@@ -286,6 +287,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FRMPrincipal().setVisible(true);
+                
             }
         });
     }
