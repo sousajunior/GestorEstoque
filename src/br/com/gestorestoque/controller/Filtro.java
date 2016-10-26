@@ -15,5 +15,5 @@ import java.util.List;
 public interface Filtro<T> {
 
     
-  List<T>  filtrar(List<T> lista,String textoPesquisa, int indiceComboBox);  
+  List<T>  filtrar();  
 }

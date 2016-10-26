@@ -14,9 +14,21 @@ import java.util.List;
  */
 public class FiltroComposite implements Filtro<ProdutoArmazenado>{
 
+    List<Filtro> filtros ;
+
+    public FiltroComposite(List<Filtro> filtros) {
+        this.filtros = filtros;
+    }
+    
+    
+    
     @Override
-    public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista, String textoPesquisa, int indiceComboBox) {
-            return null;
+    public List<ProdutoArmazenado> filtrar() {
+        for (Filtro filtro : filtros) {
+            filtro.filtrar();
+        }
+    
+        return null;
     }
     
 }

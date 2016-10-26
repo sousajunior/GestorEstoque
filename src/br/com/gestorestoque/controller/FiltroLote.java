@@ -16,15 +16,19 @@ import java.util.List;
 public class FiltroLote implements Filtro<ProdutoArmazenado> {
 
     List<ProdutoArmazenado> produtos = new ArrayList<>();
+    String lote;
+    int selectedIndex;
 
-    public FiltroLote(List<ProdutoArmazenado> produtos) {
+    public FiltroLote(List<ProdutoArmazenado> produtos, String lote, int selectedIndex) {
         this.produtos = produtos;
+        this.lote = lote;
+        this.selectedIndex = selectedIndex;
     }
-    
-    @Override
-    public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista,String lote, int selectedIndex) {
 
-        List<ProdutoArmazenado> produtosArmazenadosPesquisa = lista;
+    @Override
+    public List<ProdutoArmazenado> filtrar() {
+
+        List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
         if (validarIndex(selectedIndex)) {
             if (selectedIndex == 1) {
                 for (ProdutoArmazenado produto : produtos) {
@@ -57,5 +61,5 @@ public class FiltroLote implements Filtro<ProdutoArmazenado> {
     private boolean validarIndex(int index) {
         return index > 0 ? true : false;
     }
-    
+
 }
