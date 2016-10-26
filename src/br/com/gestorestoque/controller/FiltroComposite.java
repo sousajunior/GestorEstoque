@@ -6,6 +6,7 @@
 package br.com.gestorestoque.controller;
 
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,21 +15,40 @@ import java.util.List;
  */
 public class FiltroComposite implements Filtro<ProdutoArmazenado>{
 
-    List<Filtro> filtros ;
+    List<ProdutoArmazenado> produtos = new ArrayList<>();
+    List<Filtro> filtros = new ArrayList<>();
 
     public FiltroComposite(List<Filtro> filtros) {
         this.filtros = filtros;
     }
+
+    public FiltroComposite() {
+    }
+    
     
     
     
     @Override
-    public List<ProdutoArmazenado> filtrar() {
+    public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> listaProdutosArmazenados) {
+        
+        List<ProdutoArmazenado> lista = listaProdutosArmazenados;
+        List<ProdutoArmazenado> lista2 = new ArrayList<>();        
+        
         for (Filtro filtro : filtros) {
-            filtro.filtrar();
+            
+            lista2 = filtro.filtrar(lista);
+            lista = lista2;
+            
         }
     
-        return null;
+        return lista;
     }
     
+    /**
+     * Adiciona um filtro a lista de filtros da classe FiltroComposite.
+     * @param filtro (Um filtro que implemente a interface filtro).
+     */
+    public void add(Filtro filtro){
+        filtros.add(filtro);
+    }
 }

@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
-
-import java.util.List;
-
+package br.com.gestorestoque.util;
 
 /**
  *
  * @author DG
  */
-public interface Filtro<T> {
-
+public class FiltroUtil {
     
-  List<T>  filtrar(List<T> lista);  
+    
+    public static boolean validarIndex(int index) {
+        return index > 0 ? true : false;
+    }
+
 }

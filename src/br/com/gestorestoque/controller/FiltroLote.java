@@ -6,6 +6,7 @@
 package br.com.gestorestoque.controller;
 
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,23 +16,23 @@ import java.util.List;
  */
 public class FiltroLote implements Filtro<ProdutoArmazenado> {
 
-    List<ProdutoArmazenado> produtos = new ArrayList<>();
+    
     String lote;
     int selectedIndex;
 
-    public FiltroLote(List<ProdutoArmazenado> produtos, String lote, int selectedIndex) {
-        this.produtos = produtos;
+    public FiltroLote( String lote, int selectedIndex) {
+        
         this.lote = lote;
         this.selectedIndex = selectedIndex;
     }
 
     @Override
-    public List<ProdutoArmazenado> filtrar() {
+    public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista) {
 
         List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
-        if (validarIndex(selectedIndex)) {
+        if (FiltroUtil.validarIndex(selectedIndex)) {
             if (selectedIndex == 1) {
-                for (ProdutoArmazenado produto : produtos) {
+                for (ProdutoArmazenado produto : lista) {
                     //verifica se o produto é controlado por lote
                     if (produto.getProduto().isControladoPorLote()) {
                         //verifica se o lote da posição atual contem a expressão que o usuário digitou
@@ -42,7 +43,7 @@ public class FiltroLote implements Filtro<ProdutoArmazenado> {
                     }
                 }
             } else if (selectedIndex == 2) {
-                for (ProdutoArmazenado produto : produtos) {
+                for (ProdutoArmazenado produto : lista) {
                     //verifica se o produto é controlado por lote
                     if (produto.getProduto().isControladoPorLote()) {
                         //verifica se o lote da posição atual contem a expressão que o usuário digitou
@@ -58,8 +59,5 @@ public class FiltroLote implements Filtro<ProdutoArmazenado> {
         return null;
     }
 
-    private boolean validarIndex(int index) {
-        return index > 0 ? true : false;
-    }
-
+    
 }

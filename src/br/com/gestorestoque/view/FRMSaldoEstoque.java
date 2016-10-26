@@ -8,6 +8,9 @@ package br.com.gestorestoque.view;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
+import br.com.gestorestoque.controller.FiltroComposite;
+import br.com.gestorestoque.controller.FiltroDescricaoProduto;
+import br.com.gestorestoque.controller.FiltroLote;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
 import br.com.gestorestoque.model.Produto;
@@ -379,13 +382,12 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
                 }
         );
 
-        
         jcbTipoRelatorio.addActionListener(
                 (e) -> {
                     itemComboTipoRelatorioSelecionado();
                 }
         );
-        
+
         //entrada de produto
         jbtEntradaProduto.addActionListener(
                 (e) -> {
@@ -593,9 +595,9 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
         }
 
     }
-    
+
     private void btnGerarRelatorioClicado() throws SQLException {
-        
+
         if (modeloTabelaProdutoArmazenado.getRowCount() > 0) {
             String codigosProdutosArmazenados = "";
             for (int i = 0; i < modeloTabelaProdutoArmazenado.getRowCount(); i++) {
@@ -605,9 +607,9 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             }
             if (codigosProdutosArmazenados.length() > 0) {
 
-                      if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
+                if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
                     new FRMRelatorio(this,
-                            true,codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1),
+                            true, codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1),
                             Relatorio.RelatorioSaldoEstoque, TipoRelatorio.PDF).setVisible(true);
                 }
 
@@ -616,7 +618,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
 
             }
         }
-        
+
     }
 
     private void btnLimparClicado() {
@@ -785,7 +787,7 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
 
     private void filtrar() {
 
-        produtosArmazenadosPesquisa = new ArrayList<>();
+        /* produtosArmazenadosPesquisa = new ArrayList<>();
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
         if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
@@ -1642,13 +1644,30 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             }
 
         }
-
+         */
+        FiltroComposite filtroComposite = new FiltroComposite();
+        
+        if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
+            
+            filtroComposite.add(new FiltroLote( 
+                    this.jtfLote.getText(), 
+                    this.jcbCondicaoLote.getSelectedIndex()));
+        }
+        
+        if(this.jcbCondicaoProduto.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroDescricaoProduto(this.jtfProduto.getText(), 
+                    this.jcbCondicaoProduto.getSelectedIndex()));
+        }
+        
+        produtosArmazenadosPesquisa = filtroComposite.filtrar(produtosArmazenados);
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaProdutosArmazenadosComPesquisa();
 
     }
 
     private void atualizarTabelaProdutosArmazenadosComPesquisa() {
+        
         modeloTabelaProdutoArmazenado = new ProdutoArmazenadoTableModel(produtosArmazenadosPesquisa);
         jtProdutosArmazenados.setModel(modeloTabelaProdutoArmazenado);
         atualizarListaProdutosQuantidadeMinima();
