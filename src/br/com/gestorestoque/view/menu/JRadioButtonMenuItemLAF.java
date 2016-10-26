@@ -39,11 +39,11 @@ public class JRadioButtonMenuItemLAF extends JRadioButtonMenuItem {
             }
            
             
-            
+            /*
             @Override
             public void mouseEntered(MouseEvent e) {
                 acionarItem();
-            }
+            }*/
            
             
         });
