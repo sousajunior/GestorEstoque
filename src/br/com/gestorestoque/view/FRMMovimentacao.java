@@ -6,7 +6,13 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorMovimentacao;
+import br.com.gestorestoque.controller.FiltroArmazem;
+import br.com.gestorestoque.controller.FiltroComposite;
+import br.com.gestorestoque.controller.FiltroDescricaoProduto;
+import br.com.gestorestoque.controller.FiltroLote;
+import br.com.gestorestoque.controller.FiltroNotaFiscal;
 import br.com.gestorestoque.model.Movimentacao;
+import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.view.enumerado.Relatorio;
 import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Cursor;
@@ -28,6 +34,8 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
     List<Movimentacao> movimentacoes = new ArrayList<>();
     List<Movimentacao> movimentacoesPesquisa = new ArrayList<>();
+    List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
+    List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
     ControladorMovimentacao ctrlMovimentacao;
     TableModel modeloTabelaMovimentacoes;
 
@@ -517,7 +525,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
     }
 
     private void filtrar() {
-
+/*
         movimentacoesPesquisa = new ArrayList<>();
         //Filtro por lote
         //Verificar se o combo de condição por lote não está ocm o traço selecionado
@@ -1043,7 +1051,40 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaMovimentacaoComPesquisa();
-
+ */
+        FiltroComposite filtroComposite = new FiltroComposite();
+        
+        //ativa o filtro por lote
+        if(this.jcbCondicaoLote.getSelectedIndex() > 0)
+        {
+            filtroComposite.add(new FiltroLote(this.jtfLote.getText(), jcbCondicaoLote.getSelectedIndex()));
+        }
+        //ativa o filtro por descrição do produto
+        if(this.jcbCondicaoProduto.getSelectedIndex() > 0)
+        {
+            filtroComposite.add(new FiltroDescricaoProduto(this.jtfProduto.getText(), jcbCondicaoProduto.getSelectedIndex()));
+        }
+        //ativa o filtro por aramazém
+        if(this.jcbCondicaoArmazem.getSelectedIndex() > 0)
+        {
+            filtroComposite.add(new FiltroArmazem(this.jcbCondicaoArmazem.getSelectedIndex(),this.jtfArmazem.getText()));
+        }
+        //ativa o filtro por quantidade (saldo)
+        if(this.jcbCondicaoQuantidade.getSelectedIndex() > 0)
+        {
+            filtroComposite.add(new FiltroSaldo(this.jtfQuantidade.getText(),this.jcbCondicaoQuantidade.getSelectedIndex()));
+        }
+        //ativa o filtro por nota fiscal
+        if(this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0)
+        {
+            filtroComposite.add(new FiltroNotaFiscal(this.jcbCondicaoNotaFiscal.getSelectedIndex(),this.jtfNotaFiscal.getText()));
+        }
+        
+        //chama o composite de filtros com todos os filtros ativos
+        produtosArmazenadosPesquisa = filtroComposite.filtrar(produtosArmazenados);
+        //atualiza a tabela com o resultado da pesquisa
+        atualizarTabelaMovimentacaoComPesquisa();
+        
     }
 
     private void atualizarTabelaMovimentacaoComPesquisa() {
