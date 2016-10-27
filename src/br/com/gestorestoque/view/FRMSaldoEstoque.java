@@ -10,7 +10,10 @@ import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.controller.FiltroComposite;
 import br.com.gestorestoque.controller.FiltroDescricaoProduto;
+import br.com.gestorestoque.controller.FiltroFornecedor;
 import br.com.gestorestoque.controller.FiltroLote;
+import br.com.gestorestoque.controller.FiltroNotaFiscal;
+import br.com.gestorestoque.controller.FiltroUnidadeMedida;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
 import br.com.gestorestoque.model.Produto;
@@ -1659,6 +1662,29 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             filtroComposite.add(new FiltroDescricaoProduto(this.jtfProduto.getText(), 
                     this.jcbCondicaoProduto.getSelectedIndex()));
         }
+        
+        if(this.jcbCondicaoFornecedor.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroFornecedor(this.jtfFornecedor.getText(), 
+                    this.jcbCondicaoFornecedor.getSelectedIndex()));
+        }
+        
+        if(this.jcbCondicaoSaldo.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroSaldo(this.jtfSaldo.getText(), 
+                    this.jcbCondicaoSaldo.getSelectedIndex()));
+        }
+        
+        if(this.jcbCondicaoUnidadeMedida.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroUnidadeMedida(this.jcbCondicaoUnidadeMedida.getSelectedIndex(),this.jtfUnidadeMedida.getText()));
+        }
+        
+        if(this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroNotaFiscal(this.jcbCondicaoNotaFiscal.getSelectedIndex(),this.jtfNotaFiscal.getText()));
+        }
+        
         
         produtosArmazenadosPesquisa = filtroComposite.filtrar(produtosArmazenados);
         //atualiza a tabela com o resultado da pesquisa

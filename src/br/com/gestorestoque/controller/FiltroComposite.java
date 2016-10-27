@@ -23,6 +23,7 @@ public class FiltroComposite implements Filtro<ProdutoArmazenado>{
     }
 
     public FiltroComposite() {
+        
     }
     
     
