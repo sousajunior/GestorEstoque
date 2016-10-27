@@ -8,11 +8,13 @@ package br.com.gestorestoque.view;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
+import br.com.gestorestoque.controller.FiltroArmazem;
 import br.com.gestorestoque.controller.FiltroComposite;
 import br.com.gestorestoque.controller.FiltroDescricaoProduto;
 import br.com.gestorestoque.controller.FiltroFornecedor;
 import br.com.gestorestoque.controller.FiltroLote;
 import br.com.gestorestoque.controller.FiltroNotaFiscal;
+import br.com.gestorestoque.controller.FiltroPreco;
 import br.com.gestorestoque.controller.FiltroUnidadeMedida;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
@@ -1685,7 +1687,16 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
             filtroComposite.add(new FiltroNotaFiscal(this.jcbCondicaoNotaFiscal.getSelectedIndex(),this.jtfNotaFiscal.getText()));
         }
         
+        if(this.jcbCondicaoArmazem.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroArmazem(this.jcbCondicaoArmazem.getSelectedIndex(),this.jtfArmazem.getText()));
+        }
+        if(this.jcbCondicaoPreco.getSelectedIndex() > 0){
+            
+            filtroComposite.add(new FiltroPreco(this.jcbCondicaoPreco.getSelectedIndex(),this.jtfPreco.getText()));
+        }
         
+        // chama o composite de filtros com todos os filtros ativos
         produtosArmazenadosPesquisa = filtroComposite.filtrar(produtosArmazenados);
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaProdutosArmazenadosComPesquisa();
