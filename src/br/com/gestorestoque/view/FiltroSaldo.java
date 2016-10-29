@@ -5,7 +5,7 @@
  */
 package br.com.gestorestoque.view;
 
-import br.com.gestorestoque.controller.Filtro;
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;

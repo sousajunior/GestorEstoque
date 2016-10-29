@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
+package br.com.gestorestoque.controller.filtros.produtoArmazenado;
 
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
@@ -12,33 +13,32 @@ import java.util.List;
 
 /**
  *
- * @author DG
+ * @author 5927161
  */
-public class FiltroDescricaoProduto implements Filtro<ProdutoArmazenado>{
+public class FiltroArmazemProdutoArmazenado implements Filtro<ProdutoArmazenado>{
 
-    
-    String produtoCod;
-    int selectedIndex;
+    final private int selectedIndex;
+    final private String armazem;
 
-    public FiltroDescricaoProduto( String produtoCod, int selectedIndex) {
-        
-        this.produtoCod = produtoCod;
-        this.selectedIndex = selectedIndex;
+    public FiltroArmazemProdutoArmazenado(int index,String armazem) {
+        this.selectedIndex = index;
+        this.armazem = armazem;
     }
-
+    
+    
     @Override
     public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista) {
         List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
         if (FiltroUtil.validarIndex(selectedIndex)) {
             if (selectedIndex == 1) {
                 for (ProdutoArmazenado produto : lista) {
-                    if (produto.getProduto().getNome().toUpperCase().contains(produtoCod.toUpperCase())) {
+                    if (produto.getArmazem().getDescricao().toUpperCase().contains(armazem.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
             } else if (selectedIndex == 2) {
                 for (ProdutoArmazenado produto : lista) {
-                    if (produto.getProduto().getNome().toUpperCase().equalsIgnoreCase(produtoCod.toUpperCase())) {
+                    if (produto.getArmazem().getDescricao().toUpperCase().equalsIgnoreCase(armazem.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
@@ -47,5 +47,5 @@ public class FiltroDescricaoProduto implements Filtro<ProdutoArmazenado>{
         }
         return null;
     }
-
+    
 }

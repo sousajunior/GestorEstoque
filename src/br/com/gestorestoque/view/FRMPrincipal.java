@@ -16,14 +16,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceChallengerDeepLookAndFeel;
-import org.pushingpixels.substance.api.skin.TwilightSkin;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel;
+import tools.jitterbug.substance;
 
 /**
  *
@@ -41,8 +37,9 @@ public class FRMPrincipal extends javax.swing.JFrame {
     public FRMPrincipal() {
         new FRMUtil().setarIcone(this, null);
         initComponents();
-        getContentPane().setBackground(Color.WHITE);
+        //SubstanceBusinessBlackSteelLookAndFeel.setToUseConstantThemesOnDialogs(true);
         setExtendedState(MAXIMIZED_BOTH);
+        getContentPane().setBackground(Color.WHITE);
         prepararComponentes();
 
     }

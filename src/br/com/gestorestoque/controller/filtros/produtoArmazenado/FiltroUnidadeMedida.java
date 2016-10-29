@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
+package br.com.gestorestoque.controller.filtros.produtoArmazenado;
 
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
+import br.com.gestorestoque.util.FRMUtil;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,33 +16,29 @@ import java.util.List;
  *
  * @author 5927161
  */
-public class FiltroNotaFiscal implements Filtro<ProdutoArmazenado>{
+public class FiltroUnidadeMedida implements Filtro<ProdutoArmazenado> {
 
     private int selectedIndex;
-    private String notaFiscal;
+    private String unidadeAbreviada;
 
-    public FiltroNotaFiscal(int selectedIndex, String notaFiscal) {
+    public FiltroUnidadeMedida(int selectedIndex, String unidadeAbreviada) {
         this.selectedIndex = selectedIndex;
-        this.notaFiscal = notaFiscal;
+        this.unidadeAbreviada = unidadeAbreviada;
     }
-   
-    
-    
+
     @Override
     public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista) {
         List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
         if (FiltroUtil.validarIndex(selectedIndex)) {
             if (selectedIndex == 1) {
                 for (ProdutoArmazenado produto : lista) {
-                    String nf = "" + produto.getNotaFiscal();
-                    if (nf.contains(notaFiscal)) {
+                    if (produto.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().contains(unidadeAbreviada.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
             } else if (selectedIndex == 2) {
                 for (ProdutoArmazenado produto : lista) {
-                    String nf = "" + produto.getNotaFiscal();
-                    if (nf.equalsIgnoreCase(notaFiscal)) {
+                    if (produto.getProduto().getUnidadeMedida().getAbreviacao().toUpperCase().equalsIgnoreCase(unidadeAbreviada.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
@@ -49,5 +47,4 @@ public class FiltroNotaFiscal implements Filtro<ProdutoArmazenado>{
         }
         return null;
     }
-    
-}   
+}

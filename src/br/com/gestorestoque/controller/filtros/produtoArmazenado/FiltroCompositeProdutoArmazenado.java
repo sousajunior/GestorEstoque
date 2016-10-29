@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
+package br.com.gestorestoque.controller.filtros.produtoArmazenado;
 
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +14,16 @@ import java.util.List;
  *
  * @author DG
  */
-public class FiltroComposite implements Filtro<ProdutoArmazenado>{
+public class FiltroCompositeProdutoArmazenado implements Filtro<ProdutoArmazenado>{
 
     List<ProdutoArmazenado> produtos = new ArrayList<>();
     List<Filtro> filtros = new ArrayList<>();
 
-    public FiltroComposite(List<Filtro> filtros) {
+    public FiltroCompositeProdutoArmazenado(List<Filtro> filtros) {
         this.filtros = filtros;
     }
 
-    public FiltroComposite() {
+    public FiltroCompositeProdutoArmazenado() {
         
     }
     
@@ -46,7 +47,7 @@ public class FiltroComposite implements Filtro<ProdutoArmazenado>{
     }
     
     /**
-     * Adiciona um filtro a lista de filtros da classe FiltroComposite.
+     * Adiciona um filtro a lista de filtros da classe FiltroCompositeProdutoArmazenado.
      * @param filtro (Um filtro que implemente a interface filtro).
      */
     public void add(Filtro filtro){

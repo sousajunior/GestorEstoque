@@ -2,11 +2,10 @@ package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.banco.Conexao;
 import br.com.gestorestoque.util.FRMUtil;
+import com.alee.laf.WebLookAndFeel;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -67,6 +66,10 @@ public class SplashScreen extends JWindow {
                         SplashScreen.this.setAlwaysOnTop(false);
                         FRMLogin frmLogin = new FRMLogin();
                         FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin,"");
+                        frmLogin.setDefaultLookAndFeelDecorated(true);
+                        
+                        //WebLookAndFeel.setDecorateDialogs(true);
+                        //WebLookAndFeel.setDecorateFrames(true);
                         //frmLogin.setAlwaysOnTop(true);
                         SplashScreen.this.setVisible(false);
                         frmLogin.requestFocus();

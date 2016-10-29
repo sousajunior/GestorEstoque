@@ -6,13 +6,13 @@
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorMovimentacao;
-import br.com.gestorestoque.controller.FiltroArmazem;
-import br.com.gestorestoque.controller.FiltroComposite;
-import br.com.gestorestoque.controller.FiltroDescricaoProduto;
-import br.com.gestorestoque.controller.FiltroLote;
-import br.com.gestorestoque.controller.FiltroNotaFiscal;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroArmazemMovimentacao;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroCompositeHistoricoMovimentacoes;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroDescricaoProdutoMovimentacao;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroLoteMovimentacao;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroNotaFiscalMovimentacao;
+import br.com.gestorestoque.controller.filtros.historicoMovimentacao.FiltroQuantidadeMovimentacao;
 import br.com.gestorestoque.model.Movimentacao;
-import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.view.enumerado.Relatorio;
 import br.com.gestorestoque.view.enumerado.TipoRelatorio;
 import java.awt.Cursor;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -34,11 +35,9 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
     List<Movimentacao> movimentacoes = new ArrayList<>();
     List<Movimentacao> movimentacoesPesquisa = new ArrayList<>();
-    List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
-    List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
     ControladorMovimentacao ctrlMovimentacao;
     TableModel modeloTabelaMovimentacoes;
-
+    String validaNumero = ".0123456789";
     /**
      * Creates new form FRMMovimentacao
      *
@@ -300,7 +299,6 @@ public class FRMMovimentacao extends javax.swing.JDialog {
                 }
         );
 
-        
         jcbTipoRelatorio.addActionListener(
                 (e) -> {
                     itemComboTipoRelatorioSelecionado();
@@ -352,14 +350,26 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         //listener do campo de quantidade(saldo)
         jtfQuantidade.addKeyListener(new KeyAdapter() {
 
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
 
             }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+               
+                if(!validaNumero.contains(""+e.getKeyChar())){
+                    e.consume();
+                }
+             
+            }
+            
+            
 
         });
 
@@ -496,14 +506,13 @@ public class FRMMovimentacao extends javax.swing.JDialog {
             String codigosMovimentacoes = "";
             for (int i = 0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
                 codigosMovimentacoes += " " + modeloTabelaMovimentacoes.getValueAt(i, 7) + ",";
-                // System.out.println(" "+modeloTabelaMovimentacao.getValueAt(jtProdutosArmazenados.getSelectedRow(), 0) + ",");
-                // System.out.println(codigosProdutosArmazenados);
+
             }
             if (codigosMovimentacoes.length() > 0) {
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
                     new FRMRelatorio(this,
-                            true,codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
+                            true, codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
                             Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.PDF).setVisible(true);
                 }
 
@@ -525,566 +534,39 @@ public class FRMMovimentacao extends javax.swing.JDialog {
     }
 
     private void filtrar() {
-/*
-        movimentacoesPesquisa = new ArrayList<>();
-        //Filtro por lote
-        //Verificar se o combo de condição por lote não está ocm o traço selecionado
-        if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
 
-            //Verificar se o combo de condição por lote esta selecionando (Contém a expressão)
-            if (this.jcbCondicaoLote.getSelectedIndex() == 1) {
+        FiltroCompositeHistoricoMovimentacoes filtroComposite = new FiltroCompositeHistoricoMovimentacoes();
 
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    //percorre a lista primária de produtos armazenados
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        //verifica se o produto é controlado por lote
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().isControladoPorLote()) {
-
-                            //verifica se o lote da posição atual contem a expressão que o usuário digitou
-                            if (movimentacao.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
-
-                                //adiciona na lista quando encontra um lote que contenha o que o usuário digitou
-                                movimentacoesPesquisa.add(movimentacao);
-
-                            }
-
-                        }
-
-                    }
-
-                } else {
-
-                    //Se a lista secundaria de produtos armazenados não for vazia, cria uma nova 
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        //verifica se o produto é controlado por lote
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().isControladoPorLote()) {
-
-                            //verifica se o lote atual contem a expressão que o usuário digitou
-                            if (movimentacao.getLote().toUpperCase().contains(jtfLote.getText().toUpperCase())) {
-
-                                //adiciona o item que encontrou na terceira lista
-                                movimentacoesPesquisa2.add(movimentacao);
-
-                            }
-
-                        }
-
-                    }
-
-                    //remove os itens da segunda lista
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-
-                    //e atualiza com o que existe na terceira lista
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-                //quando o item (é igual a), e selecionado no combo de filtro por lote
-            } else if (this.jcbCondicaoLote.getSelectedIndex() == 2) {
-
-                //Verificar se a lista de produto armazenado para pesquisa está vazia 
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    //percorre a lista primária de produtos armazenados
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        //verifica se o produto é controlado por lote
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().isControladoPorLote()) {
-
-                            //verifica se o lote atual é igual a expressão que o usuário digitou
-                            if (movimentacao.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
-
-                                //adiciona na lista quando encontra um lote que seja igual o que o usuário digitou
-                                movimentacoesPesquisa.add(movimentacao);
-
-                            }
-
-                        }
-
-                    }
-
-                } else {
-
-                    // se a lista de pesquisa nao estiver vazia
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    //percorre a lista secundária de produtos armazenados que foi criada para pesquisa
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        //verifica se o produto é controlado por lote
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().isControladoPorLote()) {
-
-                            //verifica se o lote atual é igual a expressão que o usuário digitou
-                            if (movimentacao.getLote().toUpperCase().equalsIgnoreCase(jtfLote.getText().toUpperCase())) {
-
-                                //adiciona o item que encontrou na terceira lista
-                                movimentacoesPesquisa2.add(movimentacao);
-
-                            }
-
-                        }
-
-                    }
-
-                    //remove os itens da segunda lista
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-
-                    //e atualiza com o que existe na terceira lista
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            }
-
-        }
-
-        //----Produto
-        //Filtro por produto
-        //Verificar se o combo de condição por produto não está ocm o traço selecionado
-        if (this.jcbCondicaoProduto.getSelectedIndex() > 0) {
-
-            if (this.jcbCondicaoProduto.getSelectedIndex() == 1) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().getNome().toUpperCase().contains(jtfProduto.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoProduto.getSelectedIndex() == 2) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getIdProdutoArmazenado().getProduto().getNome().toUpperCase().equalsIgnoreCase(jtfProduto.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            }
-
-        }
-
-        //----NotaFiscal
-        //Filtro por NotaFiscal
-        //Verificar se o combo de condição por produto não está ocm o traço selecionado
-        if (this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0) {
-
-            if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 1) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        String nf = "" + movimentacao.getNotaFiscal();
-
-                        if (nf.contains(jtfNotaFiscal.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        String nf = "" + movimentacao.getNotaFiscal();
-
-                        if (nf.contains(jtfNotaFiscal.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoNotaFiscal.getSelectedIndex() == 2) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        String nf = "" + movimentacao.getNotaFiscal();
-
-                        if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        String nf = "" + movimentacao.getNotaFiscal();
-
-                        if (nf.equalsIgnoreCase(jtfNotaFiscal.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            }
-
-        }
-
-        //----Saldo
-        //Filtro por Saldo
-        //Verificar se o combo de condição por produto não está ocm o traço selecionado
-        if (this.jcbCondicaoQuantidade.getSelectedIndex() > 0) {
-
-            if (this.jcbCondicaoQuantidade.getSelectedIndex() == 1) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getQtd() == Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getQtd() == Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoQuantidade.getSelectedIndex() == 2) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getQtd() > Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getQtd() > Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoQuantidade.getSelectedIndex() == 3) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getQtd() > Double.parseDouble(jtfQuantidade.getText()) || movimentacao.getQtd() == Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getQtd() > Double.parseDouble(jtfQuantidade.getText()) || movimentacao.getQtd() == Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoQuantidade.getSelectedIndex() == 4) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getQtd() < Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getQtd() < Double.parseDouble(jtfQuantidade.getText())) {
-                            movimentacoesPesquisa2.add(movimentacao);
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoQuantidade.getSelectedIndex() == 5) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getQtd() <= Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getQtd() <= Double.parseDouble(jtfQuantidade.getText())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            }
-
-        }
-
-        //Filtro por armazem
-        //Verificar se o combo de condição por armazem não está ocm o traço selecionado
-        if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
-
-            if (this.jcbCondicaoArmazem.getSelectedIndex() == 1) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().contains(this.jtfArmazem.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().contains(jtfArmazem.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            } else if (this.jcbCondicaoArmazem.getSelectedIndex() == 2) {
-
-                if (movimentacoesPesquisa.isEmpty()) {
-
-                    for (Movimentacao movimentacao : movimentacoes) {
-
-                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa.add(movimentacao);
-
-                        }
-
-                    }
-
-                } else {
-
-                    List<Movimentacao> movimentacoesPesquisa2 = new ArrayList<>();
-
-                    for (Movimentacao movimentacao : movimentacoesPesquisa) {
-
-                        if (movimentacao.getIdArmazem().getDescricao().toUpperCase().equalsIgnoreCase(jtfArmazem.getText().toUpperCase())) {
-
-                            movimentacoesPesquisa2.add(movimentacao);
-
-                        }
-
-                    }
-
-                    movimentacoesPesquisa.removeAll(movimentacoesPesquisa);
-                    movimentacoesPesquisa = movimentacoesPesquisa2;
-
-                }
-
-            }
-
-        }
-
-        //atualiza a tabela com o resultado da pesquisa
-        atualizarTabelaMovimentacaoComPesquisa();
- */
-        FiltroComposite filtroComposite = new FiltroComposite();
-        
         //ativa o filtro por lote
-        if(this.jcbCondicaoLote.getSelectedIndex() > 0)
-        {
-            filtroComposite.add(new FiltroLote(this.jtfLote.getText(), jcbCondicaoLote.getSelectedIndex()));
+        if (this.jcbCondicaoLote.getSelectedIndex() > 0) {
+            filtroComposite.add(new FiltroLoteMovimentacao(this.jtfLote.getText(), this.jcbCondicaoLote.getSelectedIndex()));
         }
         //ativa o filtro por descrição do produto
-        if(this.jcbCondicaoProduto.getSelectedIndex() > 0)
-        {
-            filtroComposite.add(new FiltroDescricaoProduto(this.jtfProduto.getText(), jcbCondicaoProduto.getSelectedIndex()));
+        if (this.jcbCondicaoProduto.getSelectedIndex() > 0) {
+            filtroComposite.add(new FiltroDescricaoProdutoMovimentacao(this.jtfProduto.getText(), this.jcbCondicaoProduto.getSelectedIndex()));
         }
         //ativa o filtro por aramazém
-        if(this.jcbCondicaoArmazem.getSelectedIndex() > 0)
-        {
-            filtroComposite.add(new FiltroArmazem(this.jcbCondicaoArmazem.getSelectedIndex(),this.jtfArmazem.getText()));
+        if (this.jcbCondicaoArmazem.getSelectedIndex() > 0) {
+            filtroComposite.add(new FiltroArmazemMovimentacao(this.jcbCondicaoArmazem.getSelectedIndex(), this.jtfArmazem.getText()));
         }
         //ativa o filtro por quantidade (saldo)
-        if(this.jcbCondicaoQuantidade.getSelectedIndex() > 0)
-        {
-            filtroComposite.add(new FiltroSaldo(this.jtfQuantidade.getText(),this.jcbCondicaoQuantidade.getSelectedIndex()));
+        if (this.jcbCondicaoQuantidade.getSelectedIndex() > 0) {
+            if (this.jtfQuantidade.getText().equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(this, "Preencha o campo de quantidade!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            } else {
+                filtroComposite.add(new FiltroQuantidadeMovimentacao(this.jcbCondicaoQuantidade.getSelectedIndex(), this.jtfQuantidade.getText()));
+            }
         }
         //ativa o filtro por nota fiscal
-        if(this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0)
-        {
-            filtroComposite.add(new FiltroNotaFiscal(this.jcbCondicaoNotaFiscal.getSelectedIndex(),this.jtfNotaFiscal.getText()));
+        if (this.jcbCondicaoNotaFiscal.getSelectedIndex() > 0) {
+            filtroComposite.add(new FiltroNotaFiscalMovimentacao(this.jcbCondicaoNotaFiscal.getSelectedIndex(), this.jtfNotaFiscal.getText()));
         }
-        
+
         //chama o composite de filtros com todos os filtros ativos
-        produtosArmazenadosPesquisa = filtroComposite.filtrar(produtosArmazenados);
+        movimentacoesPesquisa = filtroComposite.filtrar(movimentacoes);
         //atualiza a tabela com o resultado da pesquisa
         atualizarTabelaMovimentacaoComPesquisa();
-        
+
     }
 
     private void atualizarTabelaMovimentacaoComPesquisa() {

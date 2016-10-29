@@ -25,8 +25,8 @@ public class EstoqueDataUtil {
         Date d = new Date();
         
         int ano = d.getYear()+1900;
-        
-        return d.getDate()+"/"+d.getMonth()+"/"+ano;
+        int mes = d.getMonth()+1;
+        return d.getDate()+"/"+mes+"/"+ano;
     }
 
 }

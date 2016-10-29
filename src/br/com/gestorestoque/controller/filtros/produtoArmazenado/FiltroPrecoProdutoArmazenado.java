@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
+package br.com.gestorestoque.controller.filtros.produtoArmazenado;
 
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.List;
  *
  * @author 5927161
  */
-public class FiltroPreco implements Filtro<ProdutoArmazenado>{
+public class FiltroPrecoProdutoArmazenado implements Filtro<ProdutoArmazenado>{
     final private int selectedIndex;
     final private String preco;
 
-    public FiltroPreco(int index, String preco) {
+    public FiltroPrecoProdutoArmazenado(int index, String preco) {
         this.selectedIndex = index;
         this.preco = preco;
     }

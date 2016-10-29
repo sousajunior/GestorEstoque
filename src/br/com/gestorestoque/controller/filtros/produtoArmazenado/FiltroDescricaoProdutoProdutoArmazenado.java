@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.gestorestoque.controller;
+package br.com.gestorestoque.controller.filtros.produtoArmazenado;
 
+import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
@@ -12,33 +13,33 @@ import java.util.List;
 
 /**
  *
- * @author 5981468
+ * @author DG
  */
-public class FiltroFornecedor implements Filtro<ProdutoArmazenado>  {
+public class FiltroDescricaoProdutoProdutoArmazenado implements Filtro<ProdutoArmazenado>{
+
     
-     String fornNome;
+    String produtoCod;
     int selectedIndex;
 
-    public FiltroFornecedor( String fornNome, int selectedIndex) {
+    public FiltroDescricaoProdutoProdutoArmazenado( String produtoCod, int selectedIndex) {
         
-        this.fornNome = fornNome;
+        this.produtoCod = produtoCod;
         this.selectedIndex = selectedIndex;
     }
 
     @Override
     public List<ProdutoArmazenado> filtrar(List<ProdutoArmazenado> lista) {
-
         List<ProdutoArmazenado> produtosArmazenadosPesquisa = new ArrayList<>();
         if (FiltroUtil.validarIndex(selectedIndex)) {
             if (selectedIndex == 1) {
                 for (ProdutoArmazenado produto : lista) {
-                    if (produto.getFornecedor().getNome().toUpperCase().contains(fornNome.toUpperCase())) {
+                    if (produto.getProduto().getNome().toUpperCase().contains(produtoCod.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
             } else if (selectedIndex == 2) {
                 for (ProdutoArmazenado produto : lista) {
-                    if (produto.getFornecedor().getNome().toUpperCase().equalsIgnoreCase(fornNome.toUpperCase())) {
+                    if (produto.getProduto().getNome().toUpperCase().equalsIgnoreCase(produtoCod.toUpperCase())) {
                         produtosArmazenadosPesquisa.add(produto);
                     }
                 }
@@ -48,6 +49,4 @@ public class FiltroFornecedor implements Filtro<ProdutoArmazenado>  {
         return null;
     }
 
-    
-    
 }
