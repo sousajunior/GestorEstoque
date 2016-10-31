@@ -207,7 +207,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-use estoquedb;
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `estoquedb`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome_completo` VARCHAR(45) NOT NULL,
@@ -215,13 +215,13 @@ CREATE TABLE `estoquedb`.`usuario` (
   `senha` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
-
+DROP TABLE IF EXISTS `grupo`;
 CREATE TABLE `estoquedb`.`grupo` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome_grupo` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));
 
-
+DROP TABLE IF EXISTS `usuario_grupo`;
 CREATE TABLE `estoquedb`.`usuario_grupo` (
   `id_usuario` INT NOT NULL,
   `id_grupo` INT NOT NULL,
@@ -238,10 +238,10 @@ CREATE TABLE `estoquedb`.`usuario_grupo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-insert into usuario values(1,'Geam Felipe Dos Santos','Geam','123');
+insert into usuario values(1,'Geam Felipe Dos Santos','Geam','123'),(2,'Matheus de Souza','Matheus','321');
 insert into grupo values(1,'ADMINISTRADORES');
 insert into grupo values(2,'ALMOXARIFADO');
-INSERT INTO USUARIO_GRUPO VALUES(1,1);
+INSERT INTO USUARIO_GRUPO VALUES(1,1),(2,2);
 
 
 -- Dump completed on 2016-09-07 12:40:31
