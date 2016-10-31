@@ -22,7 +22,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
     private static FRMPrincipal fRMPrincipalUnicaInstancia;
     private static int cont = 0;
-    UsuarioGrupo usuarioLogado = UsuarioGrupo.getInstance();
+    UsuarioGrupo usuarioLogado;
 
     /**
      * Creates new form FRMPrincipal
@@ -30,6 +30,7 @@ public class FRMPrincipal extends javax.swing.JFrame {
     public FRMPrincipal() {
         new FRMUtil().setarIcone(this, null);
         initComponents();
+        usuarioLogado = UsuarioGrupo.getInstance();
         //SubstanceBusinessBlackSteelLookAndFeel.setToUseConstantThemesOnDialogs(true);
         setExtendedState(MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.WHITE);
@@ -88,9 +89,10 @@ public class FRMPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor de estoque - Início");
         setSize(new java.awt.Dimension(591, 355));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -107,12 +109,17 @@ public class FRMPrincipal extends javax.swing.JFrame {
         jLblSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/logoff - 32.png"))); // NOI18N
         jLblSair.setToolTipText("Sair");
         jLblSair.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jLblSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLblSairMouseClicked(evt);
+            }
+        });
         jPanel1.add(jLblSair, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/gestor-estoque-transparente.png"))); // NOI18N
@@ -208,8 +215,12 @@ public class FRMPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void prepararComponentes() {
+    private void jLblSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSairMouseClicked
+        sairDoSistema();
+    }//GEN-LAST:event_jLblSairMouseClicked
 
+    public void prepararComponentes() {
+        usuarioLogado = UsuarioGrupo.getInstance();
         AbstractFabricaMenus fabricaMenus = CriadorFabricaMenu.getMenuComponent(SelecionaTipoMenu.selecionarTipoMenu());
         BarraMenu barraMenu = fabricaMenus.criaBarraMenu();
         //this.jmbPrincipal = fabricaMenus.criaBarraMenu();
@@ -221,19 +232,19 @@ public class FRMPrincipal extends javax.swing.JFrame {
 
         jLblSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        jLblSair.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                sairDoSistema();
-
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                sairDoSistema();
-            }
-
-        });
+//        jLblSair.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                sairDoSistema();
+//
+//            }
+//
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                sairDoSistema();
+//            }
+//
+//        });
     }
 
     private void sairDoSistema() {

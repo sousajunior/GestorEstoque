@@ -64,6 +64,7 @@ public class FRMLogin extends javax.swing.JFrame {
 
                     UsuarioGrupo usuarioGrupo = new ControladorGrupoUsuario().selecionarPorCodigo(usuario.getId());
                     FRMPrincipal janelaPrincipal =  FRMPrincipal.getInstance();
+                    janelaPrincipal.prepararComponentes();
                     janelaPrincipal.setVisible(true);
                     janelaPrincipal.setAlwaysOnTop(false);
                     dispose();
@@ -94,6 +95,7 @@ public class FRMLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor Estoque - Login");
         setPreferredSize(new java.awt.Dimension(321, 234));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
