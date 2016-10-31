@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view.menu;
 
 import java.awt.Component;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.plaf.basic.BasicTextUI;
-import javax.swing.text.DefaultCaret;
 
 /**
  *

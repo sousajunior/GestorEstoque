@@ -97,56 +97,49 @@ and m.armazem_codigoArmazem = a.codigoArmazem]]>
 			<frame>
 				<reportElement mode="Opaque" x="1" y="0" width="802" height="37" forecolor="#FFFFFF" backcolor="#A42429" uuid="8fa3c5da-1e16-47ad-ae51-563308e2cc29"/>
 				<staticText>
-					<reportElement x="358" y="0" width="58" height="37" forecolor="#FFFFFF" uuid="3a6c21d4-bd3e-4230-adc7-27e2e0d755f1"/>
+					<reportElement x="443" y="0" width="58" height="37" forecolor="#FFFFFF" uuid="3a6c21d4-bd3e-4230-adc7-27e2e0d755f1"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[DATA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="67" height="37" forecolor="#FFFFFF" uuid="e466beb4-db80-4ec5-ae83-4ffe403a0819"/>
+					<reportElement x="251" y="0" width="99" height="37" forecolor="#FFFFFF" uuid="e466beb4-db80-4ec5-ae83-4ffe403a0819"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[LOTE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="11" y="0" width="187" height="37" forecolor="#FFFFFF" uuid="4e94bd4c-3764-4bdc-8c91-3e06e23d9e81"/>
+					<reportElement x="11" y="0" width="240" height="37" forecolor="#FFFFFF" uuid="4e94bd4c-3764-4bdc-8c91-3e06e23d9e81"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PRODUTO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="572" y="0" width="133" height="37" forecolor="#FFFFFF" uuid="8c985bb3-dd0d-484f-aa2b-013c9f574aa1"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Tahoma" size="11" isBold="true"/>
-					</textElement>
-					<text><![CDATA[QUANTIDADE MÍNIMA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="705" y="0" width="96" height="37" forecolor="#FFFFFF" uuid="32161e31-8459-4729-bcb1-77be9668cab0"/>
+					<reportElement x="657" y="0" width="144" height="37" forecolor="#FFFFFF" uuid="32161e31-8459-4729-bcb1-77be9668cab0"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ARMAZEM]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="265" y="0" width="93" height="37" forecolor="#FFFFFF" uuid="49827351-dc30-40a9-8312-7658ee9ca6d2"/>
+					<reportElement x="350" y="0" width="93" height="37" forecolor="#FFFFFF" uuid="49827351-dc30-40a9-8312-7658ee9ca6d2"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[QUANTIDADE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="416" y="0" width="100" height="37" forecolor="#FFFFFF" uuid="8f8a3506-083b-4e36-b6e5-b5aa009c02ae"/>
+					<reportElement x="501" y="0" width="100" height="37" forecolor="#FFFFFF" uuid="8f8a3506-083b-4e36-b6e5-b5aa009c02ae"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NOTA FISCAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="516" y="0" width="56" height="37" forecolor="#FFFFFF" uuid="7286e913-06a0-42f4-9fe1-dd71bf68a401"/>
+					<reportElement x="601" y="0" width="56" height="37" forecolor="#FFFFFF" uuid="7286e913-06a0-42f4-9fe1-dd71bf68a401"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="11" isBold="true"/>
 					</textElement>
@@ -158,44 +151,39 @@ and m.armazem_codigoArmazem = a.codigoArmazem]]>
 	<detail>
 		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="12" y="0" width="187" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
+				<reportElement x="12" y="0" width="240" height="30" uuid="f2614576-7757-481e-9c72-5f59788f453c"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PRODUTO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="573" y="0" width="133" height="30" uuid="4336aa15-1049-488c-9b30-b14a124e69ec"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="706" y="10" width="96" height="20" uuid="051657fe-da5b-4c62-87b9-56fb565175fe"/>
+				<reportElement x="658" y="10" width="144" height="20" uuid="051657fe-da5b-4c62-87b9-56fb565175fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ARMAZEM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="199" y="0" width="67" height="30" uuid="82c3ed97-e830-4edd-83e3-5cf22a493c07"/>
+				<reportElement x="252" y="0" width="99" height="30" uuid="82c3ed97-e830-4edd-83e3-5cf22a493c07"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="359" y="0" width="58" height="30" uuid="a6c8e853-9033-4c91-8cc1-47aae94fb396"/>
+				<reportElement x="444" y="0" width="58" height="30" uuid="a6c8e853-9033-4c91-8cc1-47aae94fb396"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DATA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="266" y="0" width="93" height="30" uuid="2e0d8aae-4175-418d-aee6-729fcbed2097"/>
+				<reportElement x="351" y="0" width="93" height="30" uuid="2e0d8aae-4175-418d-aee6-729fcbed2097"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="417" y="0" width="100" height="33" uuid="f1c505b2-84ba-4b5c-823e-d513e415448f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="517" y="0" width="56" height="30" uuid="f4351abc-38b3-4f3d-8947-c2a07a3359ee"/>
+				<reportElement x="602" y="3" width="56" height="30" uuid="f4351abc-38b3-4f3d-8947-c2a07a3359ee"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="0" width="100" height="33" uuid="f1c505b2-84ba-4b5c-823e-d513e415448f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOTA_FISCAL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioExcelAdapter;
 import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioJasperAdapter;
 import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioService;
 import br.com.gestorestoque.view.enumerado.Relatorio;
 import br.com.gestorestoque.view.enumerado.TipoRelatorio;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -24,13 +23,19 @@ public class FRMRelatorio extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
-     * @param jrRS
-     * @param nomeRelatorio
+     * @param codigos
+     * @param relatorio
+     * @param tipoRelatorio
      */
     public FRMRelatorio(java.awt.Dialog parent, boolean modal, String codigos, Relatorio relatorio, TipoRelatorio tipoRelatorio) {
         super(parent, modal);
         initComponents();
-
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Dimension d = tk.getScreenSize();
+        d.setSize(d.getWidth(), d.getHeight()-30);
+        setSize(d);
+        setLocationRelativeTo(null);
+        
         vizualizarRelatorio(codigos, relatorio, tipoRelatorio);
     }
 
@@ -47,6 +52,17 @@ public class FRMRelatorio extends javax.swing.JDialog {
                 this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(relatorio, codigosConsulta).getContentPane());
                 //Deixar True para exibir a tela no sistema  
             }
+            
+            if (tipoRelatorio == TipoRelatorio.EXCEL) {
+                
+                geradorRelatorioService = new GeradorRelatorioExcelAdapter();
+                
+                //Adicionando o relatorio no Jdialog  
+                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(relatorio, codigosConsulta).getContentPane());
+                //Deixar True para exibir a tela no sistema  
+            }
+            
+            
         } catch (JRRuntimeException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
             dispose();
@@ -68,7 +84,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório");
 
-        setSize(new java.awt.Dimension(1200, 700));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

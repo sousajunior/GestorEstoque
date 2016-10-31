@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view.menu.fabrica;
 import br.com.gestorestoque.view.FRMCadastroArmazem;
 import br.com.gestorestoque.view.FRMCadastroEntradaSaida;
@@ -12,11 +8,9 @@ import br.com.gestorestoque.view.FRMCadastroUnidadeMedida;
 import br.com.gestorestoque.view.FRMInventario;
 import br.com.gestorestoque.view.FRMMovimentacao;
 import br.com.gestorestoque.view.FRMPrincipal;
-import br.com.gestorestoque.view.FRMRelatorio;
 import br.com.gestorestoque.view.FRMSaldoEstoque;
 import br.com.gestorestoque.view.FRMSobre;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 /**
  *

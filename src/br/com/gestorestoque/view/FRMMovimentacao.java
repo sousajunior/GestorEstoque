@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorMovimentacao;
@@ -38,6 +33,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
     ControladorMovimentacao ctrlMovimentacao;
     TableModel modeloTabelaMovimentacoes;
     String validaNumero = ".0123456789";
+
     /**
      * Creates new form FRMMovimentacao
      *
@@ -350,10 +346,9 @@ public class FRMMovimentacao extends javax.swing.JDialog {
         //listener do campo de quantidade(saldo)
         jtfQuantidade.addKeyListener(new KeyAdapter() {
 
-            
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     filtrar();
                 }
@@ -362,14 +357,12 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
             @Override
             public void keyTyped(KeyEvent e) {
-               
-                if(!validaNumero.contains(""+e.getKeyChar())){
+
+                if (!validaNumero.contains("" + e.getKeyChar())) {
                     e.consume();
                 }
-             
+
             }
-            
-            
 
         });
 
@@ -511,12 +504,18 @@ public class FRMMovimentacao extends javax.swing.JDialog {
             if (codigosMovimentacoes.length() > 0) {
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 1) {
+
                     new FRMRelatorio(this,
                             true, codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
                             Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.PDF).setVisible(true);
                 }
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+
+                    new FRMRelatorio(this,
+                            true, codigosMovimentacoes.substring(0, codigosMovimentacoes.length() - 1),
+                            Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.EXCEL).setVisible(true);
+
                 }
 
             }

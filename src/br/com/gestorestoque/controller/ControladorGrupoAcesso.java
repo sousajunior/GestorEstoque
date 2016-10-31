@@ -3,7 +3,6 @@ package br.com.gestorestoque.controller;
 
 import br.com.gestorestoque.banco.CRUD;
 import br.com.gestorestoque.model.GrupoAcesso;
-import br.com.gestorestoque.model.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

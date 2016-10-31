@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorArmazem;
@@ -637,6 +632,10 @@ public class FRMSaldoEstoque extends javax.swing.JDialog {
                 }
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+                    new FRMRelatorio(this,
+                            true, codigosProdutosArmazenados.substring(0, codigosProdutosArmazenados.length() - 1),
+                            Relatorio.RelatorioSaldoEstoque, TipoRelatorio.EXCEL).setVisible(true);
+
                 }
 
             }

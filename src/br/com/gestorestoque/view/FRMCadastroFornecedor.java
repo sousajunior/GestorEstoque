@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorFornecedor;
@@ -316,13 +312,15 @@ public class FRMCadastroFornecedor extends javax.swing.JDialog {
         jfCNPJ.setText(fornecedorAlterarExcluir.getCnpj());
         try {
             if (fornecedorAlterarExcluir.getCpf() != null) {
-                if(!jfCPF.getText().equalsIgnoreCase("   .   .   -  ")){
-                jfCPF.commitEdit();
+                if (!jfCPF.getText().equalsIgnoreCase("   .   .   -  ")) {
+                    jfCPF.commitEdit();
                 }
             }
             if (fornecedorAlterarExcluir.getCnpj() != null) {
-                if(!jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")){
-                jfCNPJ.commitEdit();
+                if (fornecedorAlterarExcluir.getCnpj().equalsIgnoreCase("")) {
+                    if (!jfCNPJ.getText().equalsIgnoreCase("  .   .   /    -  ")) {
+                        jfCNPJ.commitEdit();
+                    }
                 }
             }
         } catch (ParseException ex) {

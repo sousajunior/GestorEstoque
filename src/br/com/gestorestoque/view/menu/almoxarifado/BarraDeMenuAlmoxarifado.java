@@ -5,9 +5,7 @@ import br.com.gestorestoque.view.menu.fabrica.BarraMenu;
 import br.com.gestorestoque.view.menu.MenuCadastros;
 import br.com.gestorestoque.view.menu.MenuEstoque;
 import br.com.gestorestoque.view.menu.MenuSistema;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 
 

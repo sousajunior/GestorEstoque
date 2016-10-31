@@ -2,8 +2,6 @@
 
 package br.com.gestorestoque.view.menu.fabrica;
 
-//import view.menus.MenuGUI.MenuGUIAtendente;
-
 import br.com.gestorestoque.view.menu.GUI.MenuGuiAdmin;
 import br.com.gestorestoque.view.menu.GUI.MenuGuiAlmoxarifado;
 

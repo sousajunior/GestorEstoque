@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.controller.filtros.historicoMovimentacao;
 
 import br.com.gestorestoque.controller.filtros.Filtro;
 import br.com.gestorestoque.model.Movimentacao;
-import br.com.gestorestoque.model.ProdutoArmazenado;
 import br.com.gestorestoque.util.FiltroUtil;
 import java.util.ArrayList;
 import java.util.List;

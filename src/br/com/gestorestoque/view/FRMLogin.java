@@ -21,7 +21,6 @@ public class FRMLogin extends javax.swing.JFrame {
      */
     public FRMLogin() {
         new FRMUtil().setarIcone(this, null);
-        this.setDefaultLookAndFeelDecorated(true);
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);

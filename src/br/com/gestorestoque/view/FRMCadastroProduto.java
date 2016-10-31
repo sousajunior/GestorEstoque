@@ -472,6 +472,9 @@ public class FRMCadastroProduto extends javax.swing.JDialog {
                 }
 
                 if (this.jcbTipoRelatorio.getSelectedIndex() == 2) {
+                    new FRMRelatorio(this,
+                            true, codigosProdutos.substring(0, codigosProdutos.length() - 1),
+                            relatorio, TipoRelatorio.EXCEL).setVisible(true);
                 }
 
                 
