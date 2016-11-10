@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
-import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
-import java.sql.ResultSet;
-import java.util.HashMap;
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioExcelAdapter;
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioJasperAdapter;
+import br.com.gestorestoque.geradorRelatorio.GeradorRelatorioService;
+import br.com.gestorestoque.view.enumerado.Relatorio;
+import br.com.gestorestoque.view.enumerado.TipoRelatorio;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
+
+import net.sf.jasperreports.engine.JRRuntimeException;
 
 /**
  *
@@ -22,31 +20,55 @@ public class FRMRelatorio extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMRelatorio
+     *
      * @param parent
      * @param modal
-     * @param rs
+     * @param codigos
+     * @param relatorio
+     * @param tipoRelatorio
      */
-    public FRMRelatorio(java.awt.Dialog parent, boolean modal,JRResultSetDataSource jrRS) {
+    public FRMRelatorio(java.awt.Dialog parent, boolean modal, String codigos, Relatorio relatorio, TipoRelatorio tipoRelatorio) {
         super(parent, modal);
         initComponents();
-
-        vizualizarRelatorio(jrRS);
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Dimension d = tk.getScreenSize();
+        d.setSize(d.getWidth(), d.getHeight()-30);
+        setSize(d);
+        setLocationRelativeTo(null);
+        
+        vizualizarRelatorio(codigos, relatorio, tipoRelatorio);
     }
 
-    private void vizualizarRelatorio(JRResultSetDataSource jrRS) {
+    private void vizualizarRelatorio(String codigosConsulta, Relatorio relatorio, TipoRelatorio tipoRelatorio) {
         try {
+
+            GeradorRelatorioService geradorRelatorioService;
+            
+            if (tipoRelatorio == TipoRelatorio.PDF) {
+                
+                geradorRelatorioService = new GeradorRelatorioJasperAdapter();
+                
+                //Adicionando o relatorio no Jdialog  
+                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(relatorio, codigosConsulta).getContentPane());
+                //Deixar True para exibir a tela no sistema  
+            }
+            
+            if (tipoRelatorio == TipoRelatorio.EXCEL) {
+                
+                geradorRelatorioService = new GeradorRelatorioExcelAdapter();
+                
+                //Adicionando o relatorio no Jdialog  
+                this.getContentPane().add(geradorRelatorioService.vizualizarRelatorio(relatorio, codigosConsulta).getContentPane());
+                //Deixar True para exibir a tela no sistema  
+            }
             
             
-            JasperPrint jasperPrint = JasperFillManager.fillReport("src/br/com/gestorestoque/relatorio/RelatorioSaldoEstoque.jasper", new HashMap(), jrRS);
-            JasperViewer jrViewer = new JasperViewer(jasperPrint, true);
-            jrViewer.setSize(1200, 700);
-            //Adicionando o relatorio no Jdialog  
-            this.getContentPane().add(jrViewer.getContentPane());
-            this.revalidate();
-            //Deixar True para exibir a tela no sistema  
-            //this.setVisible(true);
+        } catch (JRRuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar/salvar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
+            dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:"+e.getMessage(),"Erro",0);
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório! \nErro:" + e.getMessage(), "Erro", 0);
+            dispose();
         }
     }
 
@@ -62,18 +84,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
-
-        setSize(new java.awt.Dimension(1200, 700));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -115,7 +126,7 @@ public class FRMRelatorio extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true,null);
+                FRMRelatorio dialog = new FRMRelatorio(new javax.swing.JDialog(), true, "", Relatorio.RelatorioGeralMovimentacoes, TipoRelatorio.PDF);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -1,28 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.Controlador;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
 import br.com.gestorestoque.controller.ControladorArmazem;
 import br.com.gestorestoque.controller.ControladorFornecedor;
+import br.com.gestorestoque.controller.ControladorMovimentacao;
 import br.com.gestorestoque.controller.ControladorProduto;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.Armazem;
 import br.com.gestorestoque.model.Fornecedor;
+import br.com.gestorestoque.model.Movimentacao;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -37,28 +34,50 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     ControladorProduto ctrlProduto;
     ControladorFornecedor ctrlFornecedor;
     ControladorArmazem ctrlArmazem;
+    ControladorProdutoArmazenado ctrlProdutoArmazenado;
+    Controlador controlador;
+
     /**
      * Creates new form FRMCadastroEntrada
+     *
+     * @param parent
+     * @param modal
+     * @param isEntrada
      */
-    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada, String title) {
-        super(parent, title, modal);
+    public FRMCadastroEntradaSaida(java.awt.Frame parent, boolean modal, boolean isEntrada) {        
+        super(parent,modal);
         initialize(isEntrada);
     }
 
     /**
      * Creates new form FRMCadastroEntrada
+     *
+     * @param parent
+     * @param modal
+     * @param isEntrada
+     * @param title
      */
-    public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada, String title) {
-        super(parent, title, modal);
+    public FRMCadastroEntradaSaida(java.awt.Dialog parent, boolean modal, boolean isEntrada) {
+        super(parent, modal);
         initialize(isEntrada);
     }
 
     private void initialize(boolean isEntrada) {
         initComponents();
+        
+        if(isEntrada)
+        {
+            this.setTitle("Entrada de Produtos");
+        }else
+        {
+            this.setTitle("Saída de Produtos");
+        }
         this.setLocationRelativeTo(null);
         isEntrada(isEntrada);
+        this.ctrlProdutoArmazenado = new ControladorProdutoArmazenado();
         this.ctrlProduto = new ControladorProduto();
         this.ctrlFornecedor = new ControladorFornecedor();
+        this.controlador = new ControladorProdutoArmazenado();
         this.ctrlArmazem = new ControladorArmazem();
         prepararComponentes();
     }
@@ -252,18 +271,21 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         jPanel1.add(jtfNomeProduto, gridBagConstraints);
 
         jbtnPesquisarArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarArmazem.setToolTipText("Abre a tela de armazéns. (duplo clique na tabela para selecionar um Armazém)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 6;
         jPanel1.add(jbtnPesquisarArmazem, gridBagConstraints);
 
         jbtnPesquisarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarProduto.setToolTipText("Abre a tela de produtos. (duplo clique na tabela para selecionar um produto)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 4;
         jPanel1.add(jbtnPesquisarProduto, gridBagConstraints);
 
         jbtnPesquisarFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarFornecedor.setToolTipText("Abre a tela de fornecedores. (duplo clique na tabela para selecionar um fornecedor)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 8;
@@ -322,7 +344,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true, "");
+                FRMCadastroEntradaSaida dialog = new FRMCadastroEntradaSaida(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -523,6 +545,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void pesquisaArmazem() {
         FRMCadastroArmazem cadastroArmazem = new FRMCadastroArmazem(this, true);
+        cadastroArmazem.jtArmazens.setToolTipText("Duplo clique para selecionar um armazém!");
         cadastroArmazem.setVisible(true);
         cadastroArmazem.addWindowListener(new WindowAdapter() {
             @Override
@@ -539,6 +562,7 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void pesquisaFornecedor() {
         FRMCadastroFornecedor cadastroFornecedor = new FRMCadastroFornecedor(this, true);
+        cadastroFornecedor.jtFornecedor.setToolTipText("Duplo clique para selecionar um fornecedor!");
         cadastroFornecedor.setVisible(true);
         cadastroFornecedor.addWindowListener(new WindowAdapter() {
             @Override
@@ -556,10 +580,11 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
     private void pesquisaProduto() {
 
         if (this.jrbSaida.isSelected()) {
-            FRMRelatorioSaldoEstoque frmSaldo = new FRMRelatorioSaldoEstoque(this, true);
+            FRMSaldoEstoque frmSaldo = new FRMSaldoEstoque(this, true);
             frmSaldo.jbtEntradaProduto.setEnabled(false);
             frmSaldo.jbtSaidaProduto.setEnabled(false);
             frmSaldo.jbtnventario.setEnabled(false);
+            frmSaldo.jtProdutosArmazenados.setToolTipText("Duplo clique para selecionar um produto!");
             frmSaldo.setVisible(true);
 
             frmSaldo.addWindowListener(new WindowAdapter() {
@@ -594,7 +619,9 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
         } else {
             FRMCadastroProduto cadastroProduto = new FRMCadastroProduto(this, true);
+            cadastroProduto.jtProdutos.setToolTipText("Duplo clique para selecionar um produto!");
             cadastroProduto.setVisible(true);
+
             cadastroProduto.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -641,17 +668,32 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
             if (this.jrbEntrada.isSelected()) {
                 produtoArmazenado = carregarCampos();
                 //if(produtoArmazenado.getProduto().getNome().equalsIgnoreCase(jtf))
-                ControladorProdutoArmazenado.inserirProduto(produtoArmazenado);
+                ctrlProdutoArmazenado.inserir(produtoArmazenado);
+
+                produtoArmazenado = ctrlProdutoArmazenado.selecionarUltimoRegistro();
+                //Salvar movimentação
+                controlador = new ControladorMovimentacao();
+                controlador.inserir(new Movimentacao(produtoArmazenado.getLote(), produtoArmazenado.getQuantidade(), produtoArmazenado.getNotaFiscal(), "E", new Date(), produtoArmazenado, produtoArmazenado.getArmazem()));
+                
                 JOptionPane.showMessageDialog(null, "Entrada realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
+                
                 limpar();
+                
             } else //da baixa se a quantidade for válida
-            if (produtoArmazenado.getQuantidade() >= Double.parseDouble(jsQtd.getValue().toString())) {
-                produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble("" + jsQtd.getValue())));
-                ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
-                JOptionPane.showMessageDialog(null, "Saída realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
-                limpar();
-            } else {
-                JOptionPane.showMessageDialog(null, "Não há quantidade suficiente no armazém para concluir a operação. ", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            {
+                if (produtoArmazenado.getQuantidade() >= Double.parseDouble(jsQtd.getValue().toString())) {
+                    produtoArmazenado.setQuantidade(produtoArmazenado.diminuirQuantidade(Double.parseDouble("" + jsQtd.getValue())));
+                    controlador = new ControladorProdutoArmazenado();
+                    controlador.atualizarPorCodigo(produtoArmazenado);
+                    //Salvar movimentação
+                    controlador = new ControladorMovimentacao();
+                    controlador.inserir(new Movimentacao(produtoArmazenado.getLote(), produtoArmazenado.getQuantidade(), produtoArmazenado.getNotaFiscal(), "S", new Date(), produtoArmazenado, produtoArmazenado.getArmazem()));
+
+                    JOptionPane.showMessageDialog(null, "Saída realizada com sucesso!", "Concluído!", JOptionPane.INFORMATION_MESSAGE);
+                    limpar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não há quantidade suficiente no armazém para concluir a operação. ", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a operação: " + ex, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -714,12 +756,14 @@ public class FRMCadastroEntradaSaida extends javax.swing.JDialog {
 
     private void alterarParaEntrada() {
         habilitaComponentes();
+        limpar();
         jrbEntrada.setSelected(true);
         jrbSaida.setSelected(false);
     }
 
     private void alterarParaSaida() {
         desabilitaComponentes();
+        limpar();
         jrbSaida.setSelected(true);
         jrbEntrada.setSelected(false);
     }

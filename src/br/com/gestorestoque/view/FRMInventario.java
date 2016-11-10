@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
+import br.com.gestorestoque.controller.Controlador;
+import br.com.gestorestoque.controller.ControladorMovimentacao;
 import br.com.gestorestoque.controller.ControladorProdutoArmazenado;
+import br.com.gestorestoque.model.Movimentacao;
 import br.com.gestorestoque.model.Produto;
 import br.com.gestorestoque.model.ProdutoArmazenado;
 import java.awt.event.MouseAdapter;
@@ -13,7 +12,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -23,18 +24,25 @@ public class FRMInventario extends javax.swing.JDialog {
 
     ProdutoArmazenado produtoArmazenado = new ProdutoArmazenado();
     Produto produto = new Produto();
+    Controlador controlador;
+    
 
     /**
      * Creates new form FRMInventario
+     * @param parent
+     * @param modal
      */
     public FRMInventario(java.awt.Frame parent, boolean modal) {
+        
         super(parent, modal);
+        this.controlador = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
 
     public FRMInventario(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        this.controlador = new ControladorProdutoArmazenado();
         initComponents();
         prepararComponentes();
     }
@@ -117,10 +125,11 @@ public class FRMInventario extends javax.swing.JDialog {
 
     private void pesquisaProduto() {
 
-        FRMRelatorioSaldoEstoque frmSaldo = new FRMRelatorioSaldoEstoque(this, true);
+        FRMSaldoEstoque frmSaldo = new FRMSaldoEstoque(this, true);
         frmSaldo.jbtEntradaProduto.setEnabled(false);
         frmSaldo.jbtSaidaProduto.setEnabled(false);
         frmSaldo.jbtnventario.setEnabled(false);
+        frmSaldo.jtProdutosArmazenados.setToolTipText("Duplo clique para selecionar um produto!");
         frmSaldo.setVisible(true);
 
         frmSaldo.addWindowListener(new WindowAdapter() {
@@ -166,7 +175,11 @@ public class FRMInventario extends javax.swing.JDialog {
 
             produtoArmazenado.setQuantidade(Double.parseDouble(jsQtd.getValue().toString()));
 
-            ControladorProdutoArmazenado.updateSaldoProdutoArmazenado(produtoArmazenado);
+            controlador.atualizarPorCodigo(produtoArmazenado);
+            
+            //Salvar movimentação
+            controlador = new ControladorMovimentacao();
+            controlador.inserir(new Movimentacao( produtoArmazenado.getLote(), produtoArmazenado.getQuantidade(), produtoArmazenado.getNotaFiscal(),"I", new Date(), produtoArmazenado, produtoArmazenado.getArmazem()));
             JOptionPane.showMessageDialog(null, "Inventário realizado com sucesso! ", "Inventário", JOptionPane.INFORMATION_MESSAGE);
             btnLimparClicado();
 
@@ -212,7 +225,6 @@ public class FRMInventario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inventário");
         setPreferredSize(new java.awt.Dimension(480, 380));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
@@ -244,7 +256,7 @@ public class FRMInventario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jlDescricao3, gridBagConstraints);
 
-        jsQtd.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jsQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jsQtd.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
@@ -289,6 +301,7 @@ public class FRMInventario extends javax.swing.JDialog {
         jPanel1.add(jtfNomeProduto, gridBagConstraints);
 
         jbtnPesquisarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/search-16.png"))); // NOI18N
+        jbtnPesquisarProduto.setToolTipText("Abre a tela de produtos. (duplo clique na tabela para selecionar um produto)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 18;
         gridBagConstraints.gridy = 6;

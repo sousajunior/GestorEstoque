@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
 import br.com.gestorestoque.controller.ControladorUnidadeMedida;
@@ -37,11 +33,12 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMCadastroProduto
+     * @param parent
+     * @param modal
      */
     public FRMCadastroUnidadeMedida(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
         ctrlUnidadeMedida = new ControladorUnidadeMedida();
         prepararComponentes();
 
@@ -217,6 +214,15 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
                     btnExcluirClicado();
                 }
         );
+        
+        jtfAbreviacao.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent ke) {                
+                if (jtfAbreviacao.getText().length() >= 3) {
+                    ke.consume();
+                }
+            }
+        });
         
         //jdialogUnidadeMedida
         this.addWindowListener(new WindowAdapter() {
@@ -511,7 +517,8 @@ public class FRMCadastroUnidadeMedida extends javax.swing.JDialog {
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
-        pack();
+        setSize(new java.awt.Dimension(667, 440));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

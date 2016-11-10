@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.gestorestoque.view;
 
 import java.awt.Cursor;
@@ -21,6 +17,8 @@ public class FRMSobre extends javax.swing.JDialog {
 
     /**
      * Creates new form FRMSobre
+     * @param parent
+     * @param modal
      */
     public FRMSobre(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

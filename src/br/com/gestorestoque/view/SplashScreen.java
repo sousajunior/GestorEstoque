@@ -5,8 +5,6 @@ import br.com.gestorestoque.util.FRMUtil;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,8 +26,8 @@ public class SplashScreen extends JWindow {
     JLabel label = new JLabel();
     JProgressBar barra = new JProgressBar();
     boolean conectado = false;
-    int i =0,qtdTestes = 0;
-    
+    int i = 0, qtdTestes = 0;
+
     public SplashScreen() {
 
         absoluto = new AbsoluteLayout();
@@ -45,75 +43,70 @@ public class SplashScreen extends JWindow {
         barra.setStringPainted(true);
         barra.setString("Testando Conexão com o banco de dados ...");
         label.setIcon(imagem);
-        this.setAlwaysOnTop(true);
-        this.getContentPane().setLayout(absoluto);
-        this.getContentPane().add(label, absImagem);
-        this.getContentPane().add(barra, absBarra);
-        
-        
-        
-        
+        requestFocus();
+        getContentPane().setLayout(absoluto);
+        getContentPane().add(label, absImagem);
+        getContentPane().add(barra, absBarra);
+
         new Thread() {
             @Override
             public void run() {
                 int k;
-                try {                  
+                try {
                     for (k = 1; k <= 100; k++) {
                         barra.setValue(k);
-                        
-                       if(k == 1 || k == 25 || k == 50 || k == 75)
-                       {
-                           testar();
-                       }
-                       sleep(30);
+
+                        if (k == 1 || k == 25 || k == 50 || k == 75) {
+                            testar();
+                        }
+                        sleep(30);
                     }
-                    if(conectado){
-                            SplashScreen.this.setAlwaysOnTop(false);
-                            FRMPrincipal janelaPrincipal = new FRMPrincipal();
-                            FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", janelaPrincipal);
-                            janelaPrincipal.setAlwaysOnTop(true);
-                            janelaPrincipal.setVisible(true);
-                            janelaPrincipal.setAlwaysOnTop(false);
-                            SplashScreen.this.setVisible(false);
-                    }else{
+                    if (conectado) {
                         SplashScreen.this.setAlwaysOnTop(false);
-                        JOptionPane.showMessageDialog(null, "Erro: Não foi possivel se conectar com o banco de dados!\nVerifique a sua conexão com a internet e inicie o programa novamente." , "Erro!", JOptionPane.ERROR_MESSAGE);
+                        FRMLogin frmLogin = new FRMLogin();
+                        FRMUtil.alterarLookAndFeel("com.alee.laf.WebLookAndFeel", frmLogin,"");
+                        
+                        //WebLookAndFeel.setDecorateDialogs(true);
+                        //WebLookAndFeel.setDecorateFrames(true);
+                        //frmLogin.setAlwaysOnTop(true);
+                        SplashScreen.this.setVisible(false);
+                        frmLogin.requestFocus();
+                        //frmLogin.setAutoRequestFocus(true);
+                        frmLogin.setVisible(true);
+
+                    } else {
+                        SplashScreen.this.setAlwaysOnTop(false);
+                        JOptionPane.showMessageDialog(null, "Erro: Não foi possivel se conectar com o banco de dados!\nVerifique a sua conexão com a internet e inicie o programa novamente.", "Erro!", JOptionPane.ERROR_MESSAGE);
                         System.exit(0);
                     }
-                                                        
-                        } catch (HeadlessException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | InterruptedException e) {
 
-                            JOptionPane.showMessageDialog(null, "Erro: " + e, "Erro!", JOptionPane.ERROR_MESSAGE);
+                } catch (HeadlessException | UnsupportedLookAndFeelException | InterruptedException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro: " + ex, "Erro!", JOptionPane.ERROR_MESSAGE);
 
-                        }
-                    }
-          
+                }
+            }
+
         }.start();
-        this.pack();
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
-                
-                
+        pack();
+        setVisible(true);
+        setLocationRelativeTo(null);
 
     }
 
-private void testar()
-    {
-       
-             
-            try {
-                if(qtdTestes >= 4)
-                {
-                    return;
-                }
-                conectado = Conexao.testarConexao();
-                System.out.println("Tentativa "+i++ +" sucedida");
-                qtdTestes++;
-            } catch (SQLException ex) {
-                conectado = false;
-                qtdTestes++;
-                System.err.println("Tentativa "+i++ +" Falhou.");
+    private void testar() {
+
+        try {
+            if (qtdTestes >= 4) {
+                return;
             }
-         
+            conectado = Conexao.testarConexao();
+            System.out.println("Tentativa " + i++ + " sucedida");
+            qtdTestes++;
+        } catch (SQLException ex) {
+            conectado = false;
+            qtdTestes++;
+            System.err.println("Tentativa " + i++ + " Falhou.");
+        }
+
     }
 }
