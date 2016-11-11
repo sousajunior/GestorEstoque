@@ -81,5 +81,26 @@ public class ControladorProduto implements Controlador<Produto> {
     public void deletar(Produto produto) throws SQLException {
         CRUD.delete(nomeTabela, "codigoProduto", "" + produto.getCodigo());
     }
+    
+    /**
+     * Seleciona uma quantidade especifica de produtos armazenados.Se a base tiver menos registros que a quantidade especificada, todos os registros serão listados
+     * @param n quantidade de elementos desejados
+     * @return List - Retorna uma lista contendo os n primeiros produtos armazenados
+     * @throws SQLException
+     */
+    public List<Produto> selecionarConjunto(int n) throws SQLException {
+        List<Produto> produtos = new ArrayList<>();
+
+        ResultSet rs = CRUD.select(nomeTabela);
+        int cont = 0;
+        while (rs.next() && cont++ < n) {
+            Produto produto = new Produto(rs.getInt("codigoProduto"), rs.getString("nome"),
+                    rs.getBoolean("controladoPorLote"), rs.getDouble("quantidadeMinima"),
+                    rs.getDouble("preco"),
+                    ctrlUn.selecionarPorCodigo(rs.getInt("unidadeMedida_idunidadeMedida")));
+            produtos.add(produto);
+        }
+        return produtos;
+    }
 
 }

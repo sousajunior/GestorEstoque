@@ -60,4 +60,26 @@ public class ControladorFornecedor implements Controlador<Fornecedor> {
     public void deletar(Fornecedor fornecedor) throws SQLException {
          CRUD.delete("fornecedor","idfornecedor",Integer.toString(fornecedor.getIdFornecedor()));
     }
+    
+    /**
+     * Seleciona uma quantidade especifica de produtos armazenados.Se a base tiver menos registros que a quantidade especificada, todos os registros serão listados
+     * @param n quantidade de elementos desejados
+     * @return List - Retorna uma lista contendo os n primeiros produtos armazenados
+     * @throws SQLException
+     */
+    public List<Fornecedor> selecionarConjunto(int n) throws SQLException {
+        List<Fornecedor> fornecedores = new ArrayList<>();
+        ResultSet rs = CRUD.select("fornecedor");
+        int cont = 0;
+        while (rs.next() && cont++ < n) {
+            Fornecedor fornecedor = new Fornecedor(
+                    rs.getInt("idfornecedor"), 
+                    rs.getString("nome"),rs.getString("cpf"),
+                    rs.getString("cnpj")
+            );
+            fornecedores.add(fornecedor);
+        }
+       return fornecedores;
+    }
+    
 }

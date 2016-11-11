@@ -106,7 +106,33 @@ public class ControladorProdutoArmazenado implements Controlador<ProdutoArmazena
         CRUD.delete(nomeTabela, "idProdutoArmazenado", "" + produto.getCodigo());
     }
 
-    
+    /**
+     * Seleciona uma quantidade especifica de produtos armazenados.Se a base tiver menos registros que a quantidade especificada, todos os registros serão listados
+     * @param n quantidade de elementos desejados
+     * @return List - Retorna uma lista contendo os n primeiros produtos armazenados
+     * @throws SQLException
+     */
+    public List<ProdutoArmazenado> selecionarConjunto(int n) throws SQLException {
+        List<ProdutoArmazenado> produtosArmazenados = new ArrayList<>();
+
+        ResultSet rs = CRUD.select(nomeTabela);
+        int cont = 0;
+        while (rs.next() && cont++ < n) {
+            ProdutoArmazenado produtoArmazenado
+                    = new ProdutoArmazenado(
+                            rs.getInt("idProdutoArmazenado"),
+                            rs.getString("lote"),
+                            rs.getDouble("quantidade"),
+                            rs.getInt("notaFiscal"),
+                            new ControladorProduto().selecionarPorCodigo(rs.getInt("produto_codigoProduto")),
+                            new ControladorFornecedor().selecionarPorCodigo(rs.getInt("fornecedor_idFornecedor")),
+                            ctrlArmazem.selecionarPorCodigo(rs.getInt("armazem_codigoArmazem"))
+                    );
+            produtosArmazenados.add(produtoArmazenado);
+        }
+
+        return produtosArmazenados;
+    }
     
 
    /*
