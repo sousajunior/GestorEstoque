@@ -224,6 +224,7 @@ public class FRMInventario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inventário");
+        setMinimumSize(new java.awt.Dimension(480, 380));
         setPreferredSize(new java.awt.Dimension(480, 380));
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();

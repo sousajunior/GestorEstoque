@@ -613,6 +613,7 @@ public class FRMMovimentacao extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Histórico de movimentações");
+        setMinimumSize(new java.awt.Dimension(707, 585));
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0};
