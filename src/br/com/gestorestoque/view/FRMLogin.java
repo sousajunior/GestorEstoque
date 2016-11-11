@@ -59,7 +59,7 @@ public class FRMLogin extends javax.swing.JFrame {
                 Usuario usuario = new ControladorUsuario().selecionarPorUsuarioSenha(this.jTfUsuario.getText(), this.jTfSenha.getText());
 
                 if (usuario.getId() == null) {
-                    JOptionPane.showMessageDialog(null, "Usuário sem acesso a aplicação!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
                 } else {
 
                     UsuarioGrupo usuarioGrupo = new ControladorGrupoUsuario().selecionarPorCodigo(usuario.getId());
@@ -95,7 +95,6 @@ public class FRMLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestor Estoque - Login");
         setPreferredSize(new java.awt.Dimension(321, 234));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 12, 0, 12, 0, 12, 0, 12, 0, 12, 0};
