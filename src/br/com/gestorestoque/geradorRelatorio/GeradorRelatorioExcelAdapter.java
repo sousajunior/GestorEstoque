@@ -6,9 +6,11 @@ import br.com.gestorestoque.relatorio.excel.PreparadorTabelaRelatorioProdutos;
 import br.com.gestorestoque.relatorio.excel.PreparadorTabelaRelatorioSaldoEstoque;
 import br.com.gestorestoque.relatorio.excel.PreparadorTabelaRelatorioSaldoGeralProdutos;
 import br.com.gestorestoque.relatorio.mail.SendMailAttach;
+import br.com.gestorestoque.util.FRMUtil;
 import br.com.gestorestoque.view.enumerado.Relatorio;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,18 +45,17 @@ public class GeradorRelatorioExcelAdapter implements GeradorRelatorioService {
 
     private JFrame prepararFrame(Relatorio relatorio, String codigosConsulta) throws SQLException {
 
+        new FRMUtil().setarIcone(jFrame, null);
         btExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/exportar_excel -32.png")));
 
-        btExportarExcel.addActionListener((e) -> {
+        btExportarExcel.addActionListener((ActionEvent e) -> {
             try {
                 btnExportarExcelClicado(relatorio);
-            } catch (WriteException ex) {
-                Logger.getLogger(GeradorRelatorioExcelAdapter.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            } catch (WriteException | IOException ex) {
                 Logger.getLogger(GeradorRelatorioExcelAdapter.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        );
+        });
 
         btEnviarEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gestorestoque/view/Imagens/send_mail-32.png")));
 
@@ -79,7 +80,7 @@ public class GeradorRelatorioExcelAdapter implements GeradorRelatorioService {
 
         switch (relatorio) {
             case RelatorioGeralMovimentacoes:
-            return new PreparadorTabelaRelatorioMovimentacaoEstoque().prepararTabela(relatorio, codigosConsulta);
+                return new PreparadorTabelaRelatorioMovimentacaoEstoque().prepararTabela(relatorio, codigosConsulta);
             case RelatorioSaldoEstoque:
                 return new PreparadorTabelaRelatorioSaldoEstoque().prepararTabela(relatorio, codigosConsulta);
             case RelatorioSaldoGeralProdutos:
@@ -102,13 +103,19 @@ public class GeradorRelatorioExcelAdapter implements GeradorRelatorioService {
         try {
 
             jFrame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            new SendMailAttach(jFrame, relatorio, tabelaDados, JOptionPane.showInputDialog("Informe o(s) endereço(s) de e-mail: "));
-            JOptionPane.showMessageDialog(jFrame, "Relatório enviado como anexo com sucesso!", "E-mail enviado!", JOptionPane.INFORMATION_MESSAGE);
+            new SendMailAttach(jFrame, 
+                               relatorio, 
+                               tabelaDados, 
+                               JOptionPane.showInputDialog("Informe o(s) endereço(s) de e-mail: "));
+            
+            JOptionPane.showMessageDialog(jFrame, 
+                                          "Relatório enviado como anexo com sucesso!", 
+                                          "E-mail enviado!", 
+                                          JOptionPane.INFORMATION_MESSAGE);
+            
             jFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
-        } catch (WriteException ex) {
-            Logger.getLogger(GeradorRelatorioExcelAdapter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (WriteException | IOException ex) {
             Logger.getLogger(GeradorRelatorioExcelAdapter.class.getName()).log(Level.SEVERE, null, ex);
         }
 
