@@ -70,12 +70,14 @@ public final class ExportadorExcel {
             chooser.setAcceptAllFileFilterUsed(false);
             //Mudar o título da janela
             chooser.setDialogTitle("Salvar");
-            //Setar o campo de texto o JFileChooser com o diretório/arquivo pertinente (nome do relatório)
+       
+            //Criar arquivo apontando para o caminho da area de trabalho do usuário.
             File arquivoVerificado = new File("C:\\Users\\" + infoSystem.getName() + "\\Desktop\\" + RelatorioUtil.retornarNomeRelatorio(relatorio));
+            //Setar o campo de texto o JFileChooser com o diretório/arquivo correto (nome do relatório) sem sobrescrever
+            //atraves do método 'criarNomeArquivoValido'
             arquivoVerificado = new File(criarNomeArquivoValido(arquivoVerificado));
             chooser.setSelectedFile(arquivoVerificado);
-            //Verificar se existem arquivos com o mesmo nome e corrigir o que foi setado no JFileChooser
-            //chooser.setSelectedFile(new File(criarNomeArquivoValido(chooser, RelatorioUtil.retornarNomeRelatorio(relatorio))));
+            
 
             //Aguarda o click do botão de salvar.
             if (chooser.showSaveDialog(frame) != JFileChooser.APPROVE_OPTION) {
